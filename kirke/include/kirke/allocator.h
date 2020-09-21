@@ -55,7 +55,15 @@ void allocator__destroy( Allocator* allocator );
  *  \param allocator The allocator to be used for allocation.
  *  \param size The size in bytes of the memory region to be allocated. 
  */
-void* allocator__alloc( Allocator* allocator, unsigned long long size );
+void *allocator__alloc( Allocator* allocator, unsigned long long size );
+
+/**
+ *	\brief This method will reallocate a given block of memory. 
+ *	If the new region of memory is larger than the old region, then this method will attempt to expand 
+ *	the current region. If the current region cannot be expanded, then a new block will be allocated, 
+ *	and the old memory will be copied to the start of the new region.
+ */
+void *allocator__realloc( Allocator* allocator, void* pointer, unsigned long long size );
 
 /**
  * 	\brief This method will free a region of memory allocated with allocator__alloc,  allocator__calloc, or

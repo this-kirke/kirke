@@ -77,6 +77,13 @@ void* allocator__alloc( Allocator* allocator, unsigned long long size ){
     return new_memory;
 }
 
+void *allocator__realloc( Allocator* allocator, void* pointer, unsigned long long size ){
+    (void)( allocator );
+    (void)( pointer );
+    (void)( size );
+    return NULL;
+}
+
 void allocator__free( Allocator* allocator, void* pointer ){
     allocator->free( pointer, allocator->allocator_data );
 }
