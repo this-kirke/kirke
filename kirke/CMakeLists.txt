@@ -2,7 +2,7 @@ set( libkirke__DIR "${CMAKE_CURRENT_LIST_DIR}" )
 
 add_library(
     libkirke
-    ${libkirke__DIR}/src/kirke.c
+    ${libkirke__DIR}/src/allocator.c
 )
 
 target_include_directories(
@@ -43,11 +43,9 @@ if( KIRKE_BUILD_TESTS )
     
     # "catch2__" methods defined in project/3rdParty/Catch2/CMakeLists.txt
     catch2__add_test(
-        NAME test__libkirke
-        SOURCES "${libkirke__DIR}/test/test__libkirke.cpp"
+        NAME test__libkirke__allocator
+        SOURCES "${libkirke__DIR}/test/test__libkirke__allocator.cpp"
         LINK_LIBRARIES libkirke
     )
-
-
 
 endif( KIRKE_BUILD_TESTS )
