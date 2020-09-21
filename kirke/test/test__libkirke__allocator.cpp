@@ -34,11 +34,23 @@ class Allocator__TestFixture{
         }
 
         Allocator* allocator;
-
-        const int ELEMENT_SIZE = sizeof( long );
-        const int ELEMENT_COUNT = 10;
 };
 
 TEST_CASE_METHOD( Allocator__TestFixture, "allocator__create_and_destroy", "[allocator]" ){
     REQUIRE( allocator != NULL );
+}
+
+TEST_CASE_METHOD( Allocator__TestFixture, "allocator__alloc_and_free", "[allocator]" ){    
+    const int ELEMENT_SIZE = sizeof( long );
+    const int ELEMENT_COUNT = 10;
+    
+    long* array = (long*) allocator__alloc( allocator, ELEMENT_COUNT * ELEMENT_SIZE );
+
+    REQUIRE( array != NULL );
+
+    for( size_t element_index = 0; element_index < ELEMENT_COUNT; element_index++ ){
+        array[ element_index ] = 0;
+    }
+
+    allocator__free( allocator, array );
 }

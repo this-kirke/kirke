@@ -63,3 +63,16 @@ void allocator__destroy( Allocator* allocator ){
         allocator->free( allocator, allocator->allocator_data );
     }
 }
+
+
+void* allocator__alloc( Allocator* allocator, unsigned long long size ){
+    (void)( allocator );
+    (void)( size );
+    
+    return NULL;
+}
+
+void allocator__free( Allocator* allocator, void* pointer ){
+    (void)( allocator );
+    (void)( pointer );
+}

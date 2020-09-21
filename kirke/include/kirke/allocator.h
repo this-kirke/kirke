@@ -51,6 +51,21 @@ Allocator* allocator__create(
 void allocator__destroy( Allocator* allocator );
 
 /**
+ * 	\brief This method allocates a new block of memory using the specified Allocator.
+ *  \param allocator The allocator to be used for allocation.
+ *  \param size The size in bytes of the memory region to be allocated. 
+ */
+void* allocator__alloc( Allocator* allocator, unsigned long long size );
+
+/**
+ * 	\brief This method will free a region of memory allocated with allocator__alloc,  allocator__calloc, or
+ *	allocator__realloc.
+ *	\param allocator The allocator which will be used to free memory.
+ *	\param pointer A pointer to the start of the region of memory to be freed.
+ */
+void allocator__free( Allocator* allocator, void* pointer );
+
+/**
  *  @} group allocator
  */
 
