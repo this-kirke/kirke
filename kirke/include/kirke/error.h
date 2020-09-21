@@ -63,6 +63,13 @@ typedef struct Error{
 } Error;
 
 /**
+ *  /def ERROR_CODE__NONE
+ *  The error code stored in a default-initialized error. Denotes that no error has occurred, and the contents of
+ *  fields type and message are not defined.
+ */
+#define Error__None 0
+
+/**
  *  \brief This method sets the type, code and message of an Error structure.
  *  \param error A pointer to an Error structure. Upon completion, this will store the specified type,
  *  code and message.
