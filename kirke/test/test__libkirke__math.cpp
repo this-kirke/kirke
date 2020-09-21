@@ -15,3 +15,12 @@ TEST_CASE( "math__min__long", "[math]" ){
     REQUIRE( math__min__long( first, second ) == first );
     REQUIRE( math__min__long( second, first ) == first );
 }
+
+TEST_CASE( "math__max__long", "[math]" ){
+    long first = LONG_MIN;
+    long second = LONG_MAX;
+
+    REQUIRE( math__max__long( first, first ) == first );
+    REQUIRE( math__max__long( first, second ) == second );
+    REQUIRE( math__max__long( second, first ) == second );
+}

@@ -11,3 +11,10 @@ long math__min__long( long first, long second ){
 
     return second;
 }
+
+long math__max__long( long first, long second ){
+    (void)( first );
+    (void)( second );
+
+    return 0;
+}
