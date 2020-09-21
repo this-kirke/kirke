@@ -37,3 +37,18 @@ TEST_CASE( "log__get_and_set__log_level", "[log]" ){
     log__set_log_level( (Log__Level) ( Log__Level__Error + 1 ) );
     REQUIRE( log__get_log_level() == Log__Level__Error );
 }
+
+TEST_CASE( "log__log" ){
+    for( unsigned long log_level = 0; log_level <= Log__Level__Error; log_level++ ){
+        log__set_log_level( (Log__Level) log_level );
+
+        log__log( Log__Level__Verbose, __FILE__, __LINE__, "%s", log__level__to_string( Log__Level__Verbose ) );
+        log__log( Log__Level__Debug, __FILE__, __LINE__, "%s", log__level__to_string( Log__Level__Debug ) );
+        log__log( Log__Level__Info, __FILE__, __LINE__, "%s", log__level__to_string( Log__Level__Info ) );
+        log__log( Log__Level__Warning, __FILE__, __LINE__, "%s", log__level__to_string( Log__Level__Warning ) );
+        log__log( Log__Level__Error, __FILE__, __LINE__, "%s", log__level__to_string( Log__Level__Error ) );
+
+        // Nothing should be printed
+        log__log( Log__Level__COUNT, __FILE__, __LINE__, "%s", log__level__to_string( Log__Level__COUNT ) );
+    }
+}

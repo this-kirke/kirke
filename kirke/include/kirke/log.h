@@ -73,6 +73,18 @@ void log__set_log_level( Log__Level level );
 char* log__level__to_string( Log__Level level );
 
 /**
+ *  \brief This method logs a message to stdout.
+ *  \param level The severity level of the message to be logged.
+ *  \param file A string representing the absolute path to the file which called this method. The macros log__*
+ *  automatically fill this parameter with the current __FILE__ macro definition.
+ *  \param line An integer representing the source code line at which this method was called. The macros log__*
+ *  automatically fill this parameter with the current __LINE__ macro definition.
+ *  \param format A C-style string, optionally containing format specifiers, followed by a list of variables
+ *  corresponding to the format specifiers that exist in the string.
+ */
+void log__log( Log__Level level, const char *file, int line, const char *format, ... );
+
+/**
  *  @} group log
  */
 
