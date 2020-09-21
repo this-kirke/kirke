@@ -52,6 +52,14 @@ typedef enum Log__Level {
 } Log__Level;
 
 /**
+ *  \brief This method converts a Log__Level enumerator value into a C-style string.
+ *  \param log_level The log level which is to be converted.
+ *  \returns A stack-allocated, const char* const containing a NULL-terminated C-style string representation of
+ *  the name of \p log_level.
+ */
+char* log__level__to_string( Log__Level log_level );
+
+/**
  *  @} group log
  */
 

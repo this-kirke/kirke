@@ -52,7 +52,7 @@ if( KIRKE_BUILD_TESTS )
     )
 
     catch2__add_test(
-        NAME test__libkirke__math
+        NAME test__libkirke__log
         SOURCES "${libkirke__DIR}/test/test__libkirke__log.cpp"
         LINK_LIBRARIES libkirke
     )
