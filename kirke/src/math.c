@@ -35,3 +35,10 @@ unsigned long math__max__ulong( unsigned long first, unsigned long second ){
 
     return second;
 }
+
+unsigned long long math__min__ullong( unsigned long long first, unsigned long long second ){
+    (void)( first );
+    (void)( second );
+
+    return 0;
+}
