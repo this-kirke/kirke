@@ -40,15 +40,26 @@ Allocator* allocator__create(
 	void ( *out_of_memory_function )( void* allocator_data ),
     void* allocator_data
 ){
-    (void)( alloc_function );
-    (void)( realloc_function );
-    (void)( free_function );
-    (void)( out_of_memory_function );
-    (void)( allocator_data );
+    Allocator* allocator = alloc_function( sizeof( Allocator ), allocator_data );
+
+	if( allocator == NULL ){
+		if( out_of_memory_function != NULL ){
+			out_of_memory_function( allocator_data );
+		}
+	}
+	else{
+		allocator->alloc = alloc_function;
+		allocator->realloc = realloc_function;
+		allocator->free = free_function;
+		allocator->out_of_memory = out_of_memory_function;
+		allocator->allocator_data = allocator_data;
+	}
     
-    return NULL;
+    return allocator;
 }
 
 void allocator__destroy( Allocator* allocator ){
-    (void)( allocator );
+    if( allocator != NULL ){
+        allocator->free( allocator, allocator->allocator_data );
+    }
 }
