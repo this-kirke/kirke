@@ -78,11 +78,18 @@ void* allocator__alloc( Allocator* allocator, unsigned long long size ){
 }
 
 void* allocator__calloc( Allocator* allocator, unsigned long long count, unsigned long long size ){
-	(void)( allocator );
-    (void)( count );
-    (void)( size );
+	void* new_memory = allocator->alloc( count * size, allocator->allocator_data );
 
-    return NULL;
+    if( new_memory == NULL ){
+        if( allocator->out_of_memory != NULL ){
+            allocator->out_of_memory( allocator->allocator_data );
+        }
+    }
+    else{
+        memset( new_memory, 0, count * size );
+    }
+    
+    return new_memory;
 }
 
 void *allocator__realloc( Allocator* allocator, void* pointer, unsigned long long size ){
