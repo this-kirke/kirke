@@ -1,12 +1,16 @@
 // Internal Includes
 #include "kirke/log.h"
 
+static Log__Level KIRKE__LOG__LEVEL = Log__Level__Warning;
+
 void log__set_log_level( Log__Level level ){
-    (void)( level );
+    if( level >= Log__Level__Verbose && level <= Log__Level__Error ){
+        KIRKE__LOG__LEVEL = level;
+    }
 }
 
 Log__Level log__get_log_level(){
-    return 0;
+    return KIRKE__LOG__LEVEL;
 }
 
 char* log__level__to_string( Log__Level log_level ){
