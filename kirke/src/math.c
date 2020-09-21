@@ -29,8 +29,9 @@ unsigned long math__min__ulong( unsigned long first, unsigned long second ){
 }
 
 unsigned long math__max__ulong( unsigned long first, unsigned long second ){
-    (void)( first );
-    (void)( second );
+    if( first > second ){
+        return first;
+    }
 
-    return 0;
+    return second;
 }
