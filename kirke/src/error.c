@@ -6,6 +6,14 @@
 // Internal Includes
 #include "kirke/error.h"
 #include "kirke/log.h"
+
+void error__set( Error *error, const char* type, unsigned long long code, const char* format, ... ){
+    (void)( error );
+    (void)( type );
+    (void)( code );
+    (void)( format );
+}
+
 bool error__equals( Error* first, Error* second ){
     if(
         strncmp( first->type, second->type, sizeof( first->type ) ) == 0 &&

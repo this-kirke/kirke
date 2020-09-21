@@ -62,6 +62,18 @@ typedef struct Error{
     char message[ 256 ];
 } Error;
 
+/**
+ *  \brief This method sets the type, code and message of an Error structure.
+ *  \param error A pointer to an Error structure. Upon completion, this will store the specified type,
+ *  code and message.
+ *  \param type A null-terminated C-style string which describes the general type of the message, such
+ *  as the class in which the error originated.
+ *  \param code An identifier for this particular error, unique within its type.
+ *  \param format A format specifier with string replacement tokens, in the style of printf, which are
+ *  used for creating the message
+ *  field.
+ */
+void error__set( Error *error, const char* type, unsigned long long code, const char* format, ... );
 
 /**
  *  \brief This method compares two Error structures for equality.
