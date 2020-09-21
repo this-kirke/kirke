@@ -51,6 +51,47 @@ typedef enum Log__Level {
     Log__Level__COUNT
 } Log__Level;
 
+
+/**
+ *  \def log__verbose
+ *  \brief Convenience macro to log a message with Log__Level__Verbose severity.
+ *  \note Contents of __VA_ARGS__ parameter should be a C-style string with format specifiers, followed by a
+ *  list of variables corresponding to the format specifiers in the string.
+ */
+#define log__verbose( ... ) log__log( Log__Level__Verbose, __FILE__, __LINE__, __VA_ARGS__ )
+
+/**
+ *  \def log__debug
+ *  \brief Convenience macro to log a message with Log__Level__Debug severity.
+ *  \note Contents of __VA_ARGS__ parameter should be a C-style string with format specifiers, followed by a
+ *  list of variables corresponding to the format specifiers in the string.
+ */
+#define log__debug( ... ) log__log( Log__Level__Debug, __FILE__, __LINE__, __VA_ARGS__ )
+
+/**
+ *  \def log__info
+ *  \brief Convenience macro to log a message with Log__Level__Info severity.
+ *  \note Contents of __VA_ARGS__ parameter should be a C-style string with format specifiers, followed by a
+ *  list of variables corresponding to the format specifiers in the string.
+ */
+#define log__info( ... )  log__log( Log__Level__Info,  __FILE__, __LINE__, __VA_ARGS__ )
+
+/**
+ *  \def log__warning
+ *  \brief Convenience macro to log a message with Log__Level__Warning severity.
+ *  \note Contents of __VA_ARGS__ parameter should be a C-style string with format specifiers, followed by a
+ *  list of variables corresponding to the format specifiers in the string.
+ */
+#define log__warning( ... )  log__log( Log__Level__Warning,  __FILE__, __LINE__, __VA_ARGS__ )
+
+/**
+ *  \def log__error
+ *  \brief Convenience macro to log a message with Log__Level__Error severity.
+ *  \note Contents of __VA_ARGS__ parameter should be a C-style string with format specifiers, followed by a
+ *  list of variables corresponding to the format specifiers in the string.
+ */
+#define log__error( ... ) log__log( Log__Level__Error, __FILE__, __LINE__, __VA_ARGS__ )
+
 /**
  *  \brief This method returns the currently-set log level.
  *  \returns The currently-set log level.

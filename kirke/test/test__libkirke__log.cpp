@@ -51,4 +51,19 @@ TEST_CASE( "log__log" ){
         // Nothing should be printed
         log__log( Log__Level__COUNT, __FILE__, __LINE__, "%s", log__level__to_string( Log__Level__COUNT ) );
     }
+
+}
+
+
+TEST_CASE( "log__convenience_macros", "[log]" ){
+    for( unsigned long log_level = 0; log_level <= Log__Level__Error; log_level++ ){
+        log__set_log_level( (Log__Level) log_level );
+
+        log__verbose( "%s", log__level__to_string( Log__Level__Verbose ) );
+        log__info( "%s", log__level__to_string( Log__Level__Info ) );
+        log__debug( "%s", log__level__to_string( Log__Level__Debug ) );
+        log__warning( "%s", log__level__to_string( Log__Level__Warning ) );
+        log__error( "%s", log__level__to_string( Log__Level__Error ) );
+        log__verbose( "%s", log__level__to_string( Log__Level__COUNT ) );
+    }
 }
