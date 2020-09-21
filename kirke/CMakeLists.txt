@@ -3,6 +3,7 @@ set( libkirke__DIR "${CMAKE_CURRENT_LIST_DIR}" )
 add_library(
     libkirke
     ${libkirke__DIR}/src/allocator.c
+    ${libkirke__DIR}/src/log.c
     ${libkirke__DIR}/src/math.c
     ${libkirke__DIR}/src/system_allocator.c
 )
@@ -47,6 +48,12 @@ if( KIRKE_BUILD_TESTS )
     catch2__add_test(
         NAME test__libkirke__allocator
         SOURCES "${libkirke__DIR}/test/test__libkirke__allocator.cpp"
+        LINK_LIBRARIES libkirke
+    )
+
+    catch2__add_test(
+        NAME test__libkirke__math
+        SOURCES "${libkirke__DIR}/test/test__libkirke__log.cpp"
         LINK_LIBRARIES libkirke
     )
 
