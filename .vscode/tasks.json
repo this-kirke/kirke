@@ -1,0 +1,79 @@
+{
+"version": "2.0.0",
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "Generate Debug",
+            "command": "cmake",
+            "args": [
+                "-B", "build",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DKIRKE_BUILD_TESTS=ON",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "Build Debug",
+            "command": "cmake",
+            "args": [
+                "--build", "build",
+            ],
+            "dependsOn": [
+                "Generate Debug"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "Generate Full",
+            "command": "cmake",
+            "args": [
+                "-B", "build",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DKIRKE_BUILD_TESTS=ON",
+                "-DKIRKE_BUILD_COVERAGE_REPORT=ON",
+                "-DKIRKE_BUILD_DOCUMENTATION=ON",
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "Build Full",
+            "command": "cmake",
+            "args": [
+                "--build", "build",
+            ],
+            "dependsOn": [
+                "Generate Full"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "type": "shell",
+            "label": "Clean",
+            "command": "rm",
+            "args": [
+                "-rf", "build"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+    ]
+}
