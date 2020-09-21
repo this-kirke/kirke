@@ -90,3 +90,29 @@ TEST_CASE_METHOD( Allocator__TestFixture, "allocator__realloc", "[allocator]" ){
 
     allocator__free( allocator, array );
 }
+
+struct AllocatorData{
+    bool out_of_memory_called;
+} allocator_data;
+
+void* out_of_memory_alloc( unsigned long long size, void *allocator_data ){
+    return NULL;
+}
+
+void out_of_memory( void *allocator_data ){
+    AllocatorData *data = (AllocatorData*) allocator_data;
+    data->out_of_memory_called = true;
+}
+
+TEST_CASE( "allocator__out_of_memory_is_called_if_alloc_returns_NULL", "[allocator]" ){
+    Allocator *allocator = allocator__create( 
+        out_of_memory_alloc,
+        NULL,
+        NULL,
+        out_of_memory,
+        &allocator_data
+    );
+
+    REQUIRE( allocator == NULL );
+    REQUIRE( allocator_data.out_of_memory_called == true );
+}
