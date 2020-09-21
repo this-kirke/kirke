@@ -51,3 +51,12 @@ TEST_CASE( "math__min__ullong", "[math]" ){
     REQUIRE( math__min__ullong( first, second ) == first );
     REQUIRE( math__min__ullong( second, first ) == first );
 }
+
+TEST_CASE( "math__max__ullong", "[math]" ){
+    unsigned long long first = 0;
+    unsigned long long second = ULLONG_MAX;
+
+    REQUIRE( math__max__ullong( first, first ) == first );
+    REQUIRE( math__max__ullong( first, second ) == second );
+    REQUIRE( math__max__ullong( second, first ) == second );
+}

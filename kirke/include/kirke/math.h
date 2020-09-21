@@ -51,6 +51,13 @@ unsigned long math__max__ulong( unsigned long first, unsigned long second );
 unsigned long long math__min__ullong( unsigned long long first, unsigned long long second );
 
 /**
+ *  \brief This method compares the provided values, and returns the greater or the two.
+ *  \param first The first value to be compared.
+ *  \param second The second value to be compared.
+ */
+unsigned long long math__max__ullong( unsigned long long first, unsigned long long second );
+
+/**
  *  @} group math
  */
 
