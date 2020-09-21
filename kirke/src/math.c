@@ -53,7 +53,13 @@ unsigned long long math__max__ullong( unsigned long long first, unsigned long lo
 }
 
 unsigned long math__nearest_greater_power_of_2__ulong( unsigned long value ){
-    (void)( value );
+    if( value == 0 ){
+        return 1;
+    }
 
-    return 0;
+	while( value & ( value - 1 ) ){
+		value = value & ( value - 1 );
+    }
+
+	return value << 1;
 }
