@@ -7,8 +7,12 @@
 #include "kirke/error.h"
 #include "kirke/log.h"
 bool error__equals( Error* first, Error* second ){
-    (void)( first );
-    (void)( second );
+    if(
+        strncmp( first->type, second->type, sizeof( first->type ) ) == 0 &&
+        first->code == second->code
+    ){
+        return 1;
+    }
 
-    return false;
+    return 0;
 }
