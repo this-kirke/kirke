@@ -58,6 +58,14 @@ unsigned long long math__min__ullong( unsigned long long first, unsigned long lo
 unsigned long long math__max__ullong( unsigned long long first, unsigned long long second );
 
 /**
+ *  \brief This method calculates and returns the next greater power of 2 for a given value.
+ *  \param value The value for which the next greater power of 2 will be calculated.
+ *  \note If the value itself is a power of 2, this method still returns the next greater power of 2.
+ *  For example, math__nearest_greater_power_of_2__ulong( 2 ) == 4.
+ */
+unsigned long math__nearest_greater_power_of_2__ulong( unsigned long value );
+
+/**
  *  @} group math
  */
 

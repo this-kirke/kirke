@@ -51,3 +51,9 @@ unsigned long long math__max__ullong( unsigned long long first, unsigned long lo
 
     return second;
 }
+
+unsigned long math__nearest_greater_power_of_2__ulong( unsigned long value ){
+    (void)( value );
+
+    return 0;
+}

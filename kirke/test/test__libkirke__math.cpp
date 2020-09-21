@@ -60,3 +60,18 @@ TEST_CASE( "math__max__ullong", "[math]" ){
     REQUIRE( math__max__ullong( first, second ) == second );
     REQUIRE( math__max__ullong( second, first ) == second );
 }
+
+TEST_CASE( "math__nearest_greater_power_of_2__ulong", "[math]" ){
+    REQUIRE( math__nearest_greater_power_of_2__ulong( 0 ) == 1 );
+    REQUIRE( math__nearest_greater_power_of_2__ulong( 1 ) == 2 );
+    REQUIRE( math__nearest_greater_power_of_2__ulong( 2 ) == 4 );
+    REQUIRE( math__nearest_greater_power_of_2__ulong( 4 ) == 8 );
+    REQUIRE( math__nearest_greater_power_of_2__ulong( 8 ) == 16 );
+    REQUIRE( math__nearest_greater_power_of_2__ulong( 16 ) == 32 );
+    REQUIRE( math__nearest_greater_power_of_2__ulong( 32 ) == 64 );
+    REQUIRE( math__nearest_greater_power_of_2__ulong( 64 ) == 128 );
+    REQUIRE( math__nearest_greater_power_of_2__ulong( 128 ) == 256 );
+
+    REQUIRE( math__nearest_greater_power_of_2__ulong( 255 ) == 256 );
+    REQUIRE( math__nearest_greater_power_of_2__ulong( 65535 ) == 65536 );
+}
