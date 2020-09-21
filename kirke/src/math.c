@@ -5,8 +5,9 @@
 #include "kirke/math.h"
 
 long math__min__long( long first, long second ){
-    (void)( first );
-    (void)( second );
+    if( first < second ){
+        return first;
+    }
 
-    return 0;
+    return second;
 }
