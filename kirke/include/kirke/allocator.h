@@ -58,6 +58,16 @@ void allocator__destroy( Allocator* allocator );
 void *allocator__alloc( Allocator* allocator, unsigned long long size );
 
 /**
+ *  \brief This method allocates a region of memory large enough to hold the given number of items of 
+ *  the given size, and zeros the newly-allocated region.
+ *  \param allocator The allocator to be used for allocation.
+ *  \param count The number of items to allocate.
+ *  \param size The size in bytes of each item to allocate.
+ *  \returns A pointer to the start of the newly-allocated block of memory.  
+ */
+void* allocator__calloc( Allocator* allocator, unsigned long long count, unsigned long long size );
+
+/**
  *	\brief This method will reallocate a given block of memory. 
  *	If the new region of memory is larger than the old region, then this method will attempt to expand 
  *	the current region. If the current region cannot be expanded, then a new block will be allocated, 

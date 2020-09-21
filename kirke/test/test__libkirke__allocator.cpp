@@ -55,6 +55,20 @@ TEST_CASE_METHOD( Allocator__TestFixture, "allocator__alloc_and_free", "[allocat
     allocator__free( allocator, array );
 }
 
+TEST_CASE_METHOD( Allocator__TestFixture, "allocator__calloc", "[allocator]" ){
+    const int ELEMENT_SIZE = sizeof( long );
+    const int ELEMENT_COUNT = 10;
+
+    long* array = (long*) allocator__calloc( allocator, ELEMENT_COUNT, sizeof( long ) );
+
+    REQUIRE( array != NULL );
+
+    for( size_t element_index = 0; element_index < ELEMENT_COUNT; element_index++ ){
+        REQUIRE( array[ element_index ] == 0 );
+    }
+
+    allocator__free( allocator, array );
+}
 
 TEST_CASE_METHOD( Allocator__TestFixture, "allocator__realloc", "[allocator]" ){
     const int ELEMENT_SIZE = sizeof( long );
