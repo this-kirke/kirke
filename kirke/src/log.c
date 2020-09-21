@@ -1,6 +1,14 @@
 // Internal Includes
 #include "kirke/log.h"
 
+void log__set_log_level( Log__Level level ){
+    (void)( level );
+}
+
+Log__Level log__get_log_level(){
+    return 0;
+}
+
 char* log__level__to_string( Log__Level log_level ){
     switch( log_level ){
         case Log__Level__Verbose:
