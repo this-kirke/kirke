@@ -30,6 +30,13 @@ long math__min__long( long first, long second );
 long math__max__long( long first, long second );
 
 /**
+ *  \brief This method compares the provided values, and returns the lesser or the two.
+ *  \param first The first value to be compared.
+ *  \param second The second value to be compared.
+ */
+unsigned long math__min__ulong( unsigned long first, unsigned long second );
+
+/**
  *  @} group math
  */
 
