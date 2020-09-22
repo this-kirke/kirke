@@ -47,6 +47,12 @@ if( KIRKE_BUILD_TESTS )
 
     # "catch2__" methods defined in project/3rdParty/Catch2/CMakeLists.txt
     catch2__add_test(
+        NAME test__libkirke__array
+        SOURCES "${libkirke__DIR}/test/test__libkirke__array.cpp"
+        LINK_LIBRARIES libkirke
+    )
+
+    catch2__add_test(
         NAME test__libkirke__allocator
         SOURCES "${libkirke__DIR}/test/test__libkirke__allocator.cpp"
         LINK_LIBRARIES libkirke
