@@ -214,6 +214,13 @@
     void auto_ ## TYPENAME_LOWERCASE ## __append_elements( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE, unsigned long long element_count, ELEMENT_TYPE const *data );     \
                                                                                                                                                                             \
     /**                                                                                                                                                                     \
+     *  \brief This method prepends an element to the beginning of an AutoArray, allocating additional memory as necessary.                                                 \
+     *  \param auto_array A pointer to the AutoArray to which the element will be prepended.                                                                                \
+     *  \param element The element which will be prepended to the AutoArray.                                                                                                \
+     */                                                                                                                                                                     \
+    inline void auto_ ## TYPENAME_LOWERCASE ## __prepend_element( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE, ELEMENT_TYPE element );                                    \
+                                                                                                                                                                            \
+    /**                                                                                                                                                                     \
      *  \brief This method prepends elements to the beginning of an AutoArray, allocating additional memory as necessary.                                                   \
      *  \param auto_array A pointer to the AutoArray to which the elements will be prepended.                                                                               \
      *  \param element_count The number of elements to be prepended.                                                                                                        \
@@ -482,6 +489,11 @@
         );                                                                                                                                                                  \
                                                                                                                                                                             \
         auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length += element_count;                                                                                           \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
+    inline void auto_ ## TYPENAME_LOWERCASE ## __prepend_element( Auto ## TYPENAME* auto_ ## TYPENAME_LOWERCASE, ELEMENT_TYPE element ){                                    \
+        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
+        (void)( element );                                                                                                                                                  \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
 

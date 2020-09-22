@@ -253,3 +253,29 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__prepend_elements", "[ar
 
     auto_array__char__clear( &auto_array );
 }
+
+
+TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__prepend_element", "[array]" ){
+    const unsigned long ELEMENT_COUNT = 10;
+
+    char chars[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+
+    Array__char expected_array = {
+        .data = chars,
+        .length = 10,
+        .capacity = 10,
+        .element_size = 1
+    };
+
+
+    AutoArray__char auto_array;
+    auto_array__char__initialize( &auto_array, system_allocator.allocator, ELEMENT_COUNT );
+
+    unsigned long element_index;
+    for( element_index = ELEMENT_COUNT; element_index > 0; element_index-- ){
+        auto_array__char__prepend_element( &auto_array, chars[ element_index - 1 ] );
+    }
+
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_array ) );
+    auto_array__char__clear( &auto_array );
+}
