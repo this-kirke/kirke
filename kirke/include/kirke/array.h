@@ -147,7 +147,17 @@
         TYPENAME const *first,                                                                                                                                              \
         TYPENAME const *second                                                                                                                                              \
     ){                                                                                                                                                                      \
-        return false;                                                                                                                                                       \
+        if( first->length != second->length ){                                                                                                                              \
+            return false;                                                                                                                                                   \
+        }                                                                                                                                                                   \
+                                                                                                                                                                            \
+        for( unsigned long long element_index = 0; element_index < first->length; element_index++ ){                                                                        \
+            if( ELEMENT_TYPE__EQUALS_FUNCTION( &first->data[ element_index ], &second->data[ element_index ] ) == 0 ){                                                      \
+                return false;                                                                                                                                               \
+            }                                                                                                                                                               \
+        }                                                                                                                                                                   \
+                                                                                                                                                                            \
+        return true;                                                                                                                                                        \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
 
