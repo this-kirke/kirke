@@ -299,9 +299,20 @@
         const TYPENAME* sequence,                                                                                                                                           \
         unsigned long long *out_index                                                                                                                                       \
     ){                                                                                                                                                                      \
-        (void)( TYPENAME_LOWERCASE );                                                                                                                                       \
-        (void)( sequence );                                                                                                                                                 \
-        (void)( out_index );                                                                                                                                                \
+        for( unsigned long long element_index = 0; element_index < TYPENAME_LOWERCASE->length; element_index++ ){                                                           \
+            TYPENAME subsequence = {                                                                                                                                        \
+                .data = TYPENAME_LOWERCASE->data + element_index,                                                                                                           \
+                .length = sequence->length,                                                                                                                                 \
+                .capacity = sequence->length,                                                                                                                               \
+                .element_size = sizeof( ELEMENT_TYPE )                                                                                                                      \
+            };                                                                                                                                                              \
+                                                                                                                                                                            \
+            if( TYPENAME_LOWERCASE ## __equals( &subsequence, sequence ) ){                                                                                                 \
+                *out_index = element_index;                                                                                                                                 \
+                return true;                                                                                                                                                \
+            }                                                                                                                                                               \
+        }                                                                                                                                                                   \
+                                                                                                                                                                            \
         return false;                                                                                                                                                       \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
