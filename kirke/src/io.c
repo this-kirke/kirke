@@ -1,3 +1,6 @@
+// System Includes
+#include <stdio.h> // fopen, fclose, fseek, ftell, fread
+
 // Internal Includes
 #include "kirke/allocator.h"
 #include "kirke/error.h"
@@ -29,6 +32,24 @@ String* io__read_text_file( Allocator* allocator, String* file_path, Error* erro
     output->length = fread( output->data, 1, input_file_size, input_file );
 
     fclose( input_file );
+
+    return output;
+}
+
+String* io__read_stdin( Allocator* allocator ){
+    String* output = allocator__alloc( allocator, sizeof( String ) );
+    string__initialize( output, allocator, 0 );
+
+    AutoString auto_string = {
+        .string = output,
+        .allocator = allocator
+    };
+
+    char buffer[ 1024 ];
+    long bytes_read;
+    while( ( bytes_read = fread( buffer, sizeof( char ), sizeof( buffer ), stdin ) ) > 0 ){
+        auto_string__append_elements( &auto_string, bytes_read, buffer );
+    }
 
     return output;
 }
