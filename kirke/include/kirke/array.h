@@ -652,9 +652,17 @@
         unsigned long long start_index,                                                                                                                             \
         unsigned long long element_count                                                                                                                            \
     ){                                                                                                                                                              \
-        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                      \
-        (void)( start_index );                                                                                                                                      \
-        (void)( element_count );                                                                                                                                    \
+        RETURN_IF_FAIL( auto_ ## TYPENAME_LOWERCASE != NULL );                                                                                                      \
+        RETURN_IF_FAIL( start_index <= auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length );                                                                   \
+        RETURN_IF_FAIL( start_index + element_count <= auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length );                                                   \
+                                                                                                                                                                    \
+        memmove(                                                                                                                                                    \
+            auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data + start_index,                                                                                    \
+            auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data + start_index + element_count,                                                                    \
+            ( auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length - ( start_index + element_count ) ) * sizeof( ELEMENT_TYPE )                                  \
+        );                                                                                                                                                          \
+                                                                                                                                                                    \
+        auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length -= element_count;                                                                                   \
     }
 
 /**
