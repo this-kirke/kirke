@@ -44,3 +44,13 @@ TEST_CASE_METHOD( IOTestFixture, "io__read_text_file", "[io]" ){
     string__clear( input, system_allocator.allocator );
     allocator__free( system_allocator.allocator, input );
 }
+
+TEST_CASE_METHOD( IOTestFixture, "io__read_file__error", "[io]" ){
+    String does_not_exist = string__literal( "does_not_exist" );
+
+    Error error = {0};
+    String* input = io__read_text_file( system_allocator.allocator, &does_not_exist, &error );
+
+    REQUIRE( error.code == IO__Error__UnableToOpenFile );
+    REQUIRE( input == NULL );
+}
