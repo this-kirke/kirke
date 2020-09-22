@@ -24,3 +24,9 @@ void string__initialize__va_list( String* string, Allocator* allocator, const ch
     string__initialize( string, allocator, required_capacity );
     string->length = vsnprintf( string->data, required_capacity, format, args );
 }
+
+void string__initialize__format( String* string, Allocator* allocator, const char* format, ... ){
+    (void)( string );
+    (void)( allocator );
+    (void)( format );
+}

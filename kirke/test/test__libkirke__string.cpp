@@ -387,3 +387,14 @@ TEST_CASE_METHOD( String__TestFixture, "string__initialize__va_list", "[string]"
 
     string__clear( &string, system_allocator.allocator );
 }
+
+TEST_CASE_METHOD( String__TestFixture, "string__initialize__format", "[string]" ){
+    String expected_string = string__literal( "This is a test." );
+
+    String string;
+    string__initialize__format( &string, system_allocator.allocator, "This is a %s.", "test" );
+
+    REQUIRE( string__equals( &string, &expected_string ) );
+
+    string__clear( &string, system_allocator.allocator );
+}
