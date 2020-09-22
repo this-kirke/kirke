@@ -135,3 +135,19 @@ TEST_CASE_METHOD( Array__TestFixture, "array__char__clone", "[array]" ){
 
     REQUIRE( array__char__equals( clone, &array ) );
 }
+
+TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__initialize_and_clear", "[array]" ){
+    AutoArray__char auto_array = {0};
+    auto_array__char__initialize( &auto_array, system_allocator.allocator, 15 );
+
+    REQUIRE( auto_array.array__char->data != NULL );
+    REQUIRE( auto_array.array__char->length == 0 );
+    REQUIRE( auto_array.array__char->capacity == 15 );
+    REQUIRE( auto_array.array__char->element_size == sizeof( char ) );
+    REQUIRE( auto_array.allocator == system_allocator.allocator );
+
+    auto_array__char__clear( &auto_array );
+
+    REQUIRE( auto_array.array__char == NULL );
+    REQUIRE( auto_array.allocator == NULL );
+}

@@ -159,6 +159,44 @@
         TYPENAME const *first,                                                                                                                                              \
         TYPENAME const *second                                                                                                                                              \
     );                                                                                                                                                                      \
+                                                                                                                                                                            \
+    /*                                                                                                                                                                      \
+     *  A wrapper around an array type, which provides automatic growth and memory management.                                                                              \
+     */                                                                                                                                                                     \
+    typedef struct Auto ## TYPENAME {                                                                                                                                       \
+        /**                                                                                                                                                                 \
+         *  A pointer to the underlying array.                                                                                                                              \
+         */                                                                                                                                                                 \
+        TYPENAME *TYPENAME_LOWERCASE;                                                                                                                                       \
+        /**                                                                                                                                                                 \
+         *  The allocator used for memory management.                                                                                                                       \
+         */                                                                                                                                                                 \
+        Allocator *allocator;                                                                                                                                               \
+    } Auto ## TYPENAME;                                                                                                                                                     \
+                                                                                                                                                                            \
+    /**                                                                                                                                                                     \
+     *  \brief This method intializes an AutoArray structure.                                                                                                               \
+     *  \param auto_array A pointer to the AutoArray to be initialized.                                                                                                     \
+     *  \param allocator A pointer to the allocator which will be used to manage memory controlled by the                                                                   \
+     *  AutoArray.                                                                                                                                                          \
+     *  \param capacity The desired initial capacity of the AutoArray, in elements.                                                                                         \
+     */                                                                                                                                                                     \
+    void auto_ ## TYPENAME_LOWERCASE ## __initialize(                                                                                                                       \
+        Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                                      \
+        Allocator *allocator,                                                                                                                                               \
+        unsigned long long capacity                                                                                                                                         \
+    );                                                                                                                                                                      \
+                                                                                                                                                                            \
+    /**                                                                                                                                                                     \
+     *  \brief This method will clear an AutoArray structure, and the underlying memory contained in                                                                        \
+     *  auto_array->array be freed. However, if the elements contained by this field are themselves                                                                         \
+     *  dynamically-allocated, then they must be freed prior to calling this method, as you may lose                                                                        \
+     *  your reference to these elements when auto_array->array is freed. This method will also set                                                                         \
+     *  the AutoArray's allocator to NULL. The allocator field is borrowed rather than owned, so it                                                                         \
+     *  will not be deinitialized by calling this method.                                                                                                                   \
+     *  \param auto_array A pointer to the AutoArray. structure which will be cleared.                                                                                      \
+     */                                                                                                                                                                     \
+    void auto_ ## TYPENAME_LOWERCASE ## __clear( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE );                                                                           \
 
 /**
  *  \def ARRAY__DEFINE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE )
@@ -314,6 +352,20 @@
         }                                                                                                                                                                   \
                                                                                                                                                                             \
         return false;                                                                                                                                                       \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
+    void auto_ ## TYPENAME_LOWERCASE ## __initialize(                                                                                                                       \
+        Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                                      \
+        Allocator *allocator,                                                                                                                                               \
+        unsigned long long capacity                                                                                                                                         \
+    ){                                                                                                                                                                      \
+        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
+        (void)( allocator );                                                                                                                                                \
+        (void)( capacity );                                                                                                                                                 \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
+    void auto_ ## TYPENAME_LOWERCASE ## __clear( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE ){                                                                           \
+        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
 
