@@ -359,13 +359,19 @@
         Allocator *allocator,                                                                                                                                               \
         unsigned long long capacity                                                                                                                                         \
     ){                                                                                                                                                                      \
-        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
-        (void)( allocator );                                                                                                                                                \
-        (void)( capacity );                                                                                                                                                 \
+        /* Cast for C++ compatibility */                                                                                                                                    \
+        auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE = (TYPENAME*) allocator__alloc( allocator, sizeof( TYPENAME ) );                                                    \
+        TYPENAME_LOWERCASE ## __initialize( auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE, allocator, capacity );                                                         \
+        auto_ ## TYPENAME_LOWERCASE->allocator = allocator;                                                                                                                 \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
     void auto_ ## TYPENAME_LOWERCASE ## __clear( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE ){                                                                           \
-        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
+        if( auto_ ## TYPENAME_LOWERCASE != NULL ){                                                                                                                          \
+            TYPENAME_LOWERCASE ## __clear( auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE, auto_ ## TYPENAME_LOWERCASE->allocator );                                       \
+            allocator__free( auto_ ## TYPENAME_LOWERCASE->allocator, auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE );                                                     \
+            auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE = NULL;                                                                                                         \
+            auto_ ## TYPENAME_LOWERCASE->allocator = NULL;                                                                                                                  \
+        }                                                                                                                                                                   \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
 
