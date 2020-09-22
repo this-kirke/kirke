@@ -4,6 +4,7 @@ add_library(
     libkirke
     ${libkirke__DIR}/src/allocator.c
     ${libkirke__DIR}/src/error.c
+    ${libkirke__DIR}/src/io.c
     ${libkirke__DIR}/src/log.c
     ${libkirke__DIR}/src/math.c
     ${libkirke__DIR}/src/split_iterator.c
@@ -63,6 +64,12 @@ if( KIRKE_BUILD_TESTS )
     catch2__add_test(
         NAME test__libkirke__error
         SOURCES "${libkirke__DIR}/test/test__libkirke__error.cpp"
+        LINK_LIBRARIES libkirke
+    )
+
+    catch2__add_test(
+        NAME test__libkirke__io
+        SOURCES "${libkirke__DIR}/test/test__libkirke__io.cpp"
         LINK_LIBRARIES libkirke
     )
 
