@@ -32,7 +32,19 @@ ARRAY__DECLARE( Array__String, array__string, String )
     }
 
 /**
- *  @} group log
+ *  \brief This method initializes a String using the provided format and variable arguments list. The provided Allocator is
+ *  used to allocate new memory.
+ *  \param string A pointer to the String which will be initialized.
+ *  \param allocator The allocator which will be used to manage memory controlled by the provided String.
+ *  \param format A null-terminated (C-style) string of characters, with optional format specifiers. Format specifiers
+ *  are the same as those used for printf.
+ *  \param args If format specifiers are contained within \p format, then this parameter must contain the arguments which
+ *  correspond to each specifier used.
+ */
+void string__initialize__va_list( String* string, Allocator* allocator, const char* format, va_list args );
+
+/**
+ *  @} group string
  */
 
 END_DECLARATIONS

@@ -367,3 +367,23 @@ TEST_CASE_METHOD( String__TestFixture, "auto_string__remove_range", "[string]" )
 
     auto_string__clear( &auto_string );
 }
+
+void string__initialize__va_list__helper( String* string, Allocator* allocator, const char* format, ... ){
+    va_list args;
+    va_start( args, format );
+
+    string__initialize__va_list( string, allocator, format, args );
+
+    va_end( args );
+}
+
+TEST_CASE_METHOD( String__TestFixture, "string__initialize__va_list", "[string]" ){
+    String expected_string = string__literal( "This is a test." );
+
+    String string;
+    string__initialize__va_list__helper( &string, system_allocator.allocator, "This is a %s.", "test" );
+
+    REQUIRE( string__equals( &string, &expected_string ) );
+
+    string__clear( &string, system_allocator.allocator );
+}
