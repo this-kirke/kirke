@@ -43,6 +43,13 @@ typedef enum IO__Error {
 String* io__read_text_file( Allocator* allocator, String* file_path, Error* error );
 
 /**
+ *  \brief This method reads the contents of stdin into a newly-allocated String.
+ *  \param allocator A pointer to the Allocator which will be used to allocate memory for the returned String.
+ *  \returns A pointer to a newly-allocated String containing the contents of stdin.
+ */
+String* io__read_stdin( Allocator* allocator );
+
+/**
  *  @} group io
  */
 
