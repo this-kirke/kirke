@@ -102,17 +102,25 @@
         Allocator* allocator,                                                                                                                                               \
         unsigned long long capacity                                                                                                                                         \
     ){                                                                                                                                                                      \
-        (void)( TYPENAME_LOWERCASE );                                                                                                                                       \
-        (void)( allocator );                                                                                                                                                \
-        (void)( capacity );                                                                                                                                                 \
+        *TYPENAME_LOWERCASE = (TYPENAME){                                                                                                                                   \
+            /* Cast for C++ compatibility */                                                                                                                                \
+            .data = (ELEMENT_TYPE*) allocator__alloc( allocator, capacity * sizeof( ELEMENT_TYPE ) ),                                                                       \
+            .length = 0,                                                                                                                                                    \
+            .capacity = capacity,                                                                                                                                           \
+            .element_size = sizeof( ELEMENT_TYPE )                                                                                                                          \
+        };                                                                                                                                                                  \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
     void TYPENAME_LOWERCASE ## __clear(                                                                                                                                     \
         TYPENAME *TYPENAME_LOWERCASE,                                                                                                                                       \
         Allocator *allocator                                                                                                                                                \
     ){                                                                                                                                                                      \
-        (void)( TYPENAME_LOWERCASE );                                                                                                                                       \
-        (void)( allocator );                                                                                                                                                \
+        if( TYPENAME_LOWERCASE != NULL ){                                                                                                                                   \
+            allocator__free( allocator, TYPENAME_LOWERCASE->data );                                                                                                         \
+            TYPENAME_LOWERCASE->data = NULL;                                                                                                                                \
+            TYPENAME_LOWERCASE->length = 0;                                                                                                                                 \
+            TYPENAME_LOWERCASE->capacity = 0;                                                                                                                               \
+        }                                                                                                                                                                   \
     }                                                                                                                                                                       \
 
 /**

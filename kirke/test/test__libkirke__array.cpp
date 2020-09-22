@@ -8,7 +8,6 @@
 ARRAY__DECLARE( Array__char, array__char, char )
 ARRAY__DEFINE( Array__char, array__char, char )
 
-
 class Array__TestFixture{
     protected:
         Array__TestFixture(){
