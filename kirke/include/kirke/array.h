@@ -527,9 +527,7 @@
         unsigned long long index,                                                                                                                                           \
         ELEMENT_TYPE element                                                                                                                                                \
     ){                                                                                                                                                                      \
-        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
-        (void)( index );                                                                                                                                                    \
-        (void)( element );                                                                                                                                                  \
+        auto_ ## TYPENAME_LOWERCASE ## __insert_elements( auto_ ## TYPENAME_LOWERCASE, index, 1, &element );                                                                \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
     void auto_ ## TYPENAME_LOWERCASE ## __insert_elements(                                                                                                                  \
