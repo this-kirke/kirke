@@ -6,6 +6,7 @@ add_library(
     ${libkirke__DIR}/src/error.c
     ${libkirke__DIR}/src/log.c
     ${libkirke__DIR}/src/math.c
+    ${libkirke__DIR}/src/string.c
     ${libkirke__DIR}/src/system_allocator.c
 )
 
@@ -73,6 +74,12 @@ if( KIRKE_BUILD_TESTS )
     catch2__add_test(
         NAME test__libkirke__math
         SOURCES "${libkirke__DIR}/test/test__libkirke__math.cpp"
+        LINK_LIBRARIES libkirke
+    )
+
+    catch2__add_test(
+        NAME test__libkirke__string
+        SOURCES "${libkirke__DIR}/test/test__libkirke__string.cpp"
         LINK_LIBRARIES libkirke
     )
 
