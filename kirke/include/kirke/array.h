@@ -62,7 +62,7 @@
                                                                                                                                                                             \
     /**                                                                                                                                                                     \
      *  \brief Fully initialize an array with allocated memory.                                                                                                             \
-     *  \param TYPENAME_LOWERCASE A pointer to the array which will be initialized.                                                                                         \
+     *  \param array A pointer to the array which will be initialized.                                                                                                      \
      *  \param allocator A pointer to the Allocator which will be used to initialize memory owned by                                                                        \
      *  the array.                                                                                                                                                          \
      *  \param capacity The desired capacity of the array, in elements.                                                                                                     \
@@ -75,7 +75,7 @@
                                                                                                                                                                             \
     /**                                                                                                                                                                     \
      *  \brief This method fully initializes an array with the given data                                                                                                   \
-     *  \param TYPENAME_LOWERCASE A pointer to the array which will be initialized.                                                                                         \
+     *  \param array A pointer to the array which will be initialized.                                                                                                      \
      *  \param allocator A pointer to the Allocator which will be used to initialize memory owned by                                                                        \
      *  the array.                                                                                                                                                          \
      *  \param data A pointer to the memory region containing the elements which will be contained by                                                                       \
@@ -94,7 +94,7 @@
     /**                                                                                                                                                                     \
      *  \brief This method searches for the first occurrence of the specified sequence, and returns the element                                                             \
      *  index of the start of that occurrence.                                                                                                                              \
-     *  \param TYPENAME_LOWERCASE A pointer to an array in which to search for the specified sequence                                                                       \
+     *  \param array A pointer to an array in which to search for the specified sequence                                                                                    \
      *  \param sequence A pointer to an array containing the sequence for which to search.                                                                                  \
      *  \param index An out parameter. Upon successful completion, this will store the index at which the                                                                   \
      *  specified sequence was found.  If the specified sequence was not found, then this will store the number of                                                          \
@@ -110,7 +110,7 @@
                                                                                                                                                                             \
     /**                                                                                                                                                                     \
      *  \brief Frees the memory allocated for the array, without freeing the array structure itself.                                                                        \
-     *  \param TYPENAME_LOWERCASE The array whose memory is to be cleared                                                                                                   \
+     *  \param array The array whose memory is to be cleared                                                                                                                \
      *  \param allocator The allocator which was used to allocate the array's data. This must also be used                                                                  \
      *  to free the array's data.                                                                                                                                           \
      *  \note This method will free the array's 'data' field. However, if the array contains pointers to                                                                    \
@@ -124,7 +124,7 @@
                                                                                                                                                                             \
     /**                                                                                                                                                                     \
      *  \brief Clears the specified elements of the given array by setting them equal to 0.                                                                                 \
-     *  \param TYPENAME_LOWERCASE A pointer to the array whose elements will be cleared.                                                                                    \
+     *  \param array A pointer to the array whose elements will be cleared.                                                                                                 \
      *  \param start_index The index of the first element to be cleared.                                                                                                    \
      *  \param element_count The number of elements to be cleared.                                                                                                          \
      */                                                                                                                                                                     \
@@ -138,7 +138,7 @@
      *  \brief This method creates, initializes and returns an array with the same length, capacity                                                                         \
      *  and elements as the passed-in array. Elements are copied, so modifying the returned array will                                                                      \
      *  not affect the underlying data of the passed-in array.                                                                                                              \
-     *  \param TYPENAME_LOWERCASE A pointer to the array which will be cloned.                                                                                              \
+     *  \param array A pointer to the array which will be cloned.                                                                                                           \
      *  \param allocator A pointer to the allocator which will be used to allocate new memory for the clone.                                                                \
      *  \returns A pointer to the newly-created array.                                                                                                                      \
      */                                                                                                                                                                     \
@@ -197,6 +197,15 @@
      *  \param auto_array A pointer to the AutoArray. structure which will be cleared.                                                                                      \
      */                                                                                                                                                                     \
     void auto_ ## TYPENAME_LOWERCASE ## __clear( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE );                                                                           \
+                                                                                                                                                                            \
+    /**                                                                                                                                                                     \
+     *  \brief This method appends elements to the end of an AutoArray, allocating additional memory as necessary.                                                          \
+     *  \param auto_array A pointer to the AutoArray to which the elements will be appended.                                                                                \
+     *  \param element_count The number of elements to be appended.                                                                                                         \
+     *  \param data A pointer to the memory region containing the elements will be appended to the AutoArray.                                                               \
+     */                                                                                                                                                                     \
+    void auto_ ## TYPENAME_LOWERCASE ## __append_elements( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE, unsigned long long element_count, ELEMENT_TYPE const *data );     \
+                                                                                                                                                                            \
 
 /**
  *  \def ARRAY__DEFINE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE )
@@ -374,6 +383,51 @@
         }                                                                                                                                                                   \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
+    /**                                                                                                                                                                     \
+     *  \brief Possibly expands the memory allocated for auto_array->array->data.                                                                                           \
+     *  If auto_array->capacity < new_capacity, then the memory allocated for auto_array->array->data                                                                       \
+     *  will be expanded to new_capacity. Otherwise, no action is taken.                                                                                                    \
+     *  \param auto_ ## TYPENAME_LOWERCASE A pointer to the AutoSlice whose memory may be expanded.                                                                         \
+     *  \param new_capacity The desired capacity, in elements.                                                                                                              \
+     */                                                                                                                                                                     \
+    static void auto_ ## TYPENAME_LOWERCASE ## __maybe_expand(                                                                                                              \
+        Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                                      \
+        unsigned long long new_capacity                                                                                                                                     \
+    ){                                                                                                                                                                      \
+        if(                                                                                                                                                                 \
+            auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data == NULL ||                                                                                                \
+            new_capacity > auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->capacity                                                                                        \
+        ){                                                                                                                                                                  \
+            unsigned long bytes_required = math__nearest_greater_power_of_2__ulong( auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->element_size * new_capacity );         \
+                                                                                                                                                                            \
+            /* Cast for C++ compatibility */                                                                                                                                \
+            auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data = (ELEMENT_TYPE*) allocator__realloc(                                                                     \
+                auto_ ## TYPENAME_LOWERCASE->allocator,                                                                                                                     \
+                auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data,                                                                                                      \
+                bytes_required                                                                                                                                              \
+            );                                                                                                                                                              \
+                                                                                                                                                                            \
+            auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->capacity = ( bytes_required / auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->element_size ) - 1;             \
+                                                                                                                                                                            \
+            TYPENAME_LOWERCASE ## __clear_elements(                                                                                                                         \
+                auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE,                                                                                                            \
+                auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length,                                                                                                    \
+                auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->capacity - auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length                                         \
+            );                                                                                                                                                              \
+        }                                                                                                                                                                   \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
+    void auto_ ## TYPENAME_LOWERCASE ## __append_elements(                                                                                                                  \
+        Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                                      \
+        unsigned long long element_count,                                                                                                                                   \
+        ELEMENT_TYPE const *data                                                                                                                                            \
+    ){                                                                                                                                                                      \
+        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
+        (void)( element_count );                                                                                                                                            \
+        (void)( data );                                                                                                                                                     \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
+
 
 /**
  *  @} group array

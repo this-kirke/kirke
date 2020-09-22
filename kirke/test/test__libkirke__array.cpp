@@ -151,3 +151,23 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__initialize_and_clear", 
     REQUIRE( auto_array.array__char == NULL );
     REQUIRE( auto_array.allocator == NULL );
 }
+
+TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__append_elements", "[array]" ){
+    char chars[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    Array__char expected_array = {
+        .data = chars,
+        .length = 10,
+        .capacity = 10,
+        .element_size = 1
+    };
+
+    AutoArray__char auto_array;
+    auto_array__char__initialize( &auto_array, system_allocator.allocator, 10 );
+
+    for( size_t element_index = 0; element_index < 5; element_index++ ){
+        auto_array__char__append_elements( &auto_array, 2, &chars[ 2 * element_index ] );
+    }
+
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_array ) );
+}
