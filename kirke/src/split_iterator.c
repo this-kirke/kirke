@@ -8,11 +8,28 @@ void split_iterator__initialize( SplitIterator* iterator, const String* string_,
     iterator->position = 0;
 }
 
-bool split_iterator__next( SplitIterator* iterator, String* ref_token ){
-    (void)( iterator );
-    (void)( ref_token );
+bool split_iterator__next( SplitIterator* iterator, String* out_token ){
+    if( iterator->position >= iterator->string->length ){
+        return false;
+    }
 
-    return false;
+    /*
+     * The do {} while( out_token->length == 0 ); prevents returning 0-length tokens, in case
+     * one delimiter directly follows another.
+     */
+    do{
+        split_iterator__rest( iterator, out_token );
+
+        if( string__index_of( out_token, iterator->delimiter, &out_token->length ) ){
+            iterator->position += out_token->length + iterator->delimiter->length;
+        }
+        else{
+            iterator->position += out_token->length;
+        }
+    } while( out_token->length == 0 );
+
+
+    return true;
 }
 
 void split_iterator__rest( SplitIterator* iterator, String* ref_rest ){
