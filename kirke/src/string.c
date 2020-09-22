@@ -35,8 +35,16 @@ void string__initialize__format( String* string, Allocator* allocator, const cha
 }
 
 void string__append__va_list( String *string, Allocator *allocator, const char* format, va_list args ){
-    (void)( string );
-    (void)( allocator );
-    (void)( format );
-    (void)( args );
+    va_list args_copy;
+    va_copy( args_copy, args );
+
+    char c;
+    int additional_length = vsnprintf( &c, 1, format, args_copy ) + 1;
+
+    if( string->capacity < string->length + additional_length ){
+        string->data = allocator__realloc( allocator, string->data, string->length + additional_length );
+        string->capacity = string->length + additional_length;
+    }
+
+    string->length += vsnprintf( string->data + string->length, additional_length, format, args );
 }
