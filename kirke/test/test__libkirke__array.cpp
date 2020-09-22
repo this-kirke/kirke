@@ -363,3 +363,35 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__insert_elements", "[arr
 
     auto_array__char__clear( &auto_array );
 }
+
+
+TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__insert_element", "[array]" ){
+    const unsigned long ELEMENT_COUNT = 10;
+
+    char chars[] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 0 };
+
+    Array__char expected_array = {
+        .data = chars,
+        .length = 10,
+        .capacity = 10,
+        .element_size = 1
+    };
+
+
+    AutoArray__char auto_array;
+    auto_array__char__initialize( &auto_array, system_allocator.allocator, ELEMENT_COUNT );
+
+    auto_array__char__insert_element( &auto_array, 0, chars[ 0 ] );
+    auto_array__char__insert_element( &auto_array, 1, chars[ 9 ] );
+    auto_array__char__insert_element( &auto_array, 1, chars[ 1 ] );
+    auto_array__char__insert_element( &auto_array, 2, chars[ 8 ] );
+    auto_array__char__insert_element( &auto_array, 2, chars[ 2 ] );
+    auto_array__char__insert_element( &auto_array, 3, chars[ 7 ] );
+    auto_array__char__insert_element( &auto_array, 3, chars[ 3 ] );
+    auto_array__char__insert_element( &auto_array, 4, chars[ 6 ] );
+    auto_array__char__insert_element( &auto_array, 4, chars[ 4 ] );
+    auto_array__char__insert_element( &auto_array, 5, chars[ 5 ] );
+
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_array ) );
+    auto_array__char__clear( &auto_array );
+}
