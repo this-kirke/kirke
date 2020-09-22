@@ -199,9 +199,20 @@
         unsigned long long start_index,                                                                                                                                     \
         unsigned long long element_count                                                                                                                                    \
     ){                                                                                                                                                                      \
-        (void)( TYPENAME_LOWERCASE );                                                                                                                                       \
-        (void)( start_index );                                                                                                                                              \
-        (void)( element_count );                                                                                                                                            \
+        if( TYPENAME_LOWERCASE->capacity < element_count ){                                                                                                                 \
+            log__warning(                                                                                                                                                   \
+                "%s__clear_elements: Parameter element_count is greater than Array capacity.  elemen_count: %d. capacity: %d.",                                             \
+                #TYPENAME_LOWERCASE,                                                                                                                                        \
+                element_count,                                                                                                                                              \
+                TYPENAME_LOWERCASE->capacity                                                                                                                                \
+            );                                                                                                                                                              \
+        }                                                                                                                                                                   \
+                                                                                                                                                                            \
+        memset(                                                                                                                                                             \
+            TYPENAME_LOWERCASE->data + start_index,                                                                                                                         \
+            0,                                                                                                                                                              \
+            math__min__ullong( TYPENAME_LOWERCASE->length, element_count ) * TYPENAME_LOWERCASE->element_size                                                               \
+        );                                                                                                                                                                  \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
     bool TYPENAME_LOWERCASE ## __equals(                                                                                                                                    \
