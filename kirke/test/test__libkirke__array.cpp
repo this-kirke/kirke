@@ -395,3 +395,33 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__insert_element", "[arra
     REQUIRE( array__char__equals( auto_array.array__char, &expected_array ) );
     auto_array__char__clear( &auto_array );
 }
+
+TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__remove_element", "[array]" ){
+    AutoArray__char auto_array;
+    auto_array__char__initialize( &auto_array, system_allocator.allocator, 0 );
+
+    unsigned long element_index;
+    for( element_index = 0; element_index < 100; element_index++ ){
+        auto_array__char__append_element( &auto_array, element_index );
+    }
+
+    REQUIRE( auto_array.array__char->length == 100 );
+
+    auto_array__char__remove_element( &auto_array, 57 );
+    auto_array__char__remove_element( &auto_array, 21 );
+    auto_array__char__remove_element( &auto_array, 3 );
+    auto_array__char__remove_element( &auto_array, 1 );
+
+    REQUIRE( auto_array.array__char->length == 96 );
+
+    long previous_element = -1;
+    long current_element;
+    for( element_index = 0; element_index < auto_array.array__char->length; element_index++ ){
+        current_element = auto_array.array__char->data[ element_index ];
+        REQUIRE( ( current_element != 1 && current_element != 3 && current_element != 21 && current_element != 57 ) );
+        REQUIRE( previous_element < current_element );
+        previous_element = current_element;
+    }
+
+    auto_array__char__clear( &auto_array );
+}

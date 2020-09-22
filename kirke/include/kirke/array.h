@@ -254,6 +254,15 @@
         ELEMENT_TYPE const *data                                                                                                                                            \
     );                                                                                                                                                                      \
                                                                                                                                                                             \
+    /**                                                                                                                                                                     \
+     *  \brief Removes the element at the given index.                                                                                                                      \
+     *  \param auto_array The AutoArray from which the element will be removed.                                                                                             \
+     *  \param index The index of the element which will be removed.                                                                                                        \
+     *  \note This method preserves ordering of the remaining elements within the AutoArray. If ordering is not important,                                                  \
+     *  a faster alternative is the method auto_array__remove_element_fast.                                                                                                 \
+     */                                                                                                                                                                     \
+    void auto_ ## TYPENAME_LOWERCASE ## __remove_element( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE, unsigned long long element_index );                                \
+                                                                                                                                                                            \
 
 /**
  *  \def ARRAY__DEFINE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE )
@@ -560,6 +569,11 @@
         );                                                                                                                                                                  \
                                                                                                                                                                             \
         auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length = length_after_insertion;                                                                                   \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
+    void auto_ ## TYPENAME_LOWERCASE ## __remove_element( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE, unsigned long long element_index ){                                \
+        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
+        (void)( element_index );                                                                                                                                            \
     }                                                                                                                                                                       \
 
 /**
