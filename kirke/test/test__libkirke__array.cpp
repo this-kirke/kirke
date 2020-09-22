@@ -279,3 +279,87 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__prepend_element", "[arr
     REQUIRE( array__char__equals( auto_array.array__char, &expected_array ) );
     auto_array__char__clear( &auto_array );
 }
+
+TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__insert_elements", "[array]" ){
+    char values_array[ 8 ] = { 0, 1, 2, 3, 4, 5, 6, 7 };
+    Array__char values = {
+        .data = values_array,
+        .length = ELEMENT_COUNT( values_array ),
+        .capacity = ELEMENT_COUNT( values_array ),
+        .element_size = sizeof( char )
+    };
+
+    char expected_values1_array[ 2 ] = { 0, 1 };
+    Array__char expected_values1 = {
+        .data = expected_values1_array,
+        .length = ELEMENT_COUNT( expected_values1_array ),
+        .capacity = ELEMENT_COUNT( expected_values1_array ),
+        .element_size = sizeof( char )
+    };
+
+    char expected_values2_array[ 4 ] = { 0, 2, 3, 1 };
+    Array__char expected_values2 = {
+        .data = expected_values2_array,
+        .length = ELEMENT_COUNT( expected_values2_array ),
+        .capacity = ELEMENT_COUNT( expected_values2_array ),
+        .element_size = sizeof( char )
+    };
+
+    char expected_values3_array[ 5 ] = { 0, 2, 3, 1, 4 };
+    Array__char expected_values3 = {
+        .data = expected_values3_array,
+        .length = ELEMENT_COUNT( expected_values3_array ),
+        .capacity = ELEMENT_COUNT( expected_values3_array ),
+        .element_size = sizeof( char )
+    };
+
+    char expected_values4_array[ 6 ] = { 5, 0, 2, 3, 1, 4 };
+    Array__char expected_values4 = {
+        .data = expected_values4_array,
+        .length = ELEMENT_COUNT( expected_values4_array ),
+        .capacity = ELEMENT_COUNT( expected_values4_array ),
+        .element_size = sizeof( char )
+    };
+
+    char expected_values5_array[ 12 ] = { 5, 0, 2, 3, 1, 4, 0, 0, 0, 0, 6, 7 };
+    Array__char expected_values5 = {
+        .data = expected_values5_array,
+        .length = ELEMENT_COUNT( expected_values5_array ),
+        .capacity = ELEMENT_COUNT( expected_values5_array ),
+        .element_size = sizeof( char )
+    };
+
+    // Set up an auto_array.
+    AutoArray__char auto_array;
+    auto_array__char__initialize( &auto_array, system_allocator.allocator, 0 );
+
+    // Insert several values at the beginning.
+    auto_array__char__insert_elements( &auto_array, 0, 2, &values.data[ 0 ] );
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_values1 ) );
+
+    // Insert some more part-way through.
+    auto_array__char__insert_elements( &auto_array, 1, 2, &values.data[ 2 ] );
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_values2 ) );
+
+    // And at the end.
+    auto_array__char__insert_elements( &auto_array, auto_array.array__char->length, 1, &values.data[ 4 ] );
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_values3 ) );
+
+    // Then back at the beginning again.
+    auto_array__char__insert_elements( &auto_array, 0, 1, &values.data[ 5 ] );
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_values4 ) );
+
+    // Insert zero elements.
+    auto_array__char__insert_elements( &auto_array, 0, 0, &values.data[ 0 ] );
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_values4 ) );
+
+    // Insert zero elements with a NULL pointer.
+    auto_array__char__insert_elements( &auto_array, 0, 0, NULL );
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_values4 ) );
+
+    // Insert some elements off the end of the auto_array.
+    auto_array__char__insert_elements( &auto_array, auto_array.array__char->length + 4, 2, &values.data[ 6 ] );
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_values5 ) );
+
+    auto_array__char__clear( &auto_array );
+}

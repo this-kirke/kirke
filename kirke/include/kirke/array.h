@@ -228,6 +228,20 @@
      */                                                                                                                                                                     \
     void auto_ ## TYPENAME_LOWERCASE ## __prepend_elements( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE, unsigned long long element_count, ELEMENT_TYPE const *data );    \
                                                                                                                                                                             \
+    /**                                                                                                                                                                     \
+     *  \brief This method inserts elements to the specified location of an AutoArray, allocating additional memory as necessary.                                           \
+     *  \param auto_array A pointer to the AutoArray into which elements will be inserted.                                                                                  \
+     *  \param start_index The index at which the first element will be inserted.                                                                                           \
+     *  \param element_count The number of elements which will be inserted.                                                                                                 \
+     *  \param data A pointer to the memory region containing the elements to be inserted.                                                                                  \
+     */                                                                                                                                                                     \
+    void auto_ ## TYPENAME_LOWERCASE ## __insert_elements(                                                                                                                  \
+        Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                                      \
+        unsigned long long start_index,                                                                                                                                     \
+        unsigned long long element_count,                                                                                                                                   \
+        ELEMENT_TYPE const *data                                                                                                                                            \
+    );                                                                                                                                                                      \
+                                                                                                                                                                            \
 
 /**
  *  \def ARRAY__DEFINE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE )
@@ -496,7 +510,17 @@
         auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length += element_count;                                                                                           \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
-
+    void auto_ ## TYPENAME_LOWERCASE ## __insert_elements(                                                                                                                  \
+        Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                                      \
+        unsigned long long start_index,                                                                                                                                     \
+        unsigned long long element_count,                                                                                                                                   \
+        ELEMENT_TYPE const *data                                                                                                                                            \
+    ){                                                                                                                                                                      \
+        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
+        (void)( start_index );                                                                                                                                              \
+        (void)( element_count );                                                                                                                                            \
+        (void)( data );                                                                                                                                                     \
+    }                                                                                                                                                                       \
 
 /**
  *  @} group array
