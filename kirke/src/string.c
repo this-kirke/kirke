@@ -48,3 +48,9 @@ void string__append__va_list( String *string, Allocator *allocator, const char* 
 
     string->length += vsnprintf( string->data + string->length, additional_length, format, args );
 }
+
+void string__append__format( String *string, Allocator *allocator, const char* format, ... ){
+    (void)( string );
+    (void)( allocator );
+    (void)( format );
+}

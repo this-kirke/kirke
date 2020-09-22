@@ -421,3 +421,17 @@ TEST_CASE_METHOD( String__TestFixture, "string__append__va_list", "[string]" ){
 
     REQUIRE( string__equals( &string, &expected_string ) );
 }
+
+TEST_CASE_METHOD( String__TestFixture, "string__append__format", "[string]" ){
+    char STRING[] = "Hello";
+
+    String expected_string = string__literal( "HelloHello" );
+
+    String string;
+    string__initialize( &string, system_allocator.allocator, 0 );
+
+    string__append__format( &string, system_allocator.allocator, "%s", STRING );
+    string__append__format( &string, system_allocator.allocator, "%s", STRING );
+
+    REQUIRE( string__equals( &string, &expected_string ) );
+}

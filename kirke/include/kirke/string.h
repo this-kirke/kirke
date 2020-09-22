@@ -67,6 +67,17 @@ void string__initialize__format( String* string, Allocator* allocator, const cha
 void string__append__va_list( String *string, Allocator *allocator, const char* format, va_list args );
 
 /**
+ *  \brief This method appends a formatted C-Style string to the end of a String.
+ *  \param string A pointer to the String to which the format string will be appended.
+ *  \param allocator The allocator used to allocate memory for \p string, which will also be used to expand
+ *  this memory if necessary.
+ *  \param format A null-terminated (C-style) string of characters, with optional format specifiers. Format specifiers
+ *  are the same as those used for printf. If format specifiers are contained within \p format, then this parameter
+ *  must be followed by a variable argument list of the corresponding variables.
+ */
+void string__append__format( String *string, Allocator *allocator, const char* format, ... );
+
+/**
  *  @} group string
  */
 
