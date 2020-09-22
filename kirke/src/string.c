@@ -26,7 +26,10 @@ void string__initialize__va_list( String* string, Allocator* allocator, const ch
 }
 
 void string__initialize__format( String* string, Allocator* allocator, const char* format, ... ){
-    (void)( string );
-    (void)( allocator );
-    (void)( format );
+    va_list args;
+    va_start( args, format );
+
+    string__initialize__va_list( string, allocator, format, args );
+
+    va_end( args );
 }
