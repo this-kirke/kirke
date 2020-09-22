@@ -463,9 +463,25 @@
         unsigned long long element_count,                                                                                                                                   \
         ELEMENT_TYPE const *data                                                                                                                                            \
     ){                                                                                                                                                                      \
-        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
-        (void)( element_count );                                                                                                                                            \
-        (void)( data );                                                                                                                                                     \
+        RETURN_IF_FAIL( auto_ ## TYPENAME_LOWERCASE != NULL );                                                                                                              \
+        RETURN_IF_FAIL( element_count > 0 );                                                                                                                                \
+                                                                                                                                                                            \
+        auto_ ## TYPENAME_LOWERCASE ## __maybe_expand( auto_ ## TYPENAME_LOWERCASE, auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length + element_count );              \
+                                                                                                                                                                            \
+        /* We use mem__move here because whenever element_count < length, the memory regions will overlap. */                                                               \
+        memmove(                                                                                                                                                            \
+            auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data + element_count,                                                                                          \
+            auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data,                                                                                                          \
+            auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length * auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->element_size                                         \
+        );                                                                                                                                                                  \
+                                                                                                                                                                            \
+        memcpy(                                                                                                                                                             \
+            auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data,                                                                                                          \
+            data,                                                                                                                                                           \
+            element_count * auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->element_size                                                                                   \
+        );                                                                                                                                                                  \
+                                                                                                                                                                            \
+        auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length += element_count;                                                                                           \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
 
