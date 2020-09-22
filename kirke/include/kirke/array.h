@@ -213,6 +213,14 @@
      */                                                                                                                                                                     \
     void auto_ ## TYPENAME_LOWERCASE ## __append_elements( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE, unsigned long long element_count, ELEMENT_TYPE const *data );     \
                                                                                                                                                                             \
+    /**                                                                                                                                                                     \
+     *  \brief This method prepends elements to the beginning of an AutoArray, allocating additional memory as necessary.                                                   \
+     *  \param auto_array A pointer to the AutoArray to which the elements will be prepended.                                                                               \
+     *  \param element_count The number of elements to be prepended.                                                                                                        \
+     *  \param data A pointer to the memory region containing the elements will be prepended to the AutoArray.                                                              \
+     */                                                                                                                                                                     \
+    void auto_ ## TYPENAME_LOWERCASE ## __prepend_elements( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE, unsigned long long element_count, ELEMENT_TYPE const *data );    \
+                                                                                                                                                                            \
 
 /**
  *  \def ARRAY__DEFINE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE )
@@ -448,6 +456,16 @@
         ELEMENT_TYPE element                                                                                                                                                \
     ){                                                                                                                                                                      \
         auto_ ## TYPENAME_LOWERCASE ## __append_elements( auto_ ## TYPENAME_LOWERCASE, 1, &element );                                                                       \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
+    void auto_ ## TYPENAME_LOWERCASE ## __prepend_elements(                                                                                                                 \
+        Auto ## TYPENAME* auto_ ## TYPENAME_LOWERCASE,                                                                                                                      \
+        unsigned long long element_count,                                                                                                                                   \
+        ELEMENT_TYPE const *data                                                                                                                                            \
+    ){                                                                                                                                                                      \
+        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
+        (void)( element_count );                                                                                                                                            \
+        (void)( data );                                                                                                                                                     \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
 

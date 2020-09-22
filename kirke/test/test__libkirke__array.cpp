@@ -193,3 +193,63 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__append_element", "[arra
 
     REQUIRE( array__char__equals( auto_array.array__char, &expected_array ) );
 }
+
+
+TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__prepend_elements", "[array]" ){
+    char values_array[ 5 ] = { 0, 1, 2, 3, 4 };
+    Array__char values = {
+        .data = values_array,
+        .length = ELEMENT_COUNT( values_array ),
+        .capacity = ELEMENT_COUNT( values_array ),
+        .element_size = sizeof( char )
+    };
+
+    char expected_values1_array[ 2 ] = { 0, 1 };
+    Array__char expected_values1 = {
+        .data = expected_values1_array,
+        .length = ELEMENT_COUNT( expected_values1_array ),
+        .capacity = ELEMENT_COUNT( expected_values1_array ),
+        .element_size = sizeof( char )
+    };
+
+    char expected_values2_array[ 3 ] = { 2, 0, 1 };
+    Array__char expected_values2 = {
+        .data = expected_values2_array,
+        .length = ELEMENT_COUNT( expected_values2_array ),
+        .capacity = ELEMENT_COUNT( expected_values2_array ),
+        .element_size = sizeof( char )
+    };
+
+    char expected_values3_array[ 5 ] = { 3, 4, 2, 0, 1 };
+    Array__char expected_values3 = {
+        .data = expected_values3_array,
+        .length = ELEMENT_COUNT( expected_values3_array ),
+        .capacity = ELEMENT_COUNT( expected_values3_array ),
+        .element_size = sizeof( char )
+    };
+
+    AutoArray__char auto_array;
+    auto_array__char__initialize( &auto_array, system_allocator.allocator, 0 );
+
+    // Prepend several values to an empty auto_array.
+    auto_array__char__prepend_elements( &auto_array, 2, &values.data[ 0 ] );
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_values1 ) );
+
+    // Prepend a single value.
+    auto_array__char__prepend_elements( &auto_array, 1, &values.data[ 2 ] );
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_values2 ) );
+
+    // Prepend several values to a non-empty auto_array.
+    auto_array__char__prepend_elements( &auto_array, 2, &values.data[ 3 ] );
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_values3 ) );
+
+    // Prepend no values.
+    auto_array__char__prepend_elements( &auto_array, 0, &values.data[ 0 ] );
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_values3 ) );
+
+    // Prepend no values with NULL data.
+    auto_array__char__prepend_elements( &auto_array, 0, NULL );
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_values3 ) );
+
+    auto_array__char__clear( &auto_array );
+}
