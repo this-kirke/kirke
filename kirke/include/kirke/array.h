@@ -85,6 +85,19 @@
         TYPENAME *TYPENAME_LOWERCASE,                                                                                                                                       \
         Allocator *allocator                                                                                                                                                \
     );                                                                                                                                                                      \
+                                                                                                                                                                            \
+    /**                                                                                                                                                                     \
+     *  \brief Compares two array structures for equality.                                                                                                                  \
+     *  \param first The first array to be compared.                                                                                                                        \
+     *  \param second The second array to be compared.                                                                                                                      \
+     *  \returns Returns true if both array structures are equal - that is, they have the same element size, length,                                                        \
+     *  and if they contain the same elements. Capacity is not compared.                                                                                                    \
+     *  \returns Returns false if both TYPENAME structures are not equal.                                                                                                   \
+     */                                                                                                                                                                     \
+    bool TYPENAME_LOWERCASE ## __equals(                                                                                                                                    \
+        TYPENAME const *first,                                                                                                                                              \
+        TYPENAME const *second                                                                                                                                              \
+    );                                                                                                                                                                      \
 
 /**
  *  \def ARRAY__DEFINE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE )
@@ -94,8 +107,15 @@
  *  \param TYPENAME_LOWERCASE Same as TYPENAME, only lowercase. This will be used to prefix interface methods,
  *  as well as to name local variables and parameters for the interface methods.
  *  \param ELEMENT_TYPE The type which will be stored in the array.
+ *  \param ELEMENT_TYPE__EQUALS_FUNCTION A function which will compare two ELEMENT_TYPEs, returning 1 if they
+ *  are equal, and 0 otherwise. The signature should be bool METHOD_NAME( const *ELEMENT_TYPE, const *ELEMENT_TYPE ).
+ *  This is used to implement the method bool TYPENAME_LOWERCASE ## __equals. The Array metaclass has no means of
+ *  knowing what type of elements are contained within - they could be integral types, user-defined structures,
+ *  or pointers to either. Users may also have different ideas about how these types should be compared for
+ *  equality, as in address vs. field by field comparison. Allowing the user to supply an arbitrary equality
+ *  comparison function yields the most utility and flexibility.
  */
-#define ARRAY__DEFINE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE )                                                                                                         \
+#define ARRAY__DEFINE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE, ELEMENT_TYPE__EQUALS_FUNCTION )                                                                          \
                                                                                                                                                                             \
     void TYPENAME_LOWERCASE ## __initialize(                                                                                                                                \
         TYPENAME *TYPENAME_LOWERCASE,                                                                                                                                       \
@@ -122,6 +142,15 @@
             TYPENAME_LOWERCASE->capacity = 0;                                                                                                                               \
         }                                                                                                                                                                   \
     }                                                                                                                                                                       \
+                                                                                                                                                                            \
+    bool TYPENAME_LOWERCASE ## __equals(                                                                                                                                    \
+        TYPENAME const *first,                                                                                                                                              \
+        TYPENAME const *second                                                                                                                                              \
+    ){                                                                                                                                                                      \
+        return false;                                                                                                                                                       \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
+
 
 /**
  *  @} group array
