@@ -232,10 +232,18 @@
         TYPENAME const *TYPENAME_LOWERCASE,                                                                                                                                 \
         Allocator *allocator                                                                                                                                                \
     ){                                                                                                                                                                      \
-        (void)( TYPENAME_LOWERCASE );                                                                                                                                       \
-        (void)( allocator );                                                                                                                                                \
+        TYPENAME *new_ ## TYPENAME_LOWERCASE = (TYPENAME*) allocator__alloc( allocator, sizeof( TYPENAME ) );                                                               \
+        *new_ ## TYPENAME_LOWERCASE = (TYPENAME) {                                                                                                                          \
+            /* Cast for C++ compatibility */                                                                                                                                \
+            .data = (ELEMENT_TYPE*) allocator__alloc( allocator, TYPENAME_LOWERCASE->length * sizeof( ELEMENT_TYPE ) ),                                                     \
+            .length = TYPENAME_LOWERCASE->length,                                                                                                                           \
+            .capacity = TYPENAME_LOWERCASE->capacity,                                                                                                                       \
+            .element_size = sizeof( ELEMENT_TYPE )                                                                                                                          \
+        };                                                                                                                                                                  \
                                                                                                                                                                             \
-        return NULL;                                                                                                                                                        \
+        memcpy( new_ ## TYPENAME_LOWERCASE->data, TYPENAME_LOWERCASE->data, TYPENAME_LOWERCASE->length * sizeof( ELEMENT_TYPE ) );                                          \
+                                                                                                                                                                            \
+        return new_ ## TYPENAME_LOWERCASE;                                                                                                                                  \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
     bool TYPENAME_LOWERCASE ## __equals(                                                                                                                                    \
