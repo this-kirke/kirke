@@ -106,6 +106,18 @@
     );                                                                                                                                                                      \
                                                                                                                                                                             \
     /**                                                                                                                                                                     \
+     *  \brief Clears the specified elements of the given array by setting them equal to 0.                                                                                 \
+     *  \param TYPENAME_LOWERCASE A pointer to the array whose elements will be cleared.                                                                                    \
+     *  \param start_index The index of the first element to be cleared.                                                                                                    \
+     *  \param element_count The number of elements to be cleared.                                                                                                          \
+     */                                                                                                                                                                     \
+    void TYPENAME_LOWERCASE ## __clear_elements(                                                                                                                            \
+        TYPENAME *TYPENAME_LOWERCASE,                                                                                                                                       \
+        unsigned long long start_index,                                                                                                                                     \
+        unsigned long long element_count                                                                                                                                    \
+    );                                                                                                                                                                      \
+                                                                                                                                                                            \
+    /**                                                                                                                                                                     \
      *  \brief Compares two array structures for equality.                                                                                                                  \
      *  \param first The first array to be compared.                                                                                                                        \
      *  \param second The second array to be compared.                                                                                                                      \
@@ -182,17 +194,15 @@
         }                                                                                                                                                                   \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
-    /**                                                                                                                                                                     \
-     *  \brief Clears the specified elements of the given array by setting them equal to 0.                                                                                 \
-     *  \param TYPENAME_LOWERCASE A pointer to the array whose elements will be cleared.                                                                                    \
-     *  \param start_index The index of the first element to be cleared.                                                                                                    \
-     *  \param element_count The number of elements to be cleared.                                                                                                          \
-     */                                                                                                                                                                     \
     void TYPENAME_LOWERCASE ## __clear_elements(                                                                                                                            \
         TYPENAME *TYPENAME_LOWERCASE,                                                                                                                                       \
         unsigned long long start_index,                                                                                                                                     \
         unsigned long long element_count                                                                                                                                    \
-    );                                                                                                                                                                      \
+    ){                                                                                                                                                                      \
+        (void)( TYPENAME_LOWERCASE );                                                                                                                                       \
+        (void)( start_index );                                                                                                                                              \
+        (void)( element_count );                                                                                                                                            \
+    }                                                                                                                                                                       \
                                                                                                                                                                             \
     bool TYPENAME_LOWERCASE ## __equals(                                                                                                                                    \
         TYPENAME const *first,                                                                                                                                              \

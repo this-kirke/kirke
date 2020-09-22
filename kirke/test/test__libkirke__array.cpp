@@ -35,6 +35,31 @@ TEST_CASE( "array__char__equals", "[array]" ){
     REQUIRE( array__char__equals( &first, &second ) == false );
 }
 
+TEST_CASE( "array__char__clear_elements", "[array]" ){
+    char data[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    Array__char array = {
+        .data = data,
+        .length = 10,
+        .capacity = 10,
+        .element_size = sizeof( char )
+    };
+
+    array__char__clear_elements( &array, 4, 2 );
+
+    REQUIRE( array.capacity == 10 );
+    REQUIRE( array.length == 10 );
+
+    for( size_t element_index = 0; element_index < array.length; element_index++ ){
+        if( element_index == 4 || element_index == 5 ){
+            REQUIRE( array.data[ element_index ] == 0 );
+        }
+        else{
+            REQUIRE( array.data[ element_index ] == element_index );
+        }
+    }
+}
+
 class Array__TestFixture{
     protected:
         Array__TestFixture(){
