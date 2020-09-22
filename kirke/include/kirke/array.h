@@ -92,6 +92,23 @@
     );                                                                                                                                                                      \
                                                                                                                                                                             \
     /**                                                                                                                                                                     \
+     *  \brief This method searches for the first occurrence of the specified sequence, and returns the element                                                             \
+     *  index of the start of that occurrence.                                                                                                                              \
+     *  \param TYPENAME_LOWERCASE A pointer to an array in which to search for the specified sequence                                                                       \
+     *  \param sequence A pointer to an array containing the sequence for which to search.                                                                                  \
+     *  \param index An out parameter. Upon successful completion, this will store the index at which the                                                                   \
+     *  specified sequence was found.  If the specified sequence was not found, then this will store the number of                                                          \
+     *  elements contained in the TYPENAME.                                                                                                                                 \
+     *  \returns Returns true if the specified sequence was found.                                                                                                          \
+     *  \returns Returns false if the specified sequance was not found.                                                                                                     \
+     */                                                                                                                                                                     \
+    bool TYPENAME_LOWERCASE ## __index_of(                                                                                                                                  \
+        const TYPENAME* TYPENAME_LOWERCASE,                                                                                                                                 \
+        const TYPENAME* sequence,                                                                                                                                           \
+        unsigned long long *out_index                                                                                                                                       \
+    );                                                                                                                                                                      \
+                                                                                                                                                                            \
+    /**                                                                                                                                                                     \
      *  \brief Frees the memory allocated for the array, without freeing the array structure itself.                                                                        \
      *  \param TYPENAME_LOWERCASE The array whose memory is to be cleared                                                                                                   \
      *  \param allocator The allocator which was used to allocate the array's data. This must also be used                                                                  \
@@ -277,7 +294,17 @@
         return true;                                                                                                                                                        \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
-
+    bool TYPENAME_LOWERCASE ## __index_of(                                                                                                                                  \
+        const TYPENAME* TYPENAME_LOWERCASE,                                                                                                                                 \
+        const TYPENAME* sequence,                                                                                                                                           \
+        unsigned long long *out_index                                                                                                                                       \
+    ){                                                                                                                                                                      \
+        (void)( TYPENAME_LOWERCASE );                                                                                                                                       \
+        (void)( sequence );                                                                                                                                                 \
+        (void)( out_index );                                                                                                                                                \
+        return false;                                                                                                                                                       \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
 
 /**
  *  @} group array

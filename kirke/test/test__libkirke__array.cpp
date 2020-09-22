@@ -60,6 +60,26 @@ TEST_CASE( "array__char__clear_elements", "[array]" ){
     }
 }
 
+TEST_CASE( "array__char__index_of", "[array]" ){
+    Array__char array = {
+        .data = (char*) "Hello, World!",
+        .length = 13,
+        .capacity = 14,
+        .element_size = 1
+    };
+
+    Array__char sequence = {
+        .data = (char*) "Wo",
+        .length = 2,
+        .capacity = 3,
+        .element_size = 1
+    };
+
+    unsigned long long index;
+    REQUIRE( array__char__index_of( &array, &sequence, &index ) );
+    REQUIRE( index == 7 );
+}
+
 class Array__TestFixture{
     protected:
         Array__TestFixture(){
