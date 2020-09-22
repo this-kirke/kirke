@@ -263,6 +263,14 @@
      */                                                                                                                                                                     \
     void auto_ ## TYPENAME_LOWERCASE ## __remove_element( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE, unsigned long long element_index );                                \
                                                                                                                                                                             \
+    /**                                                                                                                                                                     \
+     *  \brief Removes the element at the given index. Ordering is not preserved. Instead, the last element is copied to                                                    \
+     *  the specified index.                                                                                                                                                \
+     *  \param auto_array The AutoArray from which the element will be removed.                                                                                             \
+     *  \param index The index of the element which will be removed.                                                                                                        \
+     */                                                                                                                                                                     \
+    void auto_ ## TYPENAME_LOWERCASE ## __remove_element__fast( Auto ## TYPENAME* auto_ ## TYPENAME_LOWERCASE, unsigned long long element_index );                          \
+                                                                                                                                                                            \
 
 /**
  *  \def ARRAY__DEFINE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE )
@@ -584,6 +592,11 @@
         }                                                                                                                                                                   \
                                                                                                                                                                             \
         auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length -= 1;                                                                                                       \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
+    void auto_ ## TYPENAME_LOWERCASE ## __remove_element__fast( Auto ## TYPENAME* auto_ ## TYPENAME_LOWERCASE, unsigned long long element_index ){                          \
+        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
+        (void)( element_index );                                                                                                                                            \
     }                                                                                                                                                                       \
 
 /**
