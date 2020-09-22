@@ -572,8 +572,18 @@
     }                                                                                                                                                                       \
                                                                                                                                                                             \
     void auto_ ## TYPENAME_LOWERCASE ## __remove_element( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE, unsigned long long element_index ){                                \
-        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
-        (void)( element_index );                                                                                                                                            \
+        RETURN_IF_FAIL( auto_ ## TYPENAME_LOWERCASE != NULL );                                                                                                              \
+        RETURN_IF_FAIL( element_index < auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length );                                                                          \
+                                                                                                                                                                            \
+        if( element_index != auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length - 1 ){                                                                                 \
+            memmove(                                                                                                                                                        \
+                auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data + element_index,                                                                                      \
+                auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data + element_index + 1,                                                                                  \
+                ( auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length - element_index - 1 ) * auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->element_size             \
+            );                                                                                                                                                              \
+        }                                                                                                                                                                   \
+                                                                                                                                                                            \
+        auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length -= 1;                                                                                                       \
     }                                                                                                                                                                       \
 
 /**
