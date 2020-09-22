@@ -439,6 +439,13 @@
         }                                                                                                                                                                   \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
+    inline void auto_ ## TYPENAME_LOWERCASE ## __append_element(                                                                                                            \
+        Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                                      \
+        ELEMENT_TYPE element                                                                                                                                                \
+    ){                                                                                                                                                                      \
+        auto_ ## TYPENAME_LOWERCASE ## __append_elements( auto_ ## TYPENAME_LOWERCASE, 1, &element );                                                                       \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
     void auto_ ## TYPENAME_LOWERCASE ## __append_elements(                                                                                                                  \
         Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                                      \
         unsigned long long element_count,                                                                                                                                   \
@@ -458,11 +465,9 @@
         auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length += element_count;                                                                                           \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
-    inline void auto_ ## TYPENAME_LOWERCASE ## __append_element(                                                                                                            \
-        Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                                      \
-        ELEMENT_TYPE element                                                                                                                                                \
-    ){                                                                                                                                                                      \
-        auto_ ## TYPENAME_LOWERCASE ## __append_elements( auto_ ## TYPENAME_LOWERCASE, 1, &element );                                                                       \
+                                                                                                                                                                            \
+    inline void auto_ ## TYPENAME_LOWERCASE ## __prepend_element( Auto ## TYPENAME* auto_ ## TYPENAME_LOWERCASE, ELEMENT_TYPE element ){                                    \
+        auto_ ## TYPENAME_LOWERCASE ## __prepend_elements( auto_ ## TYPENAME_LOWERCASE, 1, &element );                                                                      \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
     void auto_ ## TYPENAME_LOWERCASE ## __prepend_elements(                                                                                                                 \
@@ -489,11 +494,6 @@
         );                                                                                                                                                                  \
                                                                                                                                                                             \
         auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length += element_count;                                                                                           \
-    }                                                                                                                                                                       \
-                                                                                                                                                                            \
-    inline void auto_ ## TYPENAME_LOWERCASE ## __prepend_element( Auto ## TYPENAME* auto_ ## TYPENAME_LOWERCASE, ELEMENT_TYPE element ){                                    \
-        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
-        (void)( element );                                                                                                                                                  \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
 
