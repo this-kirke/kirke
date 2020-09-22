@@ -516,10 +516,30 @@
         unsigned long long element_count,                                                                                                                                   \
         ELEMENT_TYPE const *data                                                                                                                                            \
     ){                                                                                                                                                                      \
-        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
-        (void)( start_index );                                                                                                                                              \
-        (void)( element_count );                                                                                                                                            \
-        (void)( data );                                                                                                                                                     \
+        RETURN_IF_FAIL( auto_ ## TYPENAME_LOWERCASE != NULL );                                                                                                              \
+        RETURN_IF_FAIL( element_count > 0 );                                                                                                                                \
+                                                                                                                                                                            \
+        /* This calculation allows for inserting elements at an index greater than the auto_ ## TYPENAME_LOWERCASE's length. */                                             \
+        unsigned long long length_after_insertion = math__max__ullong( auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length, start_index ) + element_count;              \
+                                                                                                                                                                            \
+        auto_ ## TYPENAME_LOWERCASE ## __maybe_expand( auto_ ## TYPENAME_LOWERCASE, length_after_insertion );                                                               \
+                                                                                                                                                                            \
+        /* We only have to make room for the inserted elements if they are inserted between existing elements.  */                                                          \
+        if( start_index < auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length ){                                                                                        \
+            memmove(                                                                                                                                                        \
+                auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data + start_index + element_count,                                                                        \
+                auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data + start_index,                                                                                        \
+                ( auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length - start_index ) * auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->element_size                   \
+            );                                                                                                                                                              \
+        }                                                                                                                                                                   \
+                                                                                                                                                                            \
+        memcpy(                                                                                                                                                             \
+            auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->data + start_index,                                                                                            \
+            data,                                                                                                                                                           \
+            element_count * auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->element_size                                                                                   \
+        );                                                                                                                                                                  \
+                                                                                                                                                                            \
+        auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length = length_after_insertion;                                                                                   \
     }                                                                                                                                                                       \
 
 /**
