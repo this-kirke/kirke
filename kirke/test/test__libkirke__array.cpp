@@ -171,3 +171,25 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__append_elements", "[arr
 
     REQUIRE( array__char__equals( auto_array.array__char, &expected_array ) );
 }
+
+TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__append_element", "[array]" ){
+    const unsigned long ELEMENT_COUNT = 10;
+
+    char chars[] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+
+    Array__char expected_array = {
+        .data = chars,
+        .length = 10,
+        .capacity = 10,
+        .element_size = 1
+    };
+
+    AutoArray__char auto_array;
+    auto_array__char__initialize( &auto_array, system_allocator.allocator, ELEMENT_COUNT );
+
+    for( size_t element_index = 0; element_index < ELEMENT_COUNT; element_index++ ){
+        auto_array__char__append_element( &auto_array, element_index );
+    }
+
+    REQUIRE( array__char__equals( auto_array.array__char, &expected_array ) );
+}

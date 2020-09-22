@@ -199,6 +199,13 @@
     void auto_ ## TYPENAME_LOWERCASE ## __clear( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE );                                                                           \
                                                                                                                                                                             \
     /**                                                                                                                                                                     \
+     *  \brief This method appends a single element to the end of an AutoArray, allocating additional memory as necessary.                                                  \
+     *  \param auto_array A pointer to the AutoArray to which the element will be appended.                                                                                 \
+     *  \param element The element which will be appended to the AutoArray.                                                                                                 \
+     */                                                                                                                                                                     \
+    inline void auto_ ## TYPENAME_LOWERCASE ## __append_element( Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE, ELEMENT_TYPE element );                                     \
+                                                                                                                                                                            \
+    /**                                                                                                                                                                     \
      *  \brief This method appends elements to the end of an AutoArray, allocating additional memory as necessary.                                                          \
      *  \param auto_array A pointer to the AutoArray to which the elements will be appended.                                                                                \
      *  \param element_count The number of elements to be appended.                                                                                                         \
@@ -434,6 +441,14 @@
         );                                                                                                                                                                  \
                                                                                                                                                                             \
         auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length += element_count;                                                                                           \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
+    inline void auto_ ## TYPENAME_LOWERCASE ## __append_element(                                                                                                            \
+        Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                                      \
+        ELEMENT_TYPE element                                                                                                                                                \
+    ){                                                                                                                                                                      \
+        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
+        (void)( element );                                                                                                                                                  \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
 
