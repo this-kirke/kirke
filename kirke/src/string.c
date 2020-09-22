@@ -33,3 +33,10 @@ void string__initialize__format( String* string, Allocator* allocator, const cha
 
     va_end( args );
 }
+
+void string__append__va_list( String *string, Allocator *allocator, const char* format, va_list args ){
+    (void)( string );
+    (void)( allocator );
+    (void)( format );
+    (void)( args );
+}

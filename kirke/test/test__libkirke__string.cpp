@@ -398,3 +398,26 @@ TEST_CASE_METHOD( String__TestFixture, "string__initialize__format", "[string]" 
 
     string__clear( &string, system_allocator.allocator );
 }
+
+void string__append__va_list__helper( String* string, Allocator* allocator, const char* format, ... ){
+    va_list args;
+    va_start( args, format );
+
+    string__append__va_list( string, allocator, format, args );
+
+    va_end( args );
+}
+
+TEST_CASE_METHOD( String__TestFixture, "string__append__va_list", "[string]" ){
+    char STRING[] = "Hello";
+
+    String expected_string = string__literal( "HelloHello" );
+
+    String string;
+    string__initialize( &string, system_allocator.allocator, 0 );
+
+    string__append__va_list__helper( &string, system_allocator.allocator, "%s", STRING );
+    string__append__va_list__helper( &string, system_allocator.allocator, "%s", STRING );
+
+    REQUIRE( string__equals( &string, &expected_string ) );
+}
