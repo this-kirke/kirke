@@ -29,8 +29,9 @@
 /**
  *  \def ARRAY__DECLARE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE )
  *  \brief Declares a structure and interface methods for a Array type. This macro should be paired
- *  with a call to the macro ARRAY__DEFINE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE ), which defines the
- *  implementations of interface methods declared herein.
+ *  with a call to the macro
+ *      ARRAY__DEFINE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE, ELEMENT_TYPE__EQUALS_FUNCTION ),
+ *  which defines the implementations of interface methods declared herein.
  *  \param TYPENAME The name which will be assigned to the structure type.
  *  \param TYPENAME_LOWERCASE Same as TYPENAME, only lowercase. This will be used to prefix interface methods,
  *  as well as to name local variables and parameters for the interface methods.
@@ -60,10 +61,10 @@
     } TYPENAME;                                                                                                                                                             \
                                                                                                                                                                             \
     /**                                                                                                                                                                     \
-     *  \brief Fully initialize a TYPENAME with allocated memory.                                                                                                           \
-     *  \param TYPENAME_LOWERCASE A pointer to the TYPENAME which will be initialized.                                                                                      \
+     *  \brief Fully initialize an array with allocated memory.                                                                                                             \
+     *  \param TYPENAME_LOWERCASE A pointer to the array which will be initialized.                                                                                         \
      *  \param allocator A pointer to the Allocator which will be used to initialize memory owned by                                                                        \
-     *  \p TYPENAME_LOWERCASE.                                                                                                                                              \
+     *  the array.                                                                                                                                                          \
      *  \param capacity The desired capacity of the array, in elements.                                                                                                     \
      */                                                                                                                                                                     \
     void TYPENAME_LOWERCASE ## __initialize(                                                                                                                                \
@@ -73,12 +74,12 @@
     );                                                                                                                                                                      \
                                                                                                                                                                             \
     /**                                                                                                                                                                     \
-     *  \brief This method fully initializes a TYPENAME with the given data                                                                                                 \
-     *  \param TYPENAME_LOWERCASE A pointer to the TYPENAME which will be initialized.                                                                                      \
+     *  \brief This method fully initializes an array with the given data                                                                                                   \
+     *  \param TYPENAME_LOWERCASE A pointer to the array which will be initialized.                                                                                         \
      *  \param allocator A pointer to the Allocator which will be used to initialize memory owned by                                                                        \
-     *  \p TYPENAME_LOWERCASE.                                                                                                                                              \
+     *  the array.                                                                                                                                                          \
      *  \param data A pointer to the memory region containing the elements which will be contained by                                                                       \
-     *  \p TYPENAME_LOWERCASE. Elements to be copied and \p data will not be modified. Managing the memory                                                                  \
+     *  the array. Elements to be copied and \p data will not be modified. Managing the memory                                                                              \
      *  allocated for \p data is the caller's responsibility.                                                                                                               \
      *  \param length The length, in elements of \p data.                                                                                                                   \
      */                                                                                                                                                                     \
@@ -125,12 +126,14 @@
  *  \param TYPENAME_LOWERCASE Same as TYPENAME, only lowercase. This will be used to prefix interface methods,
  *  as well as to name local variables and parameters for the interface methods.
  *  \param ELEMENT_TYPE The type which will be stored in the array.
- *  \param ELEMENT_TYPE__EQUALS_FUNCTION A function which will compare two ELEMENT_TYPEs, returning 1 if they
- *  are equal, and 0 otherwise. The signature should be bool METHOD_NAME( const *ELEMENT_TYPE, const *ELEMENT_TYPE ).
- *  This is used to implement the method bool TYPENAME_LOWERCASE ## __equals. The Array metaclass has no means of
- *  knowing what type of elements are contained within - they could be integral types, user-defined structures,
- *  or pointers to either. Users may also have different ideas about how these types should be compared for
- *  equality, as in address vs. field by field comparison. Allowing the user to supply an arbitrary equality
+ *  \param ELEMENT_TYPE__EQUALS_FUNCTION A function which will compare two pointers to const array elements, returning
+ *  true if they are equal, and false otherwise. The signature should be:
+ *      bool (*equals_function)( const *ELEMENT_TYPE, const *ELEMENT_TYPE ).
+ *  This is used, for example, to implement the method array__equals.
+ *
+ *  The array metaclass has no means of knowing what type of elements are contained within - they could be integral types,
+ *  user-defined structures, or pointers to either. Users may also have different ideas about how these types should be
+ *  compared for equality, as in by address or a field by field comparison. Allowing the user to supply an arbitrary equality
  *  comparison function yields the most utility and flexibility.
  */
 #define ARRAY__DEFINE( TYPENAME, TYPENAME_LOWERCASE, ELEMENT_TYPE, ELEMENT_TYPE__EQUALS_FUNCTION )                                                                          \
@@ -178,6 +181,18 @@
             TYPENAME_LOWERCASE->capacity = 0;                                                                                                                               \
         }                                                                                                                                                                   \
     }                                                                                                                                                                       \
+                                                                                                                                                                            \
+    /**                                                                                                                                                                     \
+     *  \brief Clears the specified elements of the given array by setting them equal to 0.                                                                                 \
+     *  \param TYPENAME_LOWERCASE A pointer to the array whose elements will be cleared.                                                                                    \
+     *  \param start_index The index of the first element to be cleared.                                                                                                    \
+     *  \param element_count The number of elements to be cleared.                                                                                                          \
+     */                                                                                                                                                                     \
+    void TYPENAME_LOWERCASE ## __clear_elements(                                                                                                                            \
+        TYPENAME *TYPENAME_LOWERCASE,                                                                                                                                       \
+        unsigned long long start_index,                                                                                                                                     \
+        unsigned long long element_count                                                                                                                                    \
+    );                                                                                                                                                                      \
                                                                                                                                                                             \
     bool TYPENAME_LOWERCASE ## __equals(                                                                                                                                    \
         TYPENAME const *first,                                                                                                                                              \
