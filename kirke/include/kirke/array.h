@@ -156,11 +156,15 @@
         unsigned long long length,                                                                                                                                          \
         unsigned long long capacity                                                                                                                                         \
     ){                                                                                                                                                                      \
-        (void)( TYPENAME_LOWERCASE );                                                                                                                                       \
-        (void)( allocator );                                                                                                                                                \
-        (void)( data );                                                                                                                                                     \
-        (void)( length );                                                                                                                                                   \
-        (void)( capacity );                                                                                                                                                 \
+        *TYPENAME_LOWERCASE = (TYPENAME) {                                                                                                                                  \
+            /* Cast for C++ compatibility */                                                                                                                                \
+            .data = (ELEMENT_TYPE*) allocator__alloc( allocator, length * sizeof( ELEMENT_TYPE ) ),                                                                         \
+            .length = length,                                                                                                                                               \
+            .capacity = capacity,                                                                                                                                           \
+            .element_size = sizeof( ELEMENT_TYPE )                                                                                                                          \
+        };                                                                                                                                                                  \
+                                                                                                                                                                            \
+        memcpy( TYPENAME_LOWERCASE->data, data, length * sizeof( ELEMENT_TYPE ) );                                                                                          \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
     void TYPENAME_LOWERCASE ## __clear(                                                                                                                                     \
