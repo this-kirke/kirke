@@ -50,7 +50,10 @@ void string__append__va_list( String *string, Allocator *allocator, const char* 
 }
 
 void string__append__format( String *string, Allocator *allocator, const char* format, ... ){
-    (void)( string );
-    (void)( allocator );
-    (void)( format );
+    va_list args;
+    va_start( args, format );
+
+    string__append__va_list( string, allocator, format, args );
+
+    va_end( args );
 }
