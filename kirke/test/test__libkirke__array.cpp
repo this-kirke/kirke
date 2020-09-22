@@ -104,3 +104,14 @@ TEST_CASE_METHOD( Array__TestFixture, "array__char__initialize__full_and_clear",
 
     array__char__clear( &array, system_allocator.allocator );
 }
+
+TEST_CASE_METHOD( Array__TestFixture, "array__char__clone", "[array]" ){
+    char ARRAY[ 10 ] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, };
+
+    Array__char array;
+    array__char__initialize__full( &array, system_allocator.allocator, ARRAY, 10, 10 );
+
+    Array__char *clone = array__char__clone( &array, system_allocator.allocator );
+
+    REQUIRE( array__char__equals( clone, &array ) );
+}

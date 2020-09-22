@@ -118,6 +118,19 @@
     );                                                                                                                                                                      \
                                                                                                                                                                             \
     /**                                                                                                                                                                     \
+     *  \brief This method creates, initializes and returns an array with the same length, capacity                                                                         \
+     *  and elements as the passed-in array. Elements are copied, so modifying the returned array will                                                                      \
+     *  not affect the underlying data of the passed-in array.                                                                                                              \
+     *  \param TYPENAME_LOWERCASE A pointer to the array which will be cloned.                                                                                              \
+     *  \param allocator A pointer to the allocator which will be used to allocate new memory for the clone.                                                                \
+     *  \returns A pointer to the newly-created array.                                                                                                                      \
+     */                                                                                                                                                                     \
+    TYPENAME *TYPENAME_LOWERCASE ## __clone(                                                                                                                                \
+        TYPENAME const *TYPENAME_LOWERCASE,                                                                                                                                 \
+        Allocator *allocator                                                                                                                                                \
+    );                                                                                                                                                                      \
+                                                                                                                                                                            \
+    /**                                                                                                                                                                     \
      *  \brief Compares two array structures for equality.                                                                                                                  \
      *  \param first The first array to be compared.                                                                                                                        \
      *  \param second The second array to be compared.                                                                                                                      \
@@ -215,10 +228,34 @@
         );                                                                                                                                                                  \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
+    TYPENAME *TYPENAME_LOWERCASE ## __clone(                                                                                                                                \
+        TYPENAME const *TYPENAME_LOWERCASE,                                                                                                                                 \
+        Allocator *allocator                                                                                                                                                \
+    ){                                                                                                                                                                      \
+        (void)( TYPENAME_LOWERCASE );                                                                                                                                       \
+        (void)( allocator );                                                                                                                                                \
+                                                                                                                                                                            \
+        return NULL;                                                                                                                                                        \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
     bool TYPENAME_LOWERCASE ## __equals(                                                                                                                                    \
         TYPENAME const *first,                                                                                                                                              \
         TYPENAME const *second                                                                                                                                              \
     ){                                                                                                                                                                      \
+        if( first == NULL || second == NULL ){                                                                                                                              \
+            log__warning(                                                                                                                                                   \
+                "%s__equals: NULL passed as parameter. Parameter \'first\': %p. Parameter \'second\': %p.",                                                                 \
+                #TYPENAME_LOWERCASE,                                                                                                                                        \
+                first,                                                                                                                                                      \
+                second                                                                                                                                                      \
+            );                                                                                                                                                              \
+                                                                                                                                                                            \
+            if( first == second ){                                                                                                                                          \
+                return true;                                                                                                                                                \
+            }                                                                                                                                                               \
+            return false;                                                                                                                                                   \
+        }                                                                                                                                                                   \
+                                                                                                                                                                            \
         if( first->length != second->length ){                                                                                                                              \
             return false;                                                                                                                                                   \
         }                                                                                                                                                                   \
