@@ -447,8 +447,7 @@
         Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                                      \
         ELEMENT_TYPE element                                                                                                                                                \
     ){                                                                                                                                                                      \
-        (void)( auto_ ## TYPENAME_LOWERCASE );                                                                                                                              \
-        (void)( element );                                                                                                                                                  \
+        auto_ ## TYPENAME_LOWERCASE ## __append_elements( auto_ ## TYPENAME_LOWERCASE, 1, &element );                                                                       \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
 
