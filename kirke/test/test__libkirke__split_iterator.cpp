@@ -40,3 +40,32 @@ TEST_CASE( "split_iterator__rest", "[split_iterator]" ){
 
     REQUIRE( string__equals( &rest, &expected_string ) );
 }
+
+
+TEST_CASE( "split_iterator__next", "[split_iterator]" ){
+    const unsigned long WORD_COUNT = 4;
+    String test_words[ WORD_COUNT ] = {
+        string__literal( "This" ),
+        string__literal( "is" ),
+        string__literal( "a" ),
+        string__literal( "test." ),
+    };
+
+    String test_string = string__literal( "This,is,a,test." );
+    String delimiter = string__literal( "," );
+
+    unsigned long split_index = 0;
+
+    SplitIterator split_iterator;
+    split_iterator__initialize( &split_iterator, &test_string, &delimiter );
+
+    String token;
+
+    // Ensure that the first call to split_iterator__next returns 1
+    REQUIRE( split_iterator__next( &split_iterator, &token ) );
+    REQUIRE( string__equals( &token, &test_words[ split_index++ ] ) );
+
+    while( split_iterator__next( &split_iterator, &token ) ){
+        REQUIRE( string__equals( &token, &test_words[ split_index++ ] ) );
+    }
+}

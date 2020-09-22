@@ -8,6 +8,13 @@ void split_iterator__initialize( SplitIterator* iterator, const String* string_,
     iterator->position = 0;
 }
 
+bool split_iterator__next( SplitIterator* iterator, String* ref_token ){
+    (void)( iterator );
+    (void)( ref_token );
+
+    return false;
+}
+
 void split_iterator__rest( SplitIterator* iterator, String* ref_rest ){
     *ref_rest = (String){
         .data = iterator->string->data + iterator->position,

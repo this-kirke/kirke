@@ -51,6 +51,16 @@ typedef struct SplitIterator{
 void split_iterator__initialize( SplitIterator* iterator, const String* string, const String* delimiter );
 
 /**
+ *  \brief This method retrieves the next token found in the SplitIterator's string field, and stores it in the provided String.
+ *  \param iterator A pointer to the SplitIterator used to retrieve the next token.
+ *  \param out_token An out parameter. Upon successful return, this will represent the next token contained by the parent String.
+ *  \returns 1 if this operation completed successfully - that is, the SplitIterator's parent String contains a next token, and that
+ *  token is represented by \p out_token.
+ *  \returns 0 if the operation did not complete successfully.
+ */
+bool split_iterator__next( SplitIterator* iterator, String* ref_token );
+
+/**
  *  \brief This method retrieves the portion of the SplitIterator's \ref string field following the SplitIterator's current position.
  *  \param iterator A pointer to the SplitIterator
  *  \param ref_rest An reference parameter. Upon return, this will store the portion of the SplitIterator's \ref string field following
