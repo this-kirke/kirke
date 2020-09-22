@@ -73,6 +73,24 @@
     );                                                                                                                                                                      \
                                                                                                                                                                             \
     /**                                                                                                                                                                     \
+     *  \brief This method fully initializes a TYPENAME with the given data                                                                                                 \
+     *  \param TYPENAME_LOWERCASE A pointer to the TYPENAME which will be initialized.                                                                                      \
+     *  \param allocator A pointer to the Allocator which will be used to initialize memory owned by                                                                        \
+     *  \p TYPENAME_LOWERCASE.                                                                                                                                              \
+     *  \param data A pointer to the memory region containing the elements which will be contained by                                                                       \
+     *  \p TYPENAME_LOWERCASE. Elements to be copied and \p data will not be modified. Managing the memory                                                                  \
+     *  allocated for \p data is the caller's responsibility.                                                                                                               \
+     *  \param length The length, in elements of \p data.                                                                                                                   \
+     */                                                                                                                                                                     \
+    void TYPENAME_LOWERCASE ## __initialize__full(                                                                                                                          \
+        TYPENAME *TYPENAME_LOWERCASE,                                                                                                                                       \
+        Allocator* allocator,                                                                                                                                               \
+        ELEMENT_TYPE const *data,                                                                                                                                           \
+        unsigned long long length,                                                                                                                                          \
+        unsigned long long capacity                                                                                                                                         \
+    );                                                                                                                                                                      \
+                                                                                                                                                                            \
+    /**                                                                                                                                                                     \
      *  \brief Frees the memory allocated for the array, without freeing the array structure itself.                                                                        \
      *  \param TYPENAME_LOWERCASE The array whose memory is to be cleared                                                                                                   \
      *  \param allocator The allocator which was used to allocate the array's data. This must also be used                                                                  \
@@ -129,6 +147,20 @@
             .capacity = capacity,                                                                                                                                           \
             .element_size = sizeof( ELEMENT_TYPE )                                                                                                                          \
         };                                                                                                                                                                  \
+    }                                                                                                                                                                       \
+                                                                                                                                                                            \
+    void TYPENAME_LOWERCASE ## __initialize__full(                                                                                                                          \
+        TYPENAME *TYPENAME_LOWERCASE,                                                                                                                                       \
+        Allocator* allocator,                                                                                                                                               \
+        ELEMENT_TYPE const *data,                                                                                                                                           \
+        unsigned long long length,                                                                                                                                          \
+        unsigned long long capacity                                                                                                                                         \
+    ){                                                                                                                                                                      \
+        (void)( TYPENAME_LOWERCASE );                                                                                                                                       \
+        (void)( allocator );                                                                                                                                                \
+        (void)( data );                                                                                                                                                     \
+        (void)( length );                                                                                                                                                   \
+        (void)( capacity );                                                                                                                                                 \
     }                                                                                                                                                                       \
                                                                                                                                                                             \
     void TYPENAME_LOWERCASE ## __clear(                                                                                                                                     \
