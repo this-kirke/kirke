@@ -134,6 +134,9 @@ TEST_CASE_METHOD( Array__TestFixture, "array__char__clone", "[array]" ){
     Array__char *clone = array__char__clone( &array, system_allocator.allocator );
 
     REQUIRE( array__char__equals( clone, &array ) );
+
+    array__char__clear( clone, system_allocator.allocator );
+    allocator__free( system_allocator.allocator, clone );
 }
 
 TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__initialize_and_clear", "[array]" ){
