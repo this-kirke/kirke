@@ -18,3 +18,25 @@ TEST_CASE( "split_iterator__initialize", "[split_iterator]" ){
 
     REQUIRE( split_iterator.position == 0 );
 }
+
+
+TEST_CASE( "split_iterator__rest", "[split_iterator]" ){
+    String string = string__literal( "This,is,a,test." );
+    String delimiter = string__literal( "," );
+
+    SplitIterator split_iterator;
+    split_iterator__initialize( &split_iterator, &string, &delimiter );
+
+    String rest;
+
+    // Test that for a newly-initialized SplitIterator, split_iterator__rest returns the entire String.
+    split_iterator__rest( &split_iterator, &rest );
+    REQUIRE( string__equals( &rest, &string ) );
+
+    // Test that split_iterator__rest returns a String from the current position (inclusive) to the end of the string.
+    String expected_string = string__literal( "is,a,test." );
+    split_iterator.position = 5;
+    split_iterator__rest( &split_iterator, &rest );
+
+    REQUIRE( string__equals( &rest, &expected_string ) );
+}

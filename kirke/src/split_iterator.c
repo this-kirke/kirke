@@ -7,3 +7,8 @@ void split_iterator__initialize( SplitIterator* iterator, const String* string_,
     iterator->delimiter = delimiter;
     iterator->position = 0;
 }
+
+void split_iterator__rest( SplitIterator* iterator, String* ref_rest ){
+    (void)( iterator );
+    (void)( ref_rest );
+}

@@ -51,6 +51,14 @@ typedef struct SplitIterator{
 void split_iterator__initialize( SplitIterator* iterator, const String* string, const String* delimiter );
 
 /**
+ *  \brief This method retrieves the portion of the SplitIterator's \ref string field following the SplitIterator's current position.
+ *  \param iterator A pointer to the SplitIterator
+ *  \param ref_rest An reference parameter. Upon return, this will store the portion of the SplitIterator's \ref string field following
+ *  the SplitIterator's current position.
+ */
+void split_iterator__rest( SplitIterator* iterator, String* ref_rest );
+
+/**
  *  @} group split_iterator
  */
 
