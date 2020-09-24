@@ -38,7 +38,6 @@
                 "-B", "build",
                 "-DCMAKE_BUILD_TYPE=Debug",
                 "-DKIRKE_BUILD_TESTS=ON",
-                "-DKIRKE_BUILD_COVERAGE_REPORT=ON",
                 "-DKIRKE_BUILD_DOCUMENTATION=ON",
             ],
             "options": {

@@ -3,12 +3,7 @@ cmake_minimum_required( VERSION 3.12 )
 set( CMAKE_VERBOSE_MAKEFILE OFF )
 
 option( KIRKE_BUILD_TESTS "Build tests with project." OFF )
-option( KIRKE_BUILD_COVERAGE_REPORT "Build test coverage report with project and tests." OFF )
 option( KIRKE_BUILD_DOCUMENTATION "Build project documentation." OFF )
-
-if( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
-    set( BUILD_COVERAGE_REPORT OFF CACHE BOOL "Compiler is Clang. Disabled BUILD_COVERAGE_REPORT because we don't yet support coverage with Clang." )
-endif( CMAKE_CXX_COMPILER_ID STREQUAL "Clang" )
 
 project( kirke )
 
@@ -24,17 +19,12 @@ add_subdirectory( kirke )
 if( KIRKE_BUILD_TESTS )
     # "catch2__" methods defined in project/3rdParty/Catch2/CMakeLists.txt
     catch2__build_test_executable()
-    
-    if( KIRKE_BUILD_COVERAGE_REPORT )
-        catch2__generate_coverage_report( OUTPUT_DIR ${CMAKE_BINARY_DIR}/docs/coverage )
-    endif( KIRKE_BUILD_COVERAGE_REPORT )
-
 endif( KIRKE_BUILD_TESTS )
 
 if( KIRKE_BUILD_DOCUMENTATION )
 
     find_package( Doxygen )
-        
+
     if( DOXYGEN_FOUND )
 
         set( DOXYGEN_PROJECT_NAME "libkirke" )

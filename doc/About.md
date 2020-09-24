@@ -28,7 +28,7 @@ This will build the project without tests, coverage or generated documentation i
 The generated target is a static library by default. To build a shared library instead of a static library, add the cmake option `-DBUILD_SHARED_LIBS=ON` to the generate (first) command.
 
 Tests, coverage report and generated documentation can be enabled by setting the desired option as defined in the root CMakeLists.txt file. To generate the build with all options enabled, invoke the following command:  
-    `<kirke project root>$ cmake -B build -DKIRKE_BUILD_TESTS=ON -DKIRKE_BUILD_COVERAGE_REPORT=ON -DKIRKE_BUILD_DOCUMENTATION=ON`  
+    `<kirke project root>$ cmake -B build -DKIRKE_BUILD_TESTS=ON -DKIRKE_BUILD_DOCUMENTATION=ON`  
 
 ## <ins>Usage</ins>
 

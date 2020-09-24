@@ -34,19 +34,11 @@ target_compile_options(
 
 if( KIRKE_BUILD_TESTS )
 
-    if( KIRKE_BUILD_COVERAGE_REPORT )
-        target_link_libraries(
-            libkirke
-            PRIVATE
-            gcov
-        )
-
-        set_target_properties(
-            libkirke
-            PROPERTIES
-            COMPILE_FLAGS "--coverage"
-        )
-    endif( KIRKE_BUILD_COVERAGE_REPORT )
+    set_target_properties(
+        libkirke
+        PROPERTIES
+        COMPILE_FLAGS "--coverage"
+    )
 
     # "catch2__" methods defined in project/3rdParty/Catch2/CMakeLists.txt
     catch2__add_test(
