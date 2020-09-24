@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/this-kirke/kirke.svg?branch=master)](https://travis-ci.org/this-kirke/kirke)
+[![Coverage Status](https://coveralls.io/repos/github/this-kirke/kirke/badge.svg?branch=master)](https://coveralls.io/github/this-kirke/kirke?branch=master)
+
 # libkirke
 
 # Author: Justin Kirkegaard
