@@ -23,8 +23,13 @@ BEGIN_DECLARATIONS
 
 #define LIST__DEFINE( TYPENAME, METHOD_PREFIX, ELEMENT_TYPE )                                                                       \
     TYPENAME *METHOD_PREFIX ## __head( TYPENAME *list ){                                                                            \
-        (void)( list );                                                                                                             \
-        return NULL;                                                                                                                \
+        if( list != NULL ){                                                                                                         \
+            while( list->previous != NULL ){                                                                                        \
+                list = list->previous;                                                                                              \
+            }                                                                                                                       \
+        }                                                                                                                           \
+                                                                                                                                    \
+        return list;                                                                                                                \
     }
 
 END_DECLARATIONS
