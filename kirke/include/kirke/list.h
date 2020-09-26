@@ -19,7 +19,9 @@ BEGIN_DECLARATIONS
         TYPENAME *previous;                                                                                                         \
     };                                                                                                                              \
                                                                                                                                     \
-    TYPENAME* METHOD_PREFIX ## __head( TYPENAME *list );
+    TYPENAME* METHOD_PREFIX ## __head( TYPENAME *list );                                                                            \
+                                                                                                                                    \
+    TYPENAME* METHOD_PREFIX ## __tail( TYPENAME *list );
 
 #define LIST__DEFINE( TYPENAME, METHOD_PREFIX, ELEMENT_TYPE )                                                                       \
     TYPENAME *METHOD_PREFIX ## __head( TYPENAME *list ){                                                                            \
@@ -30,6 +32,11 @@ BEGIN_DECLARATIONS
         }                                                                                                                           \
                                                                                                                                     \
         return list;                                                                                                                \
+    }                                                                                                                               \
+                                                                                                                                    \
+    TYPENAME* METHOD_PREFIX ## __tail( TYPENAME *list ){                                                                            \
+        (void)( list );                                                                                                             \
+        return NULL;                                                                                                                \
     }
 
 END_DECLARATIONS
