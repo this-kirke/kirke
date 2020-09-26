@@ -21,7 +21,8 @@
         "vector": "c",
         "string_view": "c",
         "chrono": "cpp",
-        "memory_resource": "cpp"
+        "memory_resource": "cpp",
+        "list": "cpp"
     },
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
