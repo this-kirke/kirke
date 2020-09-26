@@ -61,3 +61,37 @@ TEST_CASE_METHOD( List__TestFixture, "list__int__head", "[list]" ){
         allocator__free( system_allocator.allocator, head );
     }
 }
+
+TEST_CASE_METHOD( List__TestFixture, "list__int__tail", "[list]" ){
+    list = (List__int*) allocator__alloc( system_allocator.allocator, sizeof( List__int ) );
+    *list = (List__int){
+        .value = 0,
+        .next = NULL,
+        .previous = NULL
+    };
+
+    List__int *current_tail = list;
+    for( int link_index = 1; link_index < 10; link_index++ ){
+        List__int *link= (List__int*) allocator__alloc( system_allocator.allocator, sizeof( List__int ) );
+        *link = (List__int){
+            .value = link_index,
+            .next = NULL,
+            .previous = NULL
+        };
+
+        current_tail->next = link;
+        link->previous = current_tail;
+        link->next = NULL;
+
+        current_tail = link;
+    }
+
+    REQUIRE( list__int__tail( list ) == current_tail );
+
+    while( list != NULL ){
+        List__int *head = list;
+        list = list->next;
+        allocator__free( system_allocator.allocator, head );
+    }
+}
+
