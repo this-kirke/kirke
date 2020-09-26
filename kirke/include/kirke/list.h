@@ -35,8 +35,13 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     TYPENAME* METHOD_PREFIX ## __tail( TYPENAME *list ){                                                                            \
-        (void)( list );                                                                                                             \
-        return NULL;                                                                                                                \
+    if( list != NULL ){                                                                                                             \
+            while( list->next != NULL ){                                                                                            \
+                list = list->next;                                                                                                  \
+            }                                                                                                                       \
+        }                                                                                                                           \
+                                                                                                                                    \
+        return list;                                                                                                                \
     }
 
 END_DECLARATIONS
