@@ -31,14 +31,22 @@ BEGIN_DECLARATIONS
 #define LIST__DEFINE( TYPENAME, METHOD_PREFIX, ELEMENT_TYPE )                                                                       \
                                                                                                                                     \
     void METHOD_PREFIX ## __initialize( TYPENAME **list, Allocator *allocator, ELEMENT_TYPE value ){                                \
-        (void)( list );                                                                                                             \
-        (void)( allocator );                                                                                                        \
-        (void)( value );                                                                                                            \
+        /* Cast for C++ compatibility */                                                                                            \
+        *list = (TYPENAME *) allocator__alloc( allocator, sizeof( TYPENAME ) );                                                     \
+        **list = (TYPENAME) {                                                                                                       \
+            .value = value,                                                                                                         \
+            .next = NULL,                                                                                                           \
+            .previous = NULL                                                                                                        \
+        };                                                                                                                          \
     }                                                                                                                               \
                                                                                                                                     \
     void METHOD_PREFIX ## __clear( TYPENAME *list, Allocator *allocator ){                                                          \
-        (void)( list );                                                                                                             \
-        (void)( allocator );                                                                                                        \
+        TYPENAME *current = METHOD_PREFIX ## __head( list );                                                                        \
+        while( current != NULL ){                                                                                                   \
+            TYPENAME *head = current;                                                                                               \
+            current = current->next;                                                                                                \
+            allocator__free( allocator, head );                                                                                     \
+        }                                                                                                                           \
     }                                                                                                                               \
                                                                                                                                     \
     TYPENAME *METHOD_PREFIX ## __head( TYPENAME *list ){                                                                            \
