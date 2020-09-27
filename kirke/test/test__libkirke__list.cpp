@@ -169,6 +169,24 @@ TEST_CASE_METHOD( List__TestFixture, "list__int__position_of", "[list]" ){
     REQUIRE( list__int__position_of( link ) == 3 );
 }
 
+void list__int__for_each__helper( int *value, void* user_data ){
+    bool *called = (bool*) user_data;
+    called[ *value ] = 1;
+}
+
+TEST_CASE_METHOD( List__TestFixture, "list__int__for_each", "[list]" ){
+    for( int link_index = 1; link_index < 10; link_index++ ){
+        list__int__append( list, system_allocator.allocator, link_index );
+    }
+
+    bool called[ 10 ] = { true };
+    list__int__for_each( list, list__int__for_each__helper, called );
+
+    for( int called_index = 0; called_index < sizeof( called ); called_index++ ){
+        REQUIRE( called[ called_index ] == true );
+    }
+}
+
 TEST_CASE_METHOD( List__TestFixture, "list__int__append", "[list]" ){
     for( int list_index = 1; list_index < 10; list_index++ ){
         list__int__append( list, system_allocator.allocator, list_index );
