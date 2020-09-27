@@ -27,6 +27,10 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
     TYPENAME* METHOD_PREFIX ## __tail( TYPENAME *list );                                                                            \
                                                                                                                                     \
+    unsigned long long METHOD_PREFIX ## __length( TYPENAME *list );                                                                 \
+                                                                                                                                    \
+    bool METHOD_PREFIX ## __where( TYPENAME *list, ELEMENT_TYPE value, TYPENAME **ref_list_pointer );                               \
+                                                                                                                                    \
     bool METHOD_PREFIX ## __at( TYPENAME *list, unsigned long long position, TYPENAME **ref_list_pointer );                         \
                                                                                                                                     \
     void METHOD_PREFIX ## __append( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value );                                     \
@@ -37,10 +41,8 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
     void METHOD_PREFIX ## __insert_after( TYPENAME *link, Allocator *allocator, ELEMENT_TYPE value );                               \
                                                                                                                                     \
-    unsigned long long METHOD_PREFIX ## __length( TYPENAME *list );                                                                 \
-                                                                                                                                    \
 
-#define LIST__DEFINE( TYPENAME, METHOD_PREFIX, ELEMENT_TYPE )                                                                       \
+#define LIST__DEFINE( TYPENAME, METHOD_PREFIX, ELEMENT_TYPE, ELEMENT_TYPE__EQUALS_FUNCTION )                                        \
                                                                                                                                     \
     void METHOD_PREFIX ## __initialize( TYPENAME **list, Allocator *allocator, ELEMENT_TYPE value ){                                \
         /* Cast for C++ compatibility */                                                                                            \
@@ -91,6 +93,13 @@ BEGIN_DECLARATIONS
         }                                                                                                                           \
                                                                                                                                     \
         return length;                                                                                                              \
+    }                                                                                                                               \
+                                                                                                                                    \
+    bool METHOD_PREFIX ## __where( TYPENAME *list, ELEMENT_TYPE value, TYPENAME **ref_list_pointer ){                               \
+        (void)( list );                                                                                                             \
+        (void)( value );                                                                                                            \
+        (void)( ref_list_pointer );                                                                                                 \
+        return false;                                                                                                               \
     }                                                                                                                               \
                                                                                                                                     \
     bool METHOD_PREFIX ## __at( TYPENAME *list, unsigned long long position, TYPENAME **ref_list_pointer ){                         \

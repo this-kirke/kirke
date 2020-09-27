@@ -13,7 +13,7 @@ bool ints_are_equal( int const *first, int const *second ){
 }
 
 LIST__DECLARE( List__int, list__int, int )
-LIST__DEFINE( List__int, list__int, int )
+LIST__DEFINE( List__int, list__int, int, ints_are_equal )
 
 TEST_CASE( "list__int__head", "[list]" ){
     SystemAllocator system_allocator;
@@ -113,6 +113,19 @@ TEST_CASE_METHOD( List__TestFixture, "list__int__length", "[list]" ){
     }
 
     REQUIRE( list__int__length( list ) == 10 );
+}
+
+TEST_CASE_METHOD( List__TestFixture, "list__int__where", "[list]" ){
+    for( int link_index = 1; link_index < 10; link_index++ ){
+        list__int__append( list, system_allocator.allocator, link_index );
+    }
+
+    List__int * link;
+    REQUIRE( list__int__where( list, 3, &link ) );
+    REQUIRE( link->value == 3 );
+
+    REQUIRE_FALSE( list__int__where( list, 11, &link ) );
+    REQUIRE( link->value == 3 );
 }
 
 TEST_CASE_METHOD( List__TestFixture, "list__int__initialize_and_clear", "[list]" ){
