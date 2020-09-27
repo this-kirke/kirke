@@ -107,6 +107,10 @@ class List__TestFixture{
         List__int *list = NULL;
 };
 
+TEST_CASE_METHOD( List__TestFixture, "list__int__initialize_and_clear", "[list]" ){
+    REQUIRE( list != NULL );
+}
+
 TEST_CASE_METHOD( List__TestFixture, "list__int__length", "[list]" ){
     for( int link_index = 1; link_index < 10; link_index++ ){
         list__int__append( list, system_allocator.allocator, link_index );
@@ -128,8 +132,17 @@ TEST_CASE_METHOD( List__TestFixture, "list__int__where", "[list]" ){
     REQUIRE( link->value == 3 );
 }
 
-TEST_CASE_METHOD( List__TestFixture, "list__int__initialize_and_clear", "[list]" ){
-    REQUIRE( list != NULL );
+TEST_CASE_METHOD( List__TestFixture, "list__int__index_of", "[list]" ){
+    for( int link_index = 1; link_index < 10; link_index++ ){
+        list__int__append( list, system_allocator.allocator, link_index );
+    }
+
+    unsigned long long index;
+    REQUIRE( list__int__index_of( list, 3, &index ) );
+    REQUIRE( index == 3 );
+
+    REQUIRE_FALSE( list__int__index_of( list, 11, &index ) );
+    REQUIRE( index == 3 );
 }
 
 TEST_CASE_METHOD( List__TestFixture, "list__int__at", "[list]" ){
