@@ -31,6 +31,8 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
     bool METHOD_PREFIX ## __where( TYPENAME *list, ELEMENT_TYPE value, TYPENAME **ref_list_pointer );                               \
                                                                                                                                     \
+    bool METHOD_PREFIX ## __index_of( TYPENAME *list, ELEMENT_TYPE value, unsigned long long *out_index );                          \
+                                                                                                                                    \
     bool METHOD_PREFIX ## __at( TYPENAME *list, unsigned long long position, TYPENAME **ref_list_pointer );                         \
                                                                                                                                     \
     void METHOD_PREFIX ## __append( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value );                                     \
@@ -106,6 +108,13 @@ BEGIN_DECLARATIONS
             current = current->next;                                                                                                \
         }                                                                                                                           \
                                                                                                                                     \
+        return false;                                                                                                               \
+    }                                                                                                                               \
+                                                                                                                                    \
+    bool METHOD_PREFIX ## __index_of( TYPENAME *list, ELEMENT_TYPE value, unsigned long long *out_index ){                          \
+        (void)( list );                                                                                                             \
+        (void)( value );                                                                                                            \
+        (void)( out_index );                                                                                                        \
         return false;                                                                                                               \
     }                                                                                                                               \
                                                                                                                                     \
