@@ -110,3 +110,16 @@ class List__TestFixture{
 TEST_CASE_METHOD( List__TestFixture, "list__int__initialize_and_clear", "[list]" ){
     REQUIRE( list != NULL );
 }
+
+TEST_CASE_METHOD( List__TestFixture, "list__int__append", "[list]" ){
+    for( int list_index = 1; list_index < 10; list_index++ ){
+        list__int__append( list, system_allocator.allocator, list_index );
+    }
+
+    List__int *current = list;
+    for( int list_index = 0; list_index < 10; list_index++ ){
+        REQUIRE( current != NULL );
+        REQUIRE( current->value == list_index );
+        current = current->next;
+    }
+}
