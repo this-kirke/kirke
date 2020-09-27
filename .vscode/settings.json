@@ -22,7 +22,9 @@
         "string_view": "c",
         "chrono": "cpp",
         "memory_resource": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "bitset": "cpp",
+        "algorithm": "cpp"
     },
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,
