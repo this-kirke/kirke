@@ -47,6 +47,8 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
     void METHOD_PREFIX ## __insert_after( TYPENAME *link, Allocator *allocator, ELEMENT_TYPE value );                               \
                                                                                                                                     \
+    void METHOD_PREFIX ## __concatenate( TYPENAME *first, TYPENAME *second );                                                       \
+                                                                                                                                    \
 
 #define LIST__DEFINE( TYPENAME, METHOD_PREFIX, ELEMENT_TYPE, ELEMENT_TYPE__EQUALS_FUNCTION )                                        \
                                                                                                                                     \
@@ -231,6 +233,11 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
         link->next->previous = new_link;                                                                                            \
         link->next = new_link;                                                                                                      \
+    }                                                                                                                               \
+                                                                                                                                    \
+    void METHOD_PREFIX ## __concatenate( TYPENAME *first, TYPENAME *second ){                                                       \
+        (void)( first );                                                                                                            \
+        (void)( second );                                                                                                           \
     }                                                                                                                               \
                                                                                                                                     \
 
