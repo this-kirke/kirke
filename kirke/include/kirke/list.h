@@ -88,13 +88,21 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     TYPENAME *METHOD_PREFIX ## __prepend( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value ){                               \
-        (void)( list );                                                                                                             \
-        (void)( allocator );                                                                                                        \
-        (void)( value );                                                                                                            \
-        return list;                                                                                                                \
+        TYPENAME *head = METHOD_PREFIX ## __head( list );                                                                           \
+                                                                                                                                    \
+        /* Cast for C++ compatibility */                                                                                            \
+        TYPENAME *new_list = (TYPENAME *) allocator__alloc( allocator, sizeof( TYPENAME ) );                                        \
+                                                                                                                                    \
+        *new_list = (TYPENAME){                                                                                                     \
+            .value = value,                                                                                                         \
+            .next = head,                                                                                                           \
+            .previous = NULL,                                                                                                       \
+        };                                                                                                                          \
+        head->previous = new_list;                                                                                                  \
+                                                                                                                                    \
+        return new_list;                                                                                                            \
     }                                                                                                                               \
                                                                                                                                     \
-
 END_DECLARATIONS
 
 #endif // KIRKE__LIST__H
