@@ -282,10 +282,20 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     TYPENAME *METHOD_PREFIX ## __delete_all( TYPENAME *link, ELEMENT_TYPE value, Allocator *allocator ){                            \
-        (void)( link );                                                                                                             \
-        (void)( value );                                                                                                            \
-        (void)( allocator );                                                                                                        \
-        return NULL;                                                                                                                \
+        TYPENAME *head = METHOD_PREFIX ## __head( link );                                                                           \
+                                                                                                                                    \
+        TYPENAME *current = head;                                                                                                   \
+        while( current != NULL ){                                                                                                   \
+            if( ELEMENT_TYPE__EQUALS_FUNCTION( &current->value, &value ) ){                                                         \
+                current = current->next;                                                                                            \
+                head = METHOD_PREFIX ## __delete_link( current->previous, allocator );                                              \
+            }                                                                                                                       \
+            else{                                                                                                                   \
+                current = current->next;                                                                                            \
+            }                                                                                                                       \
+        }                                                                                                                           \
+                                                                                                                                    \
+        return head;                                                                                                                \
     }
 
 END_DECLARATIONS
