@@ -160,9 +160,12 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     void METHOD_PREFIX ## __for_each( TYPENAME *list, void( *function )( ELEMENT_TYPE *value, void *user_data ), void *user_data ){ \
-        (void)( list );                                                                                                             \
-        (void)( function );                                                                                                         \
-        (void)( user_data );                                                                                                        \
+        TYPENAME *current = METHOD_PREFIX ## __head( list );                                                                        \
+                                                                                                                                    \
+        while( current != NULL ){                                                                                                   \
+            function( &current->value, user_data );                                                                                 \
+            current = current->next;                                                                                                \
+        }                                                                                                                           \
     }                                                                                                                               \
                                                                                                                                     \
     void METHOD_PREFIX ## __append( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value ){                                     \
