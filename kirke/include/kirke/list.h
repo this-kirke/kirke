@@ -87,7 +87,7 @@ BEGIN_DECLARATIONS
         TYPENAME *second_current = METHOD_PREFIX ## __head( second );                                                               \
                                                                                                                                     \
         while( first_current != NULL ){                                                                                             \
-            if( ELEMENT_TYPE__EQUALS_FUNCTION( &first_current->value, &second_current->value ) == false ){                          \
+            if( ELEMENT_TYPE__EQUALS_FUNCTION( first_current->value, second_current->value ) == false ){                            \
                 return false;                                                                                                       \
             };                                                                                                                      \
                                                                                                                                     \
@@ -134,7 +134,7 @@ BEGIN_DECLARATIONS
         TYPENAME *current = METHOD_PREFIX ## __head( list );                                                                        \
                                                                                                                                     \
         while( current != NULL ){                                                                                                   \
-            if( ELEMENT_TYPE__EQUALS_FUNCTION( &current->value, &value ) ){                                                         \
+            if( ELEMENT_TYPE__EQUALS_FUNCTION( current->value, value ) ){                                                           \
                 *ref_list_pointer = current;                                                                                        \
                 return true;                                                                                                        \
             }                                                                                                                       \
@@ -149,7 +149,7 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
         unsigned long long index = 0;                                                                                               \
         while( current != NULL ){                                                                                                   \
-            if( ELEMENT_TYPE__EQUALS_FUNCTION( &current->value, &value ) ){                                                         \
+            if( ELEMENT_TYPE__EQUALS_FUNCTION( current->value, value ) ){                                                           \
                 *out_index = index;                                                                                                 \
                 return true;                                                                                                        \
             }                                                                                                                       \
@@ -294,7 +294,7 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
         TYPENAME *current = head;                                                                                                   \
         while( current != NULL ){                                                                                                   \
-            if( ELEMENT_TYPE__EQUALS_FUNCTION( &current->value, &value ) ){                                                         \
+            if( ELEMENT_TYPE__EQUALS_FUNCTION( current->value, value ) ){                                                           \
                 return METHOD_PREFIX ## __delete_link( current, allocator );                                                        \
             }                                                                                                                       \
             current = current->next;                                                                                                \
@@ -308,7 +308,7 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
         TYPENAME *current = head;                                                                                                   \
         while( current != NULL ){                                                                                                   \
-            if( ELEMENT_TYPE__EQUALS_FUNCTION( &current->value, &value ) ){                                                         \
+            if( ELEMENT_TYPE__EQUALS_FUNCTION( current->value, value ) ){                                                           \
                 current = current->next;                                                                                            \
                 head = METHOD_PREFIX ## __delete_link( current->previous, allocator );                                              \
             }                                                                                                                       \

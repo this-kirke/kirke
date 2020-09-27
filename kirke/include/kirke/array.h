@@ -156,8 +156,8 @@
      *  \returns Returns false if both TYPENAME structures are not equal.                                                                                           \
      */                                                                                                                                                             \
     bool TYPENAME_LOWERCASE ## __equals(                                                                                                                            \
-        TYPENAME const *first,                                                                                                                                      \
-        TYPENAME const *second                                                                                                                                      \
+        TYPENAME first,                                                                                                                                             \
+        TYPENAME second                                                                                                                                             \
     );                                                                                                                                                              \
                                                                                                                                                                     \
     /*                                                                                                                                                              \
@@ -319,12 +319,12 @@
  *  \param TYPENAME_LOWERCASE Same as TYPENAME, only lowercase. This will be used to prefix interface methods,
  *  as well as to name local variables and parameters for the interface methods.
  *  \param ELEMENT_TYPE The type which will be stored in the array.
- *  \param ELEMENT_TYPE__EQUALS_FUNCTION A function which will compare two pointers to const array elements, returning
+ *  \param ELEMENT_TYPE__EQUALS_FUNCTION A function which will compare two objects of type ELEMENT_TYPE, returning
  *  true if they are equal, and false otherwise. The signature should be:
- *      bool (*equals_function)( const *ELEMENT_TYPE, const *ELEMENT_TYPE ).
+ *      bool (*equals_function)( ELEMENT_TYPE, ELEMENT_TYPE ).
  *  This is used, for example, to implement the method array__equals.
  *
- *  The array metaclass has no means of knowing what type of elements are contained within - they could be integral types,
+ *  The array metaclass has no means of knowing which type of elements are contained within - they could be integral types,
  *  user-defined structures, or pointers to either. Users may also have different ideas about how these types should be
  *  compared for equality, as in by address or a field by field comparison. Allowing the user to supply an arbitrary equality
  *  comparison function yields the most utility and flexibility.
@@ -415,29 +415,15 @@
     }                                                                                                                                                               \
                                                                                                                                                                     \
     bool TYPENAME_LOWERCASE ## __equals(                                                                                                                            \
-        TYPENAME const *first,                                                                                                                                      \
-        TYPENAME const *second                                                                                                                                      \
+        TYPENAME first,                                                                                                                                             \
+        TYPENAME second                                                                                                                                             \
     ){                                                                                                                                                              \
-        if( first == NULL || second == NULL ){                                                                                                                      \
-            log__warning(                                                                                                                                           \
-                "%s__equals: NULL passed as parameter. Parameter \'first\': %p. Parameter \'second\': %p.",                                                         \
-                #TYPENAME_LOWERCASE,                                                                                                                                \
-                first,                                                                                                                                              \
-                second                                                                                                                                              \
-            );                                                                                                                                                      \
-                                                                                                                                                                    \
-            if( first == second ){                                                                                                                                  \
-                return true;                                                                                                                                        \
-            }                                                                                                                                                       \
+        if( first.length != second.length ){                                                                                                                        \
             return false;                                                                                                                                           \
         }                                                                                                                                                           \
                                                                                                                                                                     \
-        if( first->length != second->length ){                                                                                                                      \
-            return false;                                                                                                                                           \
-        }                                                                                                                                                           \
-                                                                                                                                                                    \
-        for( unsigned long long element_index = 0; element_index < first->length; element_index++ ){                                                                \
-            if( ELEMENT_TYPE__EQUALS_FUNCTION( &first->data[ element_index ], &second->data[ element_index ] ) == 0 ){                                              \
+        for( unsigned long long element_index = 0; element_index < first.length; element_index++ ){                                                                 \
+            if( ELEMENT_TYPE__EQUALS_FUNCTION( first.data[ element_index ], second.data[ element_index ] ) == 0 ){                                                  \
                 return false;                                                                                                                                       \
             }                                                                                                                                                       \
         }                                                                                                                                                           \
@@ -458,7 +444,7 @@
                 .element_size = sizeof( ELEMENT_TYPE )                                                                                                              \
             };                                                                                                                                                      \
                                                                                                                                                                     \
-            if( TYPENAME_LOWERCASE ## __equals( &subsequence, sequence ) ){                                                                                         \
+            if( TYPENAME_LOWERCASE ## __equals( subsequence, *sequence ) ){                                                                                         \
                 *out_index = element_index;                                                                                                                         \
                 return true;                                                                                                                                        \
             }                                                                                                                                                       \

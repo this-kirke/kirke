@@ -59,14 +59,14 @@ TEST_CASE( "split_iterator__rest", "[split_iterator]" ){
 
     // Test that for a newly-initialized SplitIterator, split_iterator__rest returns the entire String.
     split_iterator__rest( &split_iterator, &rest );
-    REQUIRE( string__equals( &rest, &string ) );
+    REQUIRE( string__equals( rest, string ) );
 
     // Test that split_iterator__rest returns a String from the current position (inclusive) to the end of the string.
     String expected_string = string__literal( "is,a,test." );
     split_iterator.position = 5;
     split_iterator__rest( &split_iterator, &rest );
 
-    REQUIRE( string__equals( &rest, &expected_string ) );
+    REQUIRE( string__equals( rest, expected_string ) );
 }
 
 
@@ -91,9 +91,9 @@ TEST_CASE( "split_iterator__next", "[split_iterator]" ){
 
     // Ensure that the first call to split_iterator__next returns 1
     REQUIRE( split_iterator__next( &split_iterator, &token ) );
-    REQUIRE( string__equals( &token, &test_words[ split_index++ ] ) );
+    REQUIRE( string__equals( token, test_words[ split_index++ ] ) );
 
     while( split_iterator__next( &split_iterator, &token ) ){
-        REQUIRE( string__equals( &token, &test_words[ split_index++ ] ) );
+        REQUIRE( string__equals( token, test_words[ split_index++ ] ) );
     }
 }
