@@ -158,6 +158,17 @@ TEST_CASE_METHOD( List__TestFixture, "list__int__at", "[list]" ){
     REQUIRE( link->value == 3 );
 }
 
+TEST_CASE_METHOD( List__TestFixture, "list__int__position_of", "[list]" ){
+    for( int link_index = 1; link_index < 10; link_index++ ){
+        list__int__append( list, system_allocator.allocator, link_index );
+    }
+
+    List__int *link;
+    list__int__at( list, 3, &link );
+
+    REQUIRE( list__int__position_of( link ) == 3 );
+}
+
 TEST_CASE_METHOD( List__TestFixture, "list__int__append", "[list]" ){
     for( int list_index = 1; list_index < 10; list_index++ ){
         list__int__append( list, system_allocator.allocator, list_index );
