@@ -123,11 +123,25 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     TYPENAME *METHOD_PREFIX ## __insert_before( TYPENAME *link, Allocator *allocator, ELEMENT_TYPE value ){                         \
-        (void)( link );                                                                                                             \
-        (void)( allocator );                                                                                                        \
-        (void)( value );                                                                                                            \
+        TYPENAME *head = METHOD_PREFIX ## __head( link );                                                                           \
                                                                                                                                     \
-        return NULL;                                                                                                                \
+        if( link == head ){                                                                                                         \
+            head = METHOD_PREFIX ## __prepend( head, allocator, value );                                                            \
+        }                                                                                                                           \
+        else{                                                                                                                       \
+            /* Cast for C++ compatibility */                                                                                        \
+            TYPENAME *new_link = (TYPENAME *) allocator__alloc( allocator, sizeof( TYPENAME ) );                                    \
+            *new_link = (TYPENAME){                                                                                                 \
+                .value = value,                                                                                                     \
+                .next = link,                                                                                                       \
+                .previous = link->previous                                                                                          \
+            };                                                                                                                      \
+                                                                                                                                    \
+            link->previous->next = new_link;                                                                                        \
+            link->previous = new_link;                                                                                              \
+        }                                                                                                                           \
+                                                                                                                                    \
+        return head;                                                                                                                \
     }                                                                                                                               \
                                                                                                                                     \
 
