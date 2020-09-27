@@ -269,3 +269,28 @@ TEST_CASE_METHOD( List__TestFixture, "list__int__concatenate", "[list]" ){
         REQUIRE( link->value == list_index );
     }
 }
+
+TEST_CASE_METHOD( List__TestFixture, "list__int__delete_link", "[list]" ){
+    for( int list_index = 1; list_index < 10; list_index++ ){
+        list__int__append( list, system_allocator.allocator, list_index );
+    }
+
+    List__int *fifth;
+    REQUIRE( list__int__at( list, 5, &fifth ) );
+
+    list__int__delete_link( fifth, system_allocator.allocator );
+    REQUIRE( list__int__at( list, 5, &fifth ) );
+
+    REQUIRE( fifth->value == 6 );
+    REQUIRE( fifth->previous->value == 4 );
+    REQUIRE( fifth->previous->next == fifth );
+    REQUIRE( fifth->next->value == 7 );
+    REQUIRE( fifth->next->previous == fifth );
+
+
+    List__int *second = list->next;
+    list = list__int__delete_link( list, system_allocator.allocator );
+
+    REQUIRE( list == second );
+}
+
