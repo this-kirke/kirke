@@ -79,10 +79,23 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     bool METHOD_PREFIX ## __equals( TYPENAME const *first, TYPENAME const *second ){                                                \
-        (void)( first );                                                                                                            \
-        (void)( second );                                                                                                           \
+        if( METHOD_PREFIX ## __length( first ) != METHOD_PREFIX ## __length( second ) ){                                            \
+            return false;                                                                                                           \
+        }                                                                                                                           \
                                                                                                                                     \
-        return false;                                                                                                               \
+        TYPENAME *first_current = METHOD_PREFIX ## __head( first );                                                                 \
+        TYPENAME *second_current = METHOD_PREFIX ## __head( second );                                                               \
+                                                                                                                                    \
+        while( first_current != NULL ){                                                                                             \
+            if( ELEMENT_TYPE__EQUALS_FUNCTION( &first_current->value, &second_current->value ) == false ){                          \
+                return false;                                                                                                       \
+            };                                                                                                                      \
+                                                                                                                                    \
+            first_current = first_current->next;                                                                                    \
+            second_current= second_current->next;                                                                                   \
+        }                                                                                                                           \
+                                                                                                                                    \
+        return true;                                                                                                                \
     }                                                                                                                               \
                                                                                                                                     \
     TYPENAME *METHOD_PREFIX ## __head( TYPENAME const *list ){                                                                      \
