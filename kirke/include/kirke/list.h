@@ -72,9 +72,17 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     void METHOD_PREFIX ## __append( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value ){                                     \
-        (void)( list );                                                                                                             \
-        (void)( allocator );                                                                                                        \
-        (void)( value );                                                                                                            \
+        TYPENAME *tail = METHOD_PREFIX ## __tail( list );                                                                           \
+                                                                                                                                    \
+        /* Cast for C++ compatibility */                                                                                            \
+        TYPENAME *new_list = (TYPENAME *) allocator__alloc( allocator, sizeof( TYPENAME ) );                                        \
+        *new_list = (TYPENAME){                                                                                                     \
+            .value = value,                                                                                                         \
+            .next = NULL,                                                                                                           \
+            .previous = tail                                                                                                        \
+        };                                                                                                                          \
+                                                                                                                                    \
+        tail->next = new_list;                                                                                                      \
     }                                                                                                                               \
                                                                                                                                     \
 END_DECLARATIONS
