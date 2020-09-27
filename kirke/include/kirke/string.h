@@ -8,6 +8,7 @@
 // Internal Includes
 #include "kirke/macros.h"
 #include "kirke/array.h"
+#include "kirke/list.h"
 
 BEGIN_DECLARATIONS
 
@@ -18,6 +19,7 @@ BEGIN_DECLARATIONS
 
 ARRAY__DECLARE( String, string, char )
 ARRAY__DECLARE( Array__String, array__string, String )
+LIST__DECLARE( List__String, list__string, String )
 
 /**
  *  \def string__literal( TEXT )

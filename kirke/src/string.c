@@ -14,6 +14,7 @@ static bool chars_are_equal( const char *first, const char *second ){
 
 ARRAY__DEFINE( String, string, char, chars_are_equal )
 ARRAY__DEFINE( Array__String, array__string, String, string__equals )
+LIST__DEFINE( List__String, list__string, String, string__equals )
 
 void string__initialize__va_list( String* string, Allocator* allocator, const char* format, va_list args ){
     char c;
