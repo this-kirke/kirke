@@ -51,6 +51,8 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
     TYPENAME *METHOD_PREFIX ## __delete_link( TYPENAME *link, Allocator *allocator );                                               \
                                                                                                                                     \
+    TYPENAME *METHOD_PREFIX ## __delete_first( TYPENAME *link, ELEMENT_TYPE value, Allocator *allocator );                          \
+                                                                                                                                    \
 
 #define LIST__DEFINE( TYPENAME, METHOD_PREFIX, ELEMENT_TYPE, ELEMENT_TYPE__EQUALS_FUNCTION )                                        \
                                                                                                                                     \
@@ -262,6 +264,13 @@ BEGIN_DECLARATIONS
         allocator__free( allocator, link );                                                                                         \
                                                                                                                                     \
         return head;                                                                                                                \
+    }                                                                                                                               \
+                                                                                                                                    \
+    TYPENAME *METHOD_PREFIX ## __delete_first( TYPENAME *link, ELEMENT_TYPE value, Allocator *allocator ){                          \
+        (void)( link );                                                                                                             \
+        (void)( value );                                                                                                            \
+        (void)( allocator );                                                                                                        \
+        return NULL;                                                                                                                \
     }                                                                                                                               \
                                                                                                                                     \
 
