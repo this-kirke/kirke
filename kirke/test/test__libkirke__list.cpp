@@ -312,3 +312,29 @@ TEST_CASE_METHOD( List__TestFixture, "list__int__delete_first", "[list]" ){
         link = link->next;
     }
 }
+
+TEST_CASE_METHOD( List__TestFixture, "list__int__delete_all", "[list]" ){
+    for( int list_index = 1; list_index < 10; list_index++ ){
+        list__int__append( list, system_allocator.allocator, list_index );
+    }
+
+    for( int list_index = 0; list_index < 10; list_index += 2 ){
+        List__int *link;
+        REQUIRE( list__int__at( list, list_index, &link ) );
+
+        list__int__insert_after( link, system_allocator.allocator, 42 );
+    }
+
+    REQUIRE( list__int__length( list ) == 15 );
+
+    list__int__delete_all( list, 42, system_allocator.allocator );
+
+    REQUIRE( list__int__length( list ) == 10 );
+
+    List__int *link = list;
+    int list_index = 0;
+    while( link != NULL ){
+        REQUIRE( link->value == list_index++ );
+        link = link->next;
+    }
+}
