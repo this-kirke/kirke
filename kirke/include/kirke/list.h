@@ -27,6 +27,8 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
     TYPENAME* METHOD_PREFIX ## __tail( TYPENAME *list );                                                                            \
                                                                                                                                     \
+    bool METHOD_PREFIX ## __at( TYPENAME *list, unsigned long long position, TYPENAME **ref_list_pointer );                         \
+                                                                                                                                    \
     void METHOD_PREFIX ## __append( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value );                                     \
                                                                                                                                     \
     TYPENAME *METHOD_PREFIX ## __prepend( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value );                               \
@@ -73,6 +75,13 @@ BEGIN_DECLARATIONS
         return list;                                                                                                                \
     }                                                                                                                               \
                                                                                                                                     \
+    bool METHOD_PREFIX ## __at( TYPENAME *list, unsigned long long position, TYPENAME **ref_list_pointer ){                         \
+        (void)( list );                                                                                                             \
+        (void)( position );                                                                                                         \
+        (void)( ref_list_pointer );                                                                                                 \
+        return false;                                                                                                               \
+    }                                                                                                                               \
+                                                                                                                                    \
     void METHOD_PREFIX ## __append( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value ){                                     \
         TYPENAME *tail = METHOD_PREFIX ## __tail( list );                                                                           \
                                                                                                                                     \
@@ -103,6 +112,7 @@ BEGIN_DECLARATIONS
         return new_list;                                                                                                            \
     }                                                                                                                               \
                                                                                                                                     \
+
 END_DECLARATIONS
 
 #endif // KIRKE__LIST__H
