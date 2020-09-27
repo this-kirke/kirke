@@ -246,9 +246,22 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     TYPENAME *METHOD_PREFIX ## __delete_link( TYPENAME *link, Allocator *allocator ){                                               \
-        (void)( link );                                                                                                             \
-        (void)( allocator );                                                                                                        \
-        return NULL;                                                                                                                \
+        TYPENAME *head = METHOD_PREFIX ## __head( link );                                                                           \
+        if( head == link ){                                                                                                         \
+            link->next->previous = NULL;                                                                                            \
+            head = link->next;                                                                                                      \
+        }                                                                                                                           \
+        else{                                                                                                                       \
+            link->previous->next = link->next;                                                                                      \
+        }                                                                                                                           \
+                                                                                                                                    \
+        if( link->next != NULL ){                                                                                                   \
+            link->next->previous = link->previous;                                                                                  \
+        }                                                                                                                           \
+                                                                                                                                    \
+        allocator__free( allocator, link );                                                                                         \
+                                                                                                                                    \
+        return head;                                                                                                                \
     }                                                                                                                               \
                                                                                                                                     \
 
