@@ -148,9 +148,16 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     void METHOD_PREFIX ## __insert_after( TYPENAME *link, Allocator *allocator, ELEMENT_TYPE value ){                               \
-        (void)( link );                                                                                                             \
-        (void)( allocator );                                                                                                        \
-        (void)( value );                                                                                                            \
+        /* Cast for C++ compatibility */                                                                                            \
+        TYPENAME *new_link = (TYPENAME *) allocator__alloc( allocator, sizeof( TYPENAME ) );                                        \
+        *new_link = (TYPENAME){                                                                                                     \
+            .value = value,                                                                                                         \
+            .next = link->next,                                                                                                     \
+            .previous = link                                                                                                        \
+        };                                                                                                                          \
+                                                                                                                                    \
+        link->next->previous = new_link;                                                                                            \
+        link->next = new_link;                                                                                                      \
     }                                                                                                                               \
                                                                                                                                     \
 
