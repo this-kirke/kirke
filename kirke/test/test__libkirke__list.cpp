@@ -250,3 +250,22 @@ TEST_CASE_METHOD( List__TestFixture, "list__int__insert_after", "[list]" ){
     REQUIRE( third->next->previous == third );
     REQUIRE( third->previous->next == third );
 }
+
+TEST_CASE_METHOD( List__TestFixture, "list__int__concatenate", "[list]" ){
+    List__int *second;
+    list__int__initialize( &second, system_allocator.allocator, 10 );
+
+    for( int list_index = 1; list_index < 10; list_index++ ){
+        list__int__append( list, system_allocator.allocator, list_index );
+        list__int__append( second, system_allocator.allocator, 10 + list_index );
+    }
+
+    list__int__concatenate( list, second );
+
+    REQUIRE( list__int__length( list ) == 20 );
+    for( int list_index = 0; list_index < 20; list_index++ ){
+        List__int *link;
+        REQUIRE( list__int__at( list, list_index, &link ) );
+        REQUIRE( link->value == list_index );
+    }
+}
