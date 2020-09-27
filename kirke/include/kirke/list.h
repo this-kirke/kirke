@@ -236,8 +236,11 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     void METHOD_PREFIX ## __concatenate( TYPENAME *first, TYPENAME *second ){                                                       \
-        (void)( first );                                                                                                            \
-        (void)( second );                                                                                                           \
+        TYPENAME *first_tail = METHOD_PREFIX ## __tail( first );                                                                    \
+        TYPENAME *second_head = METHOD_PREFIX ## __head( second );                                                                  \
+                                                                                                                                    \
+        first_tail->next = second_head;                                                                                             \
+        second_head->previous = first_tail;                                                                                         \
     }                                                                                                                               \
                                                                                                                                     \
 
