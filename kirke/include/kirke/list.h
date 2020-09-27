@@ -76,10 +76,19 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     bool METHOD_PREFIX ## __at( TYPENAME *list, unsigned long long position, TYPENAME **ref_list_pointer ){                         \
-        (void)( list );                                                                                                             \
-        (void)( position );                                                                                                         \
-        (void)( ref_list_pointer );                                                                                                 \
-        return false;                                                                                                               \
+        TYPENAME *current = METHOD_PREFIX ## __head( list );                                                                        \
+                                                                                                                                    \
+        for( unsigned long long list_index = 0; list_index < position; list_index++ ){                                              \
+            if( current->next == NULL ){                                                                                            \
+                return false;                                                                                                       \
+            }                                                                                                                       \
+                                                                                                                                    \
+            current = current->next;                                                                                                \
+        }                                                                                                                           \
+                                                                                                                                    \
+        *ref_list_pointer = current;                                                                                                \
+                                                                                                                                    \
+        return true;                                                                                                                \
     }                                                                                                                               \
                                                                                                                                     \
     void METHOD_PREFIX ## __append( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value ){                                     \
