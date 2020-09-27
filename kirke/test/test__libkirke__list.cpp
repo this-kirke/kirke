@@ -91,6 +91,28 @@ TEST_CASE( "list__int__tail", "[list]" ){
     system_allocator__deinitialize( &system_allocator );
 }
 
+TEST_CASE( "list__equals", "[list]" ){
+    SystemAllocator system_allocator;
+    system_allocator__initialize( &system_allocator, NULL );
+
+    List__int *first;
+    list__int__initialize( &first, system_allocator.allocator, 0 );
+
+    List__int *second;
+    list__int__initialize( &second, system_allocator.allocator, 0 );
+
+    for( int list_index = 1; list_index < 10; list_index++ ){
+        list__int__append( first, system_allocator.allocator, list_index );
+        second = list__int__prepend( second, system_allocator.allocator, list_index );
+    }
+
+    REQUIRE( list__int__equals( first, first ) );
+    REQUIRE( list__int__equals( second, second ) );
+    REQUIRE_FALSE( list__int__equals( first, second ) );
+
+    system_allocator__deinitialize( &system_allocator );
+}
+
 class List__TestFixture{
     protected:
         List__TestFixture(){

@@ -23,11 +23,13 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
     void METHOD_PREFIX ## __clear( TYPENAME *list, Allocator *allocator );                                                          \
                                                                                                                                     \
-    TYPENAME* METHOD_PREFIX ## __head( TYPENAME *list );                                                                            \
+    bool METHOD_PREFIX ## __equals( TYPENAME const *first, TYPENAME const *second );                                                \
                                                                                                                                     \
-    TYPENAME* METHOD_PREFIX ## __tail( TYPENAME *list );                                                                            \
+    TYPENAME* METHOD_PREFIX ## __head( TYPENAME const *list );                                                                      \
                                                                                                                                     \
-    unsigned long long METHOD_PREFIX ## __length( TYPENAME *list );                                                                 \
+    TYPENAME* METHOD_PREFIX ## __tail( TYPENAME const *list );                                                                      \
+                                                                                                                                    \
+    unsigned long long METHOD_PREFIX ## __length( TYPENAME const *list );                                                           \
                                                                                                                                     \
     bool METHOD_PREFIX ## __where( TYPENAME *list, ELEMENT_TYPE value, TYPENAME **ref_list_pointer );                               \
                                                                                                                                     \
@@ -76,27 +78,34 @@ BEGIN_DECLARATIONS
         }                                                                                                                           \
     }                                                                                                                               \
                                                                                                                                     \
-    TYPENAME *METHOD_PREFIX ## __head( TYPENAME *list ){                                                                            \
+    bool METHOD_PREFIX ## __equals( TYPENAME const *first, TYPENAME const *second ){                                                \
+        (void)( first );                                                                                                            \
+        (void)( second );                                                                                                           \
+                                                                                                                                    \
+        return false;                                                                                                               \
+    }                                                                                                                               \
+                                                                                                                                    \
+    TYPENAME *METHOD_PREFIX ## __head( TYPENAME const *list ){                                                                      \
         if( list != NULL ){                                                                                                         \
             while( list->previous != NULL ){                                                                                        \
                 list = list->previous;                                                                                              \
             }                                                                                                                       \
         }                                                                                                                           \
                                                                                                                                     \
-        return list;                                                                                                                \
+        return (TYPENAME *) list;                                                                                                   \
     }                                                                                                                               \
                                                                                                                                     \
-    TYPENAME* METHOD_PREFIX ## __tail( TYPENAME *list ){                                                                            \
-    if( list != NULL ){                                                                                                             \
+    TYPENAME *METHOD_PREFIX ## __tail( TYPENAME const *list ){                                                                      \
+        if( list != NULL ){                                                                                                         \
             while( list->next != NULL ){                                                                                            \
                 list = list->next;                                                                                                  \
             }                                                                                                                       \
         }                                                                                                                           \
                                                                                                                                     \
-        return list;                                                                                                                \
+        return (TYPENAME *) list;                                                                                                   \
     }                                                                                                                               \
                                                                                                                                     \
-    unsigned long long METHOD_PREFIX ## __length( TYPENAME *list ){                                                                 \
+    unsigned long long METHOD_PREFIX ## __length( TYPENAME const *list ){                                                           \
         TYPENAME *current = METHOD_PREFIX ## __head( list );                                                                        \
                                                                                                                                     \
         unsigned long long length = 0;                                                                                              \
