@@ -112,9 +112,18 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     bool METHOD_PREFIX ## __index_of( TYPENAME *list, ELEMENT_TYPE value, unsigned long long *out_index ){                          \
-        (void)( list );                                                                                                             \
-        (void)( value );                                                                                                            \
-        (void)( out_index );                                                                                                        \
+        TYPENAME *current = METHOD_PREFIX ## __head( list );                                                                        \
+                                                                                                                                    \
+        unsigned long long index = 0;                                                                                               \
+        while( current != NULL ){                                                                                                   \
+            if( ELEMENT_TYPE__EQUALS_FUNCTION( &current->value, &value ) ){                                                         \
+                *out_index = index;                                                                                                 \
+                return true;                                                                                                        \
+            }                                                                                                                       \
+            current = current->next;                                                                                                \
+            index++;                                                                                                                \
+        }                                                                                                                           \
+                                                                                                                                    \
         return false;                                                                                                               \
     }                                                                                                                               \
                                                                                                                                     \
