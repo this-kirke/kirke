@@ -168,3 +168,22 @@ TEST_CASE_METHOD( List__TestFixture, "list__int__insert_before", "[list]" ){
     REQUIRE( third->next->previous == third );
     REQUIRE( third->previous->next == third );
 }
+
+TEST_CASE_METHOD( List__TestFixture, "list__int__insert_after", "[list]" ){
+    for( int list_index = 1; list_index < 10; list_index++ ){
+        list__int__append( list, system_allocator.allocator, list_index );
+    }
+
+    List__int *third;
+    REQUIRE( list__int__at( list, 3, &third ) );
+
+    list__int__insert_after( third->previous, system_allocator.allocator, 11 );
+
+    REQUIRE( list__int__at( list, 3, &third ) );
+
+    REQUIRE( third->value == 11 );
+    REQUIRE( third->previous->value == 2 );
+    REQUIRE( third->next->value == 3 );
+    REQUIRE( third->next->previous == third );
+    REQUIRE( third->previous->next == third );
+}
