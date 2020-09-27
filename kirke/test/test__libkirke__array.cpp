@@ -5,8 +5,8 @@
 #include "kirke/array.h"
 #include "kirke/system_allocator.h"
 
-char chars_are_equal( const char *first, const char *second ){
-    if( *first == *second ){
+char chars_are_equal( char first, char second ){
+    if( first == second ){
         return 1;
     }
 
@@ -31,8 +31,8 @@ TEST_CASE( "array__char__equals", "[array]" ){
         .element_size = 1
     };
 
-    REQUIRE( array__char__equals( &first, &first ) == true );
-    REQUIRE( array__char__equals( &first, &second ) == false );
+    REQUIRE( array__char__equals( first, first ) == true );
+    REQUIRE( array__char__equals( first, second ) == false );
 }
 
 TEST_CASE( "array__char__clear_elements", "[array]" ){
@@ -120,7 +120,7 @@ TEST_CASE_METHOD( Array__TestFixture, "array__char__initialize__full_and_clear",
     Array__char array;
     array__char__initialize__full( &array, system_allocator.allocator, ARRAY, 10, 10 );
 
-    REQUIRE( array__char__equals( &array, &expected_array ) );
+    REQUIRE( array__char__equals( array, expected_array ) );
 
     array__char__clear( &array, system_allocator.allocator );
 }
@@ -133,7 +133,7 @@ TEST_CASE_METHOD( Array__TestFixture, "array__char__clone", "[array]" ){
 
     Array__char *clone = array__char__clone( &array, system_allocator.allocator );
 
-    REQUIRE( array__char__equals( clone, &array ) );
+    REQUIRE( array__char__equals( *clone, array ) );
 
     array__char__clear( clone, system_allocator.allocator );
     allocator__free( system_allocator.allocator, clone );
@@ -172,7 +172,7 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__append_elements", "[arr
         auto_array__char__append_elements( &auto_array, 2, &chars[ 2 * element_index ] );
     }
 
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_array ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_array ) );
 }
 
 TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__append_element", "[array]" ){
@@ -194,7 +194,7 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__append_element", "[arra
         auto_array__char__append_element( &auto_array, element_index );
     }
 
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_array ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_array ) );
 }
 
 
@@ -236,23 +236,23 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__prepend_elements", "[ar
 
     // Prepend several values to an empty auto_array.
     auto_array__char__prepend_elements( &auto_array, 2, &values.data[ 0 ] );
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_values1 ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_values1 ) );
 
     // Prepend a single value.
     auto_array__char__prepend_elements( &auto_array, 1, &values.data[ 2 ] );
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_values2 ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_values2 ) );
 
     // Prepend several values to a non-empty auto_array.
     auto_array__char__prepend_elements( &auto_array, 2, &values.data[ 3 ] );
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_values3 ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_values3 ) );
 
     // Prepend no values.
     auto_array__char__prepend_elements( &auto_array, 0, &values.data[ 0 ] );
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_values3 ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_values3 ) );
 
     // Prepend no values with NULL data.
     auto_array__char__prepend_elements( &auto_array, 0, NULL );
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_values3 ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_values3 ) );
 
     auto_array__char__clear( &auto_array );
 }
@@ -279,7 +279,7 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__prepend_element", "[arr
         auto_array__char__prepend_element( &auto_array, chars[ element_index - 1 ] );
     }
 
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_array ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_array ) );
     auto_array__char__clear( &auto_array );
 }
 
@@ -338,31 +338,31 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__insert_elements", "[arr
 
     // Insert several values at the beginning.
     auto_array__char__insert_elements( &auto_array, 0, 2, &values.data[ 0 ] );
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_values1 ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_values1 ) );
 
     // Insert some more part-way through.
     auto_array__char__insert_elements( &auto_array, 1, 2, &values.data[ 2 ] );
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_values2 ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_values2 ) );
 
     // And at the end.
     auto_array__char__insert_elements( &auto_array, auto_array.array__char->length, 1, &values.data[ 4 ] );
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_values3 ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_values3 ) );
 
     // Then back at the beginning again.
     auto_array__char__insert_elements( &auto_array, 0, 1, &values.data[ 5 ] );
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_values4 ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_values4 ) );
 
     // Insert zero elements.
     auto_array__char__insert_elements( &auto_array, 0, 0, &values.data[ 0 ] );
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_values4 ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_values4 ) );
 
     // Insert zero elements with a NULL pointer.
     auto_array__char__insert_elements( &auto_array, 0, 0, NULL );
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_values4 ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_values4 ) );
 
     // Insert some elements off the end of the auto_array.
     auto_array__char__insert_elements( &auto_array, auto_array.array__char->length + 4, 2, &values.data[ 6 ] );
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_values5 ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_values5 ) );
 
     auto_array__char__clear( &auto_array );
 }
@@ -395,7 +395,7 @@ TEST_CASE_METHOD( Array__TestFixture, "auto_array__char__insert_element", "[arra
     auto_array__char__insert_element( &auto_array, 4, chars[ 4 ] );
     auto_array__char__insert_element( &auto_array, 5, chars[ 5 ] );
 
-    REQUIRE( array__char__equals( auto_array.array__char, &expected_array ) );
+    REQUIRE( array__char__equals( *auto_array.array__char, expected_array ) );
     auto_array__char__clear( &auto_array );
 }
 

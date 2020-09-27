@@ -4,8 +4,8 @@
 // Internal Includes
 #include "kirke/string.h"
 
-static bool chars_are_equal( const char *first, const char *second ){
-    if( *first == *second ){
+static bool chars_are_equal( char first, char second ){
+    if( first == second ){
         return true;
     }
 

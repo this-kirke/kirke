@@ -5,8 +5,8 @@
 #include "kirke/list.h"
 #include "kirke/system_allocator.h"
 
-bool ints_are_equal( int const *first, int const *second ){
-    if( *first == *second ){
+bool ints_are_equal( int first, int second ){
+    if( first == second ){
         return true;
     }
     return false;

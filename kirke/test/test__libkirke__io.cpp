@@ -39,7 +39,7 @@ TEST_CASE_METHOD( IOTestFixture, "io__read_text_file", "[io]" ){
     REQUIRE( error.code == Error__None );
     REQUIRE( input != NULL );
     REQUIRE( input->length == file_contents.length );
-    REQUIRE( string__equals( input, &file_contents ) );
+    REQUIRE( string__equals( *input, file_contents ) );
 
     string__clear( input, system_allocator.allocator );
     allocator__free( system_allocator.allocator, input );

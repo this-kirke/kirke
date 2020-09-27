@@ -30,8 +30,8 @@ TEST_CASE( "string__equals", "[string]" ){
     String first = string__literal( "String 1" );
     String second = string__literal( "String 2" );
 
-    REQUIRE( string__equals( &first, &first ) == true );
-    REQUIRE( string__equals( &first, &second ) == false );
+    REQUIRE( string__equals( first, first ) == true );
+    REQUIRE( string__equals( first, second ) == false );
 }
 
 TEST_CASE( "string__clear_elements", "[string]" ){
@@ -95,7 +95,7 @@ TEST_CASE_METHOD( String__TestFixture, "string__initialize__full_and_clear", "[s
     String string;
     string__initialize__full( &string, system_allocator.allocator, STRING, 17, 18 );
 
-    REQUIRE( string__equals( &string, &expected_string ) );
+    REQUIRE( string__equals( string, expected_string ) );
 
     string__clear( &string, system_allocator.allocator );
 }
@@ -104,7 +104,7 @@ TEST_CASE_METHOD( String__TestFixture, "string__clone", "[string]" ){
     String string = string__literal( "This is a string." );
     String *clone = string__clone( &string, system_allocator.allocator );
 
-    REQUIRE( string__equals( clone, &string ) );
+    REQUIRE( string__equals( *clone, string ) );
 
     string__clear( clone, system_allocator.allocator );
     allocator__free( system_allocator.allocator, clone );
@@ -136,7 +136,7 @@ TEST_CASE_METHOD( String__TestFixture, "auto_string__append_elements", "[string]
 
     auto_string__append_elements( &auto_string, 17, STRING );
 
-    REQUIRE( string__equals( auto_string.string, &expected_string ) );
+    REQUIRE( string__equals( *auto_string.string, expected_string ) );
 }
 
 TEST_CASE_METHOD( String__TestFixture, "auto_string__append_element", "[string]" ){
@@ -151,7 +151,7 @@ TEST_CASE_METHOD( String__TestFixture, "auto_string__append_element", "[string]"
         auto_string__append_element( &auto_string, STRING[ element_index ] );
     }
 
-    REQUIRE( string__equals( auto_string.string, &expected_string ) );
+    REQUIRE( string__equals( *auto_string.string, expected_string ) );
 }
 
 TEST_CASE_METHOD( String__TestFixture, "auto_string__prepend_elements", "[string]" ){
@@ -165,23 +165,23 @@ TEST_CASE_METHOD( String__TestFixture, "auto_string__prepend_elements", "[string
 
     // Prepend several values to an empty auto_string.
     auto_string__prepend_elements( &auto_string, 2, &values.data[ 0 ] );
-    REQUIRE( string__equals( auto_string.string, &expected_values1 ) );
+    REQUIRE( string__equals( *auto_string.string, expected_values1 ) );
 
     // Prepend a single value.
     auto_string__prepend_elements( &auto_string, 1, &values.data[ 2 ] );
-    REQUIRE( string__equals( auto_string.string, &expected_values2 ) );
+    REQUIRE( string__equals( *auto_string.string, expected_values2 ) );
 
     // Prepend several values to a non-empty auto_string.
     auto_string__prepend_elements( &auto_string, 2, &values.data[ 3 ] );
-    REQUIRE( string__equals( auto_string.string, &expected_values3 ) );
+    REQUIRE( string__equals( *auto_string.string, expected_values3 ) );
 
     // Prepend no values.
     auto_string__prepend_elements( &auto_string, 0, &values.data[ 0 ] );
-    REQUIRE( string__equals( auto_string.string, &expected_values3 ) );
+    REQUIRE( string__equals( *auto_string.string, expected_values3 ) );
 
     // Prepend no values with NULL data.
     auto_string__prepend_elements( &auto_string, 0, NULL );
-    REQUIRE( string__equals( auto_string.string, &expected_values3 ) );
+    REQUIRE( string__equals( *auto_string.string, expected_values3 ) );
 
     auto_string__clear( &auto_string );
 }
@@ -198,7 +198,7 @@ TEST_CASE_METHOD( String__TestFixture, "auto_string__prepend_element", "[string]
         auto_string__prepend_element( &auto_string, STRING[ element_index - 1 ] );
     }
 
-    REQUIRE( string__equals( auto_string.string, &expected_string ) );
+    REQUIRE( string__equals( *auto_string.string, expected_string ) );
     auto_string__clear( &auto_string );
 }
 
@@ -216,31 +216,31 @@ TEST_CASE_METHOD( String__TestFixture, "auto_string__insert_elements", "[string]
 
     // Insert several values at the beginning.
     auto_string__insert_elements( &auto_string, 0, 2, &values.data[ 0 ] );
-    REQUIRE( string__equals( auto_string.string, &expected_values1 ) );
+    REQUIRE( string__equals( *auto_string.string, expected_values1 ) );
 
     // Insert some more part-way through.
     auto_string__insert_elements( &auto_string, 1, 2, &values.data[ 2 ] );
-    REQUIRE( string__equals( auto_string.string, &expected_values2 ) );
+    REQUIRE( string__equals( *auto_string.string, expected_values2 ) );
 
     // And at the end.
     auto_string__insert_elements( &auto_string, auto_string.string->length, 1, &values.data[ 4 ] );
-    REQUIRE( string__equals( auto_string.string, &expected_values3 ) );
+    REQUIRE( string__equals( *auto_string.string, expected_values3 ) );
 
     // Then back at the beginning again.
     auto_string__insert_elements( &auto_string, 0, 1, &values.data[ 5 ] );
-    REQUIRE( string__equals( auto_string.string, &expected_values4 ) );
+    REQUIRE( string__equals( *auto_string.string, expected_values4 ) );
 
     // Insert zero elements.
     auto_string__insert_elements( &auto_string, 0, 0, &values.data[ 0 ] );
-    REQUIRE( string__equals( auto_string.string, &expected_values4 ) );
+    REQUIRE( string__equals( *auto_string.string, expected_values4 ) );
 
     // Insert zero elements with a NULL pointer.
     auto_string__insert_elements( &auto_string, 0, 0, NULL );
-    REQUIRE( string__equals( auto_string.string, &expected_values4 ) );
+    REQUIRE( string__equals( *auto_string.string, expected_values4 ) );
 
     // Insert some elements off the end of the auto_string.
     auto_string__insert_elements( &auto_string, auto_string.string->length + 4, 2, &values.data[ 6 ] );
-    REQUIRE( string__equals( auto_string.string, &expected_values5 ) );
+    REQUIRE( string__equals( *auto_string.string, expected_values5 ) );
 
     auto_string__clear( &auto_string );
 }
@@ -264,7 +264,7 @@ TEST_CASE_METHOD( String__TestFixture, "auto_string__insert_element", "[string]"
     auto_string__insert_element( &auto_string, 4, STRING[ 4 ] );
     auto_string__insert_element( &auto_string, 5, STRING[ 5 ] );
 
-    REQUIRE( string__equals( auto_string.string, &expected_string ) );
+    REQUIRE( string__equals( *auto_string.string, expected_string ) );
     auto_string__clear( &auto_string );
 }
 
@@ -383,7 +383,7 @@ TEST_CASE_METHOD( String__TestFixture, "string__initialize__va_list", "[string]"
     String string;
     string__initialize__va_list__helper( &string, system_allocator.allocator, "This is a %s.", "test" );
 
-    REQUIRE( string__equals( &string, &expected_string ) );
+    REQUIRE( string__equals( string, expected_string ) );
 
     string__clear( &string, system_allocator.allocator );
 }
@@ -394,7 +394,7 @@ TEST_CASE_METHOD( String__TestFixture, "string__initialize__format", "[string]" 
     String string;
     string__initialize__format( &string, system_allocator.allocator, "This is a %s.", "test" );
 
-    REQUIRE( string__equals( &string, &expected_string ) );
+    REQUIRE( string__equals( string, expected_string ) );
 
     string__clear( &string, system_allocator.allocator );
 }
@@ -419,7 +419,7 @@ TEST_CASE_METHOD( String__TestFixture, "string__append__va_list", "[string]" ){
     string__append__va_list__helper( &string, system_allocator.allocator, "%s", STRING );
     string__append__va_list__helper( &string, system_allocator.allocator, "%s", STRING );
 
-    REQUIRE( string__equals( &string, &expected_string ) );
+    REQUIRE( string__equals( string, expected_string ) );
 }
 
 TEST_CASE_METHOD( String__TestFixture, "string__append__format", "[string]" ){
@@ -433,5 +433,5 @@ TEST_CASE_METHOD( String__TestFixture, "string__append__format", "[string]" ){
     string__append__format( &string, system_allocator.allocator, "%s", STRING );
     string__append__format( &string, system_allocator.allocator, "%s", STRING );
 
-    REQUIRE( string__equals( &string, &expected_string ) );
+    REQUIRE( string__equals( string, expected_string ) );
 }
