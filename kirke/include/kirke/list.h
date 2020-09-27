@@ -96,9 +96,16 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     bool METHOD_PREFIX ## __where( TYPENAME *list, ELEMENT_TYPE value, TYPENAME **ref_list_pointer ){                               \
-        (void)( list );                                                                                                             \
-        (void)( value );                                                                                                            \
-        (void)( ref_list_pointer );                                                                                                 \
+        TYPENAME *current = METHOD_PREFIX ## __head( list );                                                                        \
+                                                                                                                                    \
+        while( current != NULL ){                                                                                                   \
+            if( ELEMENT_TYPE__EQUALS_FUNCTION( &current->value, &value ) ){                                                         \
+                *ref_list_pointer = current;                                                                                        \
+                return true;                                                                                                        \
+            }                                                                                                                       \
+            current = current->next;                                                                                                \
+        }                                                                                                                           \
+                                                                                                                                    \
         return false;                                                                                                               \
     }                                                                                                                               \
                                                                                                                                     \
