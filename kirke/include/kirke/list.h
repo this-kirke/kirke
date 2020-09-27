@@ -146,8 +146,15 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     unsigned long long METHOD_PREFIX ## __position_of( TYPENAME *link ){                                                            \
-        (void)( link );                                                                                                             \
-        return 0;                                                                                                                   \
+        TYPENAME *current = METHOD_PREFIX ## __head( link );                                                                        \
+                                                                                                                                    \
+        unsigned long long position = 0;                                                                                            \
+        while( current != link ){                                                                                                   \
+            current = current->next;                                                                                                \
+            position++;                                                                                                             \
+        }                                                                                                                           \
+                                                                                                                                    \
+        return position;                                                                                                            \
     }                                                                                                                               \
                                                                                                                                     \
     void METHOD_PREFIX ## __append( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value ){                                     \
