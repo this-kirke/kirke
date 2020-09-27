@@ -267,9 +267,16 @@ BEGIN_DECLARATIONS
     }                                                                                                                               \
                                                                                                                                     \
     TYPENAME *METHOD_PREFIX ## __delete_first( TYPENAME *link, ELEMENT_TYPE value, Allocator *allocator ){                          \
-        (void)( link );                                                                                                             \
-        (void)( value );                                                                                                            \
-        (void)( allocator );                                                                                                        \
+        TYPENAME *head = METHOD_PREFIX ## __head( link );                                                                           \
+                                                                                                                                    \
+        TYPENAME *current = head;                                                                                                   \
+        while( current != NULL ){                                                                                                   \
+            if( ELEMENT_TYPE__EQUALS_FUNCTION( &current->value, &value ) ){                                                         \
+                return METHOD_PREFIX ## __delete_link( current, allocator );                                                        \
+            }                                                                                                                       \
+            current = current->next;                                                                                                \
+        }                                                                                                                           \
+                                                                                                                                    \
         return NULL;                                                                                                                \
     }                                                                                                                               \
                                                                                                                                     \
