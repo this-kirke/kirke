@@ -29,6 +29,8 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
     void METHOD_PREFIX ## __append( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value );                                     \
                                                                                                                                     \
+    TYPENAME *METHOD_PREFIX ## __prepend( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value );                               \
+                                                                                                                                    \
 
 #define LIST__DEFINE( TYPENAME, METHOD_PREFIX, ELEMENT_TYPE )                                                                       \
                                                                                                                                     \
@@ -85,6 +87,14 @@ BEGIN_DECLARATIONS
         tail->next = new_list;                                                                                                      \
     }                                                                                                                               \
                                                                                                                                     \
+    TYPENAME *METHOD_PREFIX ## __prepend( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value ){                               \
+        (void)( list );                                                                                                             \
+        (void)( allocator );                                                                                                        \
+        (void)( value );                                                                                                            \
+        return list;                                                                                                                \
+    }                                                                                                                               \
+                                                                                                                                    \
+
 END_DECLARATIONS
 
 #endif // KIRKE__LIST__H
