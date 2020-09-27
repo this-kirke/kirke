@@ -33,6 +33,7 @@ BEGIN_DECLARATIONS
                                                                                                                                     \
     TYPENAME *METHOD_PREFIX ## __prepend( TYPENAME *list, Allocator *allocator, ELEMENT_TYPE value );                               \
                                                                                                                                     \
+    TYPENAME *METHOD_PREFIX ## __insert_before( TYPENAME *link, Allocator *allocator, ELEMENT_TYPE value );                         \
 
 #define LIST__DEFINE( TYPENAME, METHOD_PREFIX, ELEMENT_TYPE )                                                                       \
                                                                                                                                     \
@@ -119,6 +120,14 @@ BEGIN_DECLARATIONS
         head->previous = new_list;                                                                                                  \
                                                                                                                                     \
         return new_list;                                                                                                            \
+    }                                                                                                                               \
+                                                                                                                                    \
+    TYPENAME *METHOD_PREFIX ## __insert_before( TYPENAME *link, Allocator *allocator, ELEMENT_TYPE value ){                         \
+        (void)( link );                                                                                                             \
+        (void)( allocator );                                                                                                        \
+        (void)( value );                                                                                                            \
+                                                                                                                                    \
+        return NULL;                                                                                                                \
     }                                                                                                                               \
                                                                                                                                     \
 
