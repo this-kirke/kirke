@@ -392,7 +392,7 @@
         memset(                                                                                                                                                     \
             TYPENAME_LOWERCASE->data + start_index,                                                                                                                 \
             0,                                                                                                                                                      \
-            math__min__ullong( TYPENAME_LOWERCASE->length, element_count ) * TYPENAME_LOWERCASE->element_size                                                       \
+            math__min__ullong( TYPENAME_LOWERCASE->capacity, element_count ) * sizeof( ELEMENT_TYPE )                                                               \
         );                                                                                                                                                          \
     }                                                                                                                                                               \
                                                                                                                                                                     \
