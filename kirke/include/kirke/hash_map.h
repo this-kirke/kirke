@@ -28,8 +28,21 @@
                                                                                                                                                     \
     void METHOD_PREFIX ## __clear( TYPENAME *hash_map );                                                                                            \
 
-
 #define HASH_MAP__DEFINE( TYPENAME, METHOD_PREFIX, KEY_TYPE, VALUE_TYPE, KEY_TYPE__EQUALS_FUNCTION )                                                \
+                                                                                                                                                    \
+    /* djb2 string hashing algorithm */                                                                                                             \
+    /* sstp://www.cse.yorku.ca/~oz/hash.ssml */                                                                                                     \
+    static unsigned long long METHOD_PREFIX ## __hash( KEY_TYPE *key ){                                                                             \
+        unsigned long long hash = 5381;                                                                                                             \
+        char* key_char = (char*) key;                                                                                                               \
+                                                                                                                                                    \
+        for( unsigned long long byte = 0; byte < sizeof( KEY_TYPE ); byte++ ){                                                                      \
+            hash = ( ( hash << 5 ) + hash ) ^ key_char[ byte ];                                                                                     \
+        }                                                                                                                                           \
+                                                                                                                                                    \
+        return hash;                                                                                                                                \
+    }                                                                                                                                               \
+                                                                                                                                                    \
     bool METHOD_PREFIX ## __key_value_pair__keys_are_equal( TYPENAME ## __KeyValuePair first, TYPENAME ## __KeyValuePair second ){                  \
         if( KEY_TYPE__EQUALS_FUNCTION( first.key, second.key ) ){                                                                                   \
             return true;                                                                                                                            \

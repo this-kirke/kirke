@@ -25,3 +25,21 @@ TEST_CASE( "hash_map__initialize_and_clear", "[hash_map]" ){
     hash_map__string_to_int__clear( &hash_map );
     system_allocator__deinitialize( &system_allocator );
 }
+
+class HashMap__TestFixture {
+    protected:
+
+        HashMap__TestFixture(){
+            system_allocator__initialize( &system_allocator, NULL );
+            hash_map__string_to_int__initialize( &hash_map, system_allocator.allocator, BUCKET_COUNT );
+        }
+
+        ~HashMap__TestFixture(){
+            hash_map__string_to_int__clear( &hash_map );
+            system_allocator__deinitialize( &system_allocator );
+        }
+
+        const unsigned long long BUCKET_COUNT = 10;
+        HashMap hash_map;
+        SystemAllocator system_allocator;
+};
