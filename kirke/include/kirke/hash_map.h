@@ -161,4 +161,6 @@
 
 #define HASH_MAP__DEFAULT_HASH_FUNCTION( METHOD_PREFIX, KEY_TYPE ) METHOD_PREFIX ## __hash__ ## KEY_TYPE
 
+#define HASH_MAP__DIRECT_COMPARE( first, second ) (first) == (second)
+
 #endif // KIRKE__HASH_MAP__H
