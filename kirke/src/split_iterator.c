@@ -8,6 +8,11 @@ void split_iterator__initialize( SplitIterator* iterator, const String* string_,
     iterator->position = 0;
 }
 
+unsigned long long split_iterator__count( SplitIterator const *iterator ){
+    (void)( iterator );
+    return 0;
+}
+
 bool split_iterator__next( SplitIterator* iterator, String* out_token ){
     if( iterator->position >= iterator->string->length ){
         return false;

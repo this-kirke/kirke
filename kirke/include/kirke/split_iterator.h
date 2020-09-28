@@ -51,6 +51,15 @@ typedef struct SplitIterator{
 void split_iterator__initialize( SplitIterator* iterator, const String* string, const String* delimiter );
 
 /**
+ *  \brief This method counts the total number of tokens which will be returned by split_iterator__next. This is useful
+ *  for determining the number of tokens while not having to handle each of them individually.
+ *  \param iterator A pointer to an initialized iterator, for which the number of tokens will be calculated.
+ *  \returns the number of tokens which exist in iterator->string, separated by iterator->delimiter.  The number of tokens
+ *  is equal to the number of occurrences of the delimiter sequence + 1.
+ */
+unsigned long long split_iterator__count( SplitIterator const *iterator );
+
+/**
  *  \brief This method retrieves the next token found in the SplitIterator's string field, and stores it in the provided String.
  *  \param iterator A pointer to the SplitIterator used to retrieve the next token.
  *  \param out_token An out parameter. Upon successful return, this will represent the next token contained by the parent String.
