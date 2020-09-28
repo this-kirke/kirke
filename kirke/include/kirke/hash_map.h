@@ -81,15 +81,63 @@
     }                                                                                                                                               \
                                                                                                                                                     \
     void METHOD_PREFIX ## __insert( HashMap *hash_map, KEY_TYPE key, VALUE_TYPE value ){                                                            \
-        (void)( hash_map );                                                                                                                         \
-        (void)( key );                                                                                                                              \
-        (void)( value );                                                                                                                            \
+        unsigned long long bucket_index = METHOD_PREFIX ## __hash( &key ) % hash_map->entry_buckets.capacity;                                       \
+                                                                                                                                                    \
+        /* If no list of entries exists at the index, create a new list with the specified key:value and return */                                  \
+        if( hash_map->entry_buckets.data[ bucket_index ] == NULL ){                                                                                 \
+            hash_map->entry_buckets.data[ bucket_index ] = (TYPENAME ## __List__KeyValuePair*) allocator__alloc(                                    \
+                hash_map->allocator,                                                                                                                \
+                sizeof( TYPENAME ## __List__KeyValuePair )                                                                                          \
+            );                                                                                                                                      \
+            hash_map->entry_buckets.length += 1;                                                                                                    \
+                                                                                                                                                    \
+            METHOD_PREFIX ## __list__key_value_pair__initialize(                                                                                    \
+                &hash_map->entry_buckets.data[ bucket_index ],                                                                                      \
+                hash_map->allocator,                                                                                                                \
+                (TYPENAME ## __KeyValuePair) { .key = key, .value = value }                                                                         \
+            );                                                                                                                                      \
+                                                                                                                                                    \
+            return;                                                                                                                                 \
+        }                                                                                                                                           \
+                                                                                                                                                    \
+        /* If an entry with this key already exists, update it to the new value and return */                                                       \
+        unsigned long long index;                                                                                                                   \
+        if(                                                                                                                                         \
+            METHOD_PREFIX ## __list__key_value_pair__index_of(                                                                                      \
+                hash_map->entry_buckets.data[ bucket_index ],                                                                                       \
+                (TYPENAME ## __KeyValuePair) { .key = key, .value = value },                                                                        \
+                &index                                                                                                                              \
+            )                                                                                                                                       \
+        ){                                                                                                                                          \
+            TYPENAME ## __List__KeyValuePair *existing_entry;                                                                                       \
+            METHOD_PREFIX ## __list__key_value_pair__at( hash_map->entry_buckets.data[ bucket_index ], index, &existing_entry );                    \
+            existing_entry->value.value = value;                                                                                                    \
+            return;                                                                                                                                 \
+        }                                                                                                                                           \
+                                                                                                                                                    \
+        /* Entries already exist at this index, and they don't match our key. Append the specified key:value to the existing list of entries */     \
+        METHOD_PREFIX ## __list__key_value_pair__append(                                                                                            \
+            hash_map->entry_buckets.data[ bucket_index ],                                                                                           \
+            hash_map->allocator,                                                                                                                    \
+            (TYPENAME ## __KeyValuePair) { .key = key, .value = value }                                                                             \
+        );                                                                                                                                          \
     }                                                                                                                                               \
                                                                                                                                                     \
     bool METHOD_PREFIX ## __retrieve( TYPENAME *hash_map, KEY_TYPE key, VALUE_TYPE *out_value ){                                                    \
-        (void)( hash_map );                                                                                                                         \
-        (void)( key );                                                                                                                              \
-        (void)( out_value );                                                                                                                        \
+        unsigned long long bucket_index = METHOD_PREFIX ## __hash( &key ) % hash_map->entry_buckets.capacity;                                       \
+                                                                                                                                                    \
+        TYPENAME ## __List__KeyValuePair *entry;                                                                                                    \
+        if(                                                                                                                                         \
+            METHOD_PREFIX ## __list__key_value_pair__where(                                                                                         \
+                hash_map->entry_buckets.data[ bucket_index ],                                                                                       \
+                (TYPENAME ## __KeyValuePair) { .key = key },                                                                                        \
+                &entry                                                                                                                              \
+            )                                                                                                                                       \
+        ){                                                                                                                                          \
+            *out_value = entry->value.value;                                                                                                        \
+            return true;                                                                                                                            \
+        }                                                                                                                                           \
+                                                                                                                                                    \
         return false;                                                                                                                               \
     }                                                                                                                                               \
 
