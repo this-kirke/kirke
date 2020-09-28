@@ -144,8 +144,18 @@
     }                                                                                                                                               \
                                                                                                                                                     \
     void METHOD_PREFIX ## __delete( TYPENAME *hash_map, KEY_TYPE key ){                                                                             \
-        (void)( hash_map );                                                                                                                         \
-        (void)( key );                                                                                                                              \
+        unsigned long long bucket_index = METHOD_PREFIX ## __hash( &key ) % hash_map->entry_buckets.capacity;                                       \
+                                                                                                                                                    \
+        TYPENAME ## __List__KeyValuePair *entry;                                                                                                    \
+        if(                                                                                                                                         \
+            METHOD_PREFIX ## __list__key_value_pair__where(                                                                                         \
+                hash_map->entry_buckets.data[ bucket_index ],                                                                                       \
+                (TYPENAME ## __KeyValuePair) { .key = key },                                                                                        \
+                &entry                                                                                                                              \
+            )                                                                                                                                       \
+        ){                                                                                                                                          \
+            hash_map->entry_buckets.data[ bucket_index ] = METHOD_PREFIX ## __list__key_value_pair__delete_link( entry, hash_map->allocator );      \
+        }                                                                                                                                           \
     }
 
 #endif // KIRKE__HASH_MAP__H
