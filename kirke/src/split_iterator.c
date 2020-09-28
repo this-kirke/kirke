@@ -9,8 +9,20 @@ void split_iterator__initialize( SplitIterator* iterator, const String* string_,
 }
 
 unsigned long long split_iterator__count( SplitIterator const *iterator ){
-    (void)( iterator );
-    return 0;
+    SplitIterator copy = {
+        .string = iterator->string,
+        .delimiter = iterator->delimiter,
+        .position = 0
+    };
+
+    unsigned long count = 0;
+
+    String string;
+    while( split_iterator__next( &copy, &string ) ){
+        count++;
+    }
+
+    return count;
 }
 
 bool split_iterator__next( SplitIterator* iterator, String* out_token ){
@@ -31,8 +43,11 @@ bool split_iterator__next( SplitIterator* iterator, String* out_token ){
         else{
             iterator->position += out_token->length;
         }
-    } while( out_token->length == 0 );
+    } while( out_token->length == 0 && iterator->position < iterator->string->length );
 
+    if( out_token->length == 0 ){
+        return false;
+    }
 
     return true;
 }
