@@ -43,3 +43,16 @@ class HashMap__TestFixture {
         HashMap hash_map;
         SystemAllocator system_allocator;
 };
+
+TEST_CASE_METHOD( HashMap__TestFixture, "hash_map__insert_and_retrieve", "[hash_map]" ){
+    String key = string__literal( "key" );
+    int value = 42;
+    hash_map__string_to_int__insert( &hash_map, key, value );
+
+    int retrieved_value;
+    REQUIRE( hash_map__string_to_int__retrieve( &hash_map, key, &retrieved_value ) );
+    REQUIRE( retrieved_value == value );
+
+    String does_not_exit = string__literal( "Does not exist." );
+    REQUIRE_FALSE( hash_map__string_to_int__retrieve( &hash_map, does_not_exit, &retrieved_value ) );
+}
