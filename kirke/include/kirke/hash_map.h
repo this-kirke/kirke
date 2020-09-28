@@ -52,13 +52,15 @@
     )                                                                                                                                               \
                                                                                                                                                     \
     void METHOD_PREFIX ## __initialize( TYPENAME *hash_map, Allocator *allocator, unsigned long long bucket_count ){                                \
-        (void)( hash_map );                                                                                                                         \
-        (void)( allocator );                                                                                                                        \
-        (void)( bucket_count );                                                                                                                     \
+        hash_map->allocator = allocator;                                                                                                            \
+                                                                                                                                                    \
+        METHOD_PREFIX ## __array__list__key_value_pair ## __initialize( &hash_map->entry_buckets, allocator, bucket_count );                        \
+        METHOD_PREFIX ## __array__list__key_value_pair__clear_elements( &hash_map->entry_buckets, 0, hash_map->entry_buckets.capacity );            \
     }                                                                                                                                               \
                                                                                                                                                     \
     void METHOD_PREFIX ## __clear( HashMap *hash_map ){                                                                                             \
-        (void)( hash_map );                                                                                                                         \
+        METHOD_PREFIX ## __array__list__key_value_pair__clear( &hash_map->entry_buckets, hash_map->allocator );                                     \
+        hash_map->allocator = NULL;                                                                                                                 \
     }                                                                                                                                               \
 
 #endif // KIRKE__HASH_MAP__H
