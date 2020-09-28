@@ -273,7 +273,10 @@ BEGIN_DECLARATIONS
     TYPENAME *METHOD_PREFIX ## __delete_link( TYPENAME *link, Allocator *allocator ){                                               \
         TYPENAME *head = METHOD_PREFIX ## __head( link );                                                                           \
         if( head == link ){                                                                                                         \
-            link->next->previous = NULL;                                                                                            \
+            if( link->next != NULL ){                                                                                               \
+                link->next->previous = NULL;                                                                                        \
+            }                                                                                                                       \
+                                                                                                                                    \
             head = link->next;                                                                                                      \
         }                                                                                                                           \
         else{                                                                                                                       \
