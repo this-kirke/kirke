@@ -217,12 +217,10 @@
      *  \param auto_array A pointer to the AutoArray to which the element will be appended.                                                                         \
      *  \param element The element which will be appended to the AutoArray.                                                                                         \
      */                                                                                                                                                             \
-    inline void auto_ ## TYPENAME_LOWERCASE ## __append_element(                                                                                                    \
+    void auto_ ## TYPENAME_LOWERCASE ## __append_element(                                                                                                    \
         Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                              \
         ELEMENT_TYPE element                                                                                                                                        \
-    ){                                                                                                                                                              \
-        auto_ ## TYPENAME_LOWERCASE ## __append_elements( auto_ ## TYPENAME_LOWERCASE, 1, &element );                                                               \
-    }                                                                                                                                                               \
+    );                                                                                                                                                               \
                                                                                                                                                                     \
     /**                                                                                                                                                             \
      *  \brief This method prepends elements to the beginning of an AutoArray, allocating additional memory as necessary.                                           \
@@ -241,12 +239,10 @@
      *  \param auto_array A pointer to the AutoArray to which the element will be prepended.                                                                        \
      *  \param element The element which will be prepended to the AutoArray.                                                                                        \
      */                                                                                                                                                             \
-    inline void auto_ ## TYPENAME_LOWERCASE ## __prepend_element(                                                                                                   \
+    void auto_ ## TYPENAME_LOWERCASE ## __prepend_element(                                                                                                   \
         Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                              \
         ELEMENT_TYPE element                                                                                                                                        \
-    ){                                                                                                                                                              \
-        auto_ ## TYPENAME_LOWERCASE ## __prepend_elements( auto_ ## TYPENAME_LOWERCASE, 1, &element );                                                              \
-    }                                                                                                                                                               \
+    );                                                                                                                                                               \
                                                                                                                                                                     \
     /**                                                                                                                                                             \
      *  \brief This method inserts elements to the specified location of an AutoArray, allocating additional memory as necessary.                                   \
@@ -268,13 +264,11 @@
      *  \param index The index at which the element will be inserted.                                                                                               \
      *  \param element The element which will be inserted.                                                                                                          \
      */                                                                                                                                                             \
-    inline void auto_ ## TYPENAME_LOWERCASE ## __insert_element(                                                                                                    \
+    void auto_ ## TYPENAME_LOWERCASE ## __insert_element(                                                                                                    \
         Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                              \
         unsigned long long index,                                                                                                                                   \
         ELEMENT_TYPE element                                                                                                                                        \
-    ){                                                                                                                                                              \
-        auto_ ## TYPENAME_LOWERCASE ## __insert_elements( auto_ ## TYPENAME_LOWERCASE, index, 1, &element );                                                        \
-    }                                                                                                                                                               \
+    );                                                                                                                                                               \
                                                                                                                                                                     \
     /**                                                                                                                                                             \
      *  \brief Removes the element at the given index.                                                                                                              \
@@ -507,6 +501,13 @@
         }                                                                                                                                                           \
     }                                                                                                                                                               \
                                                                                                                                                                     \
+    void auto_ ## TYPENAME_LOWERCASE ## __append_element(                                                                                                    \
+        Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                              \
+        ELEMENT_TYPE element                                                                                                                                        \
+    ){                                                                                                                                                              \
+        auto_ ## TYPENAME_LOWERCASE ## __append_elements( auto_ ## TYPENAME_LOWERCASE, 1, &element );                                                               \
+    }                                                                                                                                                               \
+                                                                                                                                                                    \
     void auto_ ## TYPENAME_LOWERCASE ## __append_elements(                                                                                                          \
         Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                              \
         unsigned long long element_count,                                                                                                                           \
@@ -524,6 +525,13 @@
         );                                                                                                                                                          \
                                                                                                                                                                     \
         auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length += element_count;                                                                                   \
+    }                                                                                                                                                               \
+                                                                                                                                                                    \
+    void auto_ ## TYPENAME_LOWERCASE ## __prepend_element(                                                                                                   \
+        Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                              \
+        ELEMENT_TYPE element                                                                                                                                        \
+    ){                                                                                                                                                              \
+        auto_ ## TYPENAME_LOWERCASE ## __prepend_elements( auto_ ## TYPENAME_LOWERCASE, 1, &element );                                                              \
     }                                                                                                                                                               \
                                                                                                                                                                     \
     void auto_ ## TYPENAME_LOWERCASE ## __prepend_elements(                                                                                                         \
@@ -550,6 +558,14 @@
         );                                                                                                                                                          \
                                                                                                                                                                     \
         auto_ ## TYPENAME_LOWERCASE->TYPENAME_LOWERCASE->length += element_count;                                                                                   \
+    }                                                                                                                                                               \
+                                                                                                                                                                    \
+    void auto_ ## TYPENAME_LOWERCASE ## __insert_element(                                                                                                    \
+        Auto ## TYPENAME *auto_ ## TYPENAME_LOWERCASE,                                                                                                              \
+        unsigned long long index,                                                                                                                                   \
+        ELEMENT_TYPE element                                                                                                                                        \
+    ){                                                                                                                                                              \
+        auto_ ## TYPENAME_LOWERCASE ## __insert_elements( auto_ ## TYPENAME_LOWERCASE, index, 1, &element );                                                        \
     }                                                                                                                                                               \
                                                                                                                                                                     \
     void auto_ ## TYPENAME_LOWERCASE ## __insert_elements(                                                                                                          \
