@@ -24,7 +24,9 @@
         "memory_resource": "cpp",
         "list": "cpp",
         "bitset": "cpp",
-        "algorithm": "cpp"
+        "algorithm": "cpp",
+        "cstdint": "cpp",
+        "cstddef": "cpp"
     },
     "files.insertFinalNewline": true,
     "files.trimTrailingWhitespace": true,

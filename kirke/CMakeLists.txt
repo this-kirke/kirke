@@ -60,6 +60,12 @@ if( KIRKE_BUILD_TESTS )
     )
 
     catch2__add_test(
+        NAME test__libkirke__hash_map
+        SOURCES "${libkirke__DIR}/test/test__libkirke__hash_map.cpp"
+        LINK_LIBRARIES libkirke
+    )
+
+    catch2__add_test(
         NAME test__libkirke__io
         SOURCES "${libkirke__DIR}/test/test__libkirke__io.cpp"
         LINK_LIBRARIES libkirke
