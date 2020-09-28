@@ -7,7 +7,17 @@
 #include "kirke/system_allocator.h"
 
 HASH_MAP__DECLARE( HashMap__StringToInt, hash_map__string_to_int, String, int )
-HASH_MAP__DEFINE( HashMap__StringToInt, hash_map__string_to_int, String, int, string__equals )
+
+HASH_MAP__DEFINE_DEFAULT_HASH_FUNCTION( hash_map__string_to_int, String )
+
+HASH_MAP__DEFINE(
+    HashMap__StringToInt,
+    hash_map__string_to_int,
+    String,
+    int,
+    HASH_MAP__DEFAULT_HASH_FUNCTION( hash_map__string_to_int, String ),
+    string__equals
+)
 
 TEST_CASE( "hash_map__initialize_and_clear", "[hash_map]" ){
     const unsigned long long BUCKET_COUNT = 10;
