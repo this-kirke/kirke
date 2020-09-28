@@ -31,6 +31,8 @@
     void METHOD_PREFIX ## __insert( HashMap* hash_map, KEY_TYPE key, VALUE_TYPE value );                                                            \
                                                                                                                                                     \
     bool METHOD_PREFIX ## __retrieve( TYPENAME *hash_map, KEY_TYPE key, VALUE_TYPE *out_value );                                                    \
+                                                                                                                                                    \
+    void METHOD_PREFIX ## __delete( TYPENAME * hash_map, KEY_TYPE key );
 
 #define HASH_MAP__DEFINE( TYPENAME, METHOD_PREFIX, KEY_TYPE, VALUE_TYPE, KEY_TYPE__EQUALS_FUNCTION )                                                \
                                                                                                                                                     \
@@ -140,5 +142,10 @@
                                                                                                                                                     \
         return false;                                                                                                                               \
     }                                                                                                                                               \
+                                                                                                                                                    \
+    void METHOD_PREFIX ## __delete( TYPENAME *hash_map, KEY_TYPE key ){                                                                             \
+        (void)( hash_map );                                                                                                                         \
+        (void)( key );                                                                                                                              \
+    }
 
 #endif // KIRKE__HASH_MAP__H
