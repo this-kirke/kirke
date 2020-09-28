@@ -27,6 +27,10 @@
     void METHOD_PREFIX ## __initialize( TYPENAME *hash_map, Allocator *allocator, unsigned long long bucket_count );                                \
                                                                                                                                                     \
     void METHOD_PREFIX ## __clear( TYPENAME *hash_map );                                                                                            \
+                                                                                                                                                    \
+    void METHOD_PREFIX ## __insert( HashMap* hash_map, KEY_TYPE key, VALUE_TYPE value );                                                            \
+                                                                                                                                                    \
+    bool METHOD_PREFIX ## __retrieve( TYPENAME *hash_map, KEY_TYPE key, VALUE_TYPE *out_value );                                                    \
 
 #define HASH_MAP__DEFINE( TYPENAME, METHOD_PREFIX, KEY_TYPE, VALUE_TYPE, KEY_TYPE__EQUALS_FUNCTION )                                                \
                                                                                                                                                     \
@@ -74,6 +78,19 @@
     void METHOD_PREFIX ## __clear( HashMap *hash_map ){                                                                                             \
         METHOD_PREFIX ## __array__list__key_value_pair__clear( &hash_map->entry_buckets, hash_map->allocator );                                     \
         hash_map->allocator = NULL;                                                                                                                 \
+    }                                                                                                                                               \
+                                                                                                                                                    \
+    void METHOD_PREFIX ## __insert( HashMap *hash_map, KEY_TYPE key, VALUE_TYPE value ){                                                            \
+        (void)( hash_map );                                                                                                                         \
+        (void)( key );                                                                                                                              \
+        (void)( value );                                                                                                                            \
+    }                                                                                                                                               \
+                                                                                                                                                    \
+    bool METHOD_PREFIX ## __retrieve( TYPENAME *hash_map, KEY_TYPE key, VALUE_TYPE *out_value ){                                                    \
+        (void)( hash_map );                                                                                                                         \
+        (void)( key );                                                                                                                              \
+        (void)( out_value );                                                                                                                        \
+        return false;                                                                                                                               \
     }                                                                                                                                               \
 
 #endif // KIRKE__HASH_MAP__H
