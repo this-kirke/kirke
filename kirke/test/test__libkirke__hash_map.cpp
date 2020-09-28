@@ -50,7 +50,7 @@ class HashMap__TestFixture {
         }
 
         const unsigned long long BUCKET_COUNT = 10;
-        HashMap hash_map;
+        HashMap__StringToInt hash_map;
         SystemAllocator system_allocator;
 };
 

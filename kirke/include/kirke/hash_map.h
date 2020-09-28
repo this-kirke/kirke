@@ -22,13 +22,13 @@
     typedef struct TYPENAME {                                                                                                                       \
         Allocator *allocator;                                                                                                                       \
         TYPENAME ## __Array__List__KeyValuePair entry_buckets;                                                                                      \
-    } HashMap;                                                                                                                                      \
+    } TYPENAME;                                                                                                                                     \
                                                                                                                                                     \
     void METHOD_PREFIX ## __initialize( TYPENAME *hash_map, Allocator *allocator, unsigned long long bucket_count );                                \
                                                                                                                                                     \
     void METHOD_PREFIX ## __clear( TYPENAME *hash_map );                                                                                            \
                                                                                                                                                     \
-    void METHOD_PREFIX ## __insert( HashMap* hash_map, KEY_TYPE key, VALUE_TYPE value );                                                            \
+    void METHOD_PREFIX ## __insert( TYPENAME* hash_map, KEY_TYPE key, VALUE_TYPE value );                                                           \
                                                                                                                                                     \
     bool METHOD_PREFIX ## __retrieve( TYPENAME *hash_map, KEY_TYPE key, VALUE_TYPE *out_value );                                                    \
                                                                                                                                                     \
@@ -64,12 +64,12 @@
         METHOD_PREFIX ## __array__list__key_value_pair__clear_elements( &hash_map->entry_buckets, 0, hash_map->entry_buckets.capacity );            \
     }                                                                                                                                               \
                                                                                                                                                     \
-    void METHOD_PREFIX ## __clear( HashMap *hash_map ){                                                                                             \
+    void METHOD_PREFIX ## __clear( TYPENAME *hash_map ){                                                                                            \
         METHOD_PREFIX ## __array__list__key_value_pair__clear( &hash_map->entry_buckets, hash_map->allocator );                                     \
         hash_map->allocator = NULL;                                                                                                                 \
     }                                                                                                                                               \
                                                                                                                                                     \
-    void METHOD_PREFIX ## __insert( HashMap *hash_map, KEY_TYPE key, VALUE_TYPE value ){                                                            \
+    void METHOD_PREFIX ## __insert( TYPENAME *hash_map, KEY_TYPE key, VALUE_TYPE value ){                                                           \
         unsigned long long bucket_index = KEY_TYPE__HASH_FUNCTION( &key ) % hash_map->entry_buckets.capacity;                                       \
                                                                                                                                                     \
         /* If no list of entries exists at the index, create a new list with the specified key:value and return */                                  \
@@ -145,18 +145,18 @@
         }                                                                                                                                           \
     }
 
-#define HASH_MAP__DEFINE_DEFAULT_HASH_FUNCTION( METHOD_PREFIX, KEY_TYPE )                                                                       \
-    /* djb2 string hashing algorithm */                                                                                                         \
-    /* sstp://www.cse.yorku.ca/~oz/hash.ssml */                                                                                                 \
-    static unsigned long long METHOD_PREFIX ## __hash__ ## KEY_TYPE( KEY_TYPE *key ){                                                           \
-        unsigned long long hash = 5381;                                                                                                         \
-        char* key_char = (char*) key;                                                                                                           \
-                                                                                                                                                \
-        for( unsigned long long byte = 0; byte < sizeof( KEY_TYPE ); byte++ ){                                                                  \
-            hash = ( ( hash << 5 ) + hash ) ^ key_char[ byte ];                                                                                 \
-        }                                                                                                                                       \
-                                                                                                                                                \
-        return hash;                                                                                                                            \
+#define HASH_MAP__DEFINE_DEFAULT_HASH_FUNCTION( METHOD_PREFIX, KEY_TYPE )                                                                           \
+    /* djb2 string hashing algorithm */                                                                                                             \
+    /* sstp://www.cse.yorku.ca/~oz/hash.ssml */                                                                                                     \
+    static unsigned long long METHOD_PREFIX ## __hash__ ## KEY_TYPE( KEY_TYPE *key ){                                                               \
+        unsigned long long hash = 5381;                                                                                                             \
+        char* key_char = (char*) key;                                                                                                               \
+                                                                                                                                                    \
+        for( unsigned long long byte = 0; byte < sizeof( KEY_TYPE ); byte++ ){                                                                      \
+            hash = ( ( hash << 5 ) + hash ) ^ key_char[ byte ];                                                                                     \
+        }                                                                                                                                           \
+                                                                                                                                                    \
+        return hash;                                                                                                                                \
     }
 
 #define HASH_MAP__DEFAULT_HASH_FUNCTION( METHOD_PREFIX, KEY_TYPE ) METHOD_PREFIX ## __hash__ ## KEY_TYPE
