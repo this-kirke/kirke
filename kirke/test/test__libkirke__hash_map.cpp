@@ -67,6 +67,8 @@ TEST_CASE_METHOD( HashMap__TestFixture, "hash_map__insert_and_retrieve", "[hash_
     REQUIRE_FALSE( hash_map__string_to_int__retrieve( &hash_map, does_not_exit, &retrieved_value ) );
 }
 
+#include <stdio.h>
+
 TEST_CASE_METHOD( HashMap__TestFixture, "hash_map__delete", "[hash_map]" ){
     String strings[ 10 ] = {
         string__literal( "zero" ),
@@ -80,10 +82,6 @@ TEST_CASE_METHOD( HashMap__TestFixture, "hash_map__delete", "[hash_map]" ){
         string__literal( "eight" ),
         string__literal( "nine" )
     };
-
-    for( unsigned long entry_index = 0; entry_index < 10; entry_index++ ){
-        hash_map__string_to_int__insert( &hash_map, strings[ entry_index ], entry_index );
-    }
 
     for( unsigned long entry_index = 0; entry_index < 10; entry_index++ ){
         hash_map__string_to_int__delete( &hash_map, strings[ 9 - entry_index ] );

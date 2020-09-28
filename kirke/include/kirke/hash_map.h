@@ -70,7 +70,7 @@
     }                                                                                                                                               \
                                                                                                                                                     \
     void METHOD_PREFIX ## __insert( TYPENAME *hash_map, KEY_TYPE key, VALUE_TYPE value ){                                                           \
-        unsigned long long bucket_index = KEY_TYPE__HASH_FUNCTION( &key ) % hash_map->entry_buckets.capacity;                                       \
+        unsigned long long bucket_index = KEY_TYPE__HASH_FUNCTION( key ) % hash_map->entry_buckets.capacity;                                        \
                                                                                                                                                     \
         /* If no list of entries exists at the index, create a new list with the specified key:value and return */                                  \
         if( hash_map->entry_buckets.data[ bucket_index ] == NULL ){                                                                                 \
@@ -113,7 +113,7 @@
     }                                                                                                                                               \
                                                                                                                                                     \
     bool METHOD_PREFIX ## __retrieve( TYPENAME *hash_map, KEY_TYPE key, VALUE_TYPE *out_value ){                                                    \
-        unsigned long long bucket_index = KEY_TYPE__HASH_FUNCTION( &key ) % hash_map->entry_buckets.capacity;                                       \
+        unsigned long long bucket_index = KEY_TYPE__HASH_FUNCTION( key ) % hash_map->entry_buckets.capacity;                                        \
                                                                                                                                                     \
         TYPENAME ## __List__KeyValuePair *entry;                                                                                                    \
         if(                                                                                                                                         \
@@ -131,7 +131,7 @@
     }                                                                                                                                               \
                                                                                                                                                     \
     void METHOD_PREFIX ## __delete( TYPENAME *hash_map, KEY_TYPE key ){                                                                             \
-        unsigned long long bucket_index = KEY_TYPE__HASH_FUNCTION( &key ) % hash_map->entry_buckets.capacity;                                       \
+        unsigned long long bucket_index = KEY_TYPE__HASH_FUNCTION( key ) % hash_map->entry_buckets.capacity;                                        \
                                                                                                                                                     \
         TYPENAME ## __List__KeyValuePair *entry;                                                                                                    \
         if(                                                                                                                                         \
@@ -148,9 +148,9 @@
 #define HASH_MAP__DEFINE_DEFAULT_HASH_FUNCTION( METHOD_PREFIX, KEY_TYPE )                                                                           \
     /* djb2 string hashing algorithm */                                                                                                             \
     /* sstp://www.cse.yorku.ca/~oz/hash.ssml */                                                                                                     \
-    static unsigned long long METHOD_PREFIX ## __hash__ ## KEY_TYPE( KEY_TYPE *key ){                                                               \
+    static unsigned long long METHOD_PREFIX ## __hash__ ## KEY_TYPE( KEY_TYPE key ){                                                                \
         unsigned long long hash = 5381;                                                                                                             \
-        char* key_char = (char*) key;                                                                                                               \
+        char* key_char = (char*) &key;                                                                                                              \
                                                                                                                                                     \
         for( unsigned long long byte = 0; byte < sizeof( KEY_TYPE ); byte++ ){                                                                      \
             hash = ( ( hash << 5 ) + hash ) ^ key_char[ byte ];                                                                                     \
