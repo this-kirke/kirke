@@ -43,8 +43,11 @@ bool split_iterator__next( SplitIterator* iterator, String* out_token ){
         else{
             iterator->position += out_token->length;
         }
-    } while( out_token->length == 0 );
+    } while( out_token->length == 0 && iterator->position < iterator->string->length );
 
+    if( out_token->length == 0 ){
+        return false;
+    }
 
     return true;
 }
