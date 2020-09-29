@@ -83,7 +83,7 @@ TEST_CASE_METHOD( HashMap__TestFixture, "hash_map__delete", "[hash_map]" ){
         string__literal( "nine" )
     };
 
-    for( unsigned long entry_index = 0; entry_index < 10; entry_index++ ){
+    for( unsigned long long entry_index = 0; entry_index < 10; entry_index++ ){
         hash_map__string_to_int__delete( &hash_map, strings[ 9 - entry_index ] );
 
         int value;

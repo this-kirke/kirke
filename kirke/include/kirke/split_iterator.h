@@ -38,7 +38,7 @@ typedef struct SplitIterator{
      *  The current position of the iterator, in elements. This is incremented by split_iterator__next to reference
      *  to the element following the last-found delimiter.
      */
-    unsigned long position;
+    unsigned long long position;
 } SplitIterator;
 
 /**

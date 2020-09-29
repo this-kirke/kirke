@@ -15,7 +15,7 @@ unsigned long long split_iterator__count( SplitIterator const *iterator ){
         .position = 0
     };
 
-    unsigned long count = 0;
+    unsigned long long count = 0;
 
     String string;
     while( split_iterator__next( &copy, &string ) ){

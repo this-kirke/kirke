@@ -55,7 +55,7 @@ typedef struct Error{
     /**
      *  An identifier for this error, unique within its type.
      */
-    unsigned long code;
+    unsigned long long code;
     /**
      *  A null-terminated C-style string of characters which describes the specific error condition
      */

@@ -193,7 +193,7 @@ TEST_CASE_METHOD( String__TestFixture, "auto_string__prepend_element", "[string]
     AutoString auto_string;
     auto_string__initialize( &auto_string, system_allocator.allocator, sizeof( STRING ) );
 
-    unsigned long element_index;
+    unsigned long long element_index;
     for( element_index = sizeof( STRING ) - 1; element_index > 0; element_index-- ){
         auto_string__prepend_element( &auto_string, STRING[ element_index - 1 ] );
     }
