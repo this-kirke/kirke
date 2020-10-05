@@ -1,9 +1,8 @@
 // Internal Includes
 #include "kirke/split_iterator.h"
-#include "kirke/string.h"
 
-void split_iterator__initialize( SplitIterator* iterator, const String* string_, const String* delimiter ){
-    iterator->string = string_;
+void split_iterator__initialize( SplitIterator* iterator, String string, String delimiter ){
+    iterator->string = string;
     iterator->delimiter = delimiter;
     iterator->position = 0;
 }
@@ -25,8 +24,8 @@ unsigned long long split_iterator__count( SplitIterator const *iterator ){
     return count;
 }
 
-bool split_iterator__next( SplitIterator* iterator, String* out_token ){
-    if( iterator->position >= iterator->string->length ){
+bool split_iterator__next( SplitIterator* iterator, String* out__token ){
+    if( iterator->position >= iterator->string.length ){
         return false;
     }
 
@@ -35,17 +34,17 @@ bool split_iterator__next( SplitIterator* iterator, String* out_token ){
      * one delimiter directly follows another.
      */
     do{
-        split_iterator__rest( iterator, out_token );
+        split_iterator__rest( iterator, out__token );
 
-        if( string__index_of( out_token, iterator->delimiter, &out_token->length ) ){
-            iterator->position += out_token->length + iterator->delimiter->length;
+        if( string__index_of( out__token, &iterator->delimiter, &out__token->length ) ){
+            iterator->position += out__token->length + iterator->delimiter.length;
         }
         else{
-            iterator->position += out_token->length;
+            iterator->position += out__token->length;
         }
-    } while( out_token->length == 0 && iterator->position < iterator->string->length );
+    } while( out__token->length == 0 && iterator->position < iterator->string.length );
 
-    if( out_token->length == 0 ){
+    if( out__token->length == 0 ){
         return false;
     }
 
@@ -54,9 +53,9 @@ bool split_iterator__next( SplitIterator* iterator, String* out_token ){
 
 void split_iterator__rest( SplitIterator* iterator, String* ref_rest ){
     *ref_rest = (String){
-        .data = iterator->string->data + iterator->position,
-        .length = iterator->string->length - iterator->position,
-        .capacity = iterator->string->length - iterator->position,
+        .data = iterator->string.data + iterator->position,
+        .length = iterator->string.length - iterator->position,
+        .capacity = iterator->string.length - iterator->position,
         .element_size = sizeof( char )
     };
 }
