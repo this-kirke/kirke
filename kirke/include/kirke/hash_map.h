@@ -62,6 +62,7 @@
                                                                                                                                                     \
         METHOD_PREFIX ## __array__list__key_value_pair ## __initialize( &hash_map->entry_buckets, allocator, bucket_count );                        \
         METHOD_PREFIX ## __array__list__key_value_pair__clear_elements( &hash_map->entry_buckets, 0, hash_map->entry_buckets.capacity );            \
+        hash_map->entry_buckets.length = bucket_count;                                                                                              \
     }                                                                                                                                               \
                                                                                                                                                     \
     void METHOD_PREFIX ## __clear( TYPENAME *hash_map ){                                                                                            \
