@@ -145,9 +145,14 @@
     }                                                                                                                                               \
                                                                                                                                                     \
     void METHOD_PREFIX ## __for_each( TYPENAME *hash_map, void (*callback )( KEY_TYPE key, VALUE_TYPE value, void *user_data ), void *user_data ){  \
-        (void)( hash_map );                                                                                                                         \
-        (void)( callback );                                                                                                                         \
-        (void)( user_data );                                                                                                                        \
+        for( unsigned long long bucket_index = 0; bucket_index < hash_map->entry_buckets.length; bucket_index++ ){                                  \
+                                                                                                                                                    \
+            TYPENAME ## __List__KeyValuePair *current_entry = hash_map->entry_buckets.data[ bucket_index ];                                         \
+            while( current_entry != NULL ){                                                                                                         \
+                callback( current_entry->value.key, current_entry->value.value, user_data );                                                        \
+                current_entry = current_entry->next;                                                                                                \
+            }                                                                                                                                       \
+        }                                                                                                                                           \
     }
 
 #define HASH_MAP__DEFINE_DEFAULT_HASH_FUNCTION( METHOD_PREFIX, KEY_TYPE )                                                                           \
