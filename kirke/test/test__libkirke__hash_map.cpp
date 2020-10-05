@@ -67,8 +67,6 @@ TEST_CASE_METHOD( HashMap__TestFixture, "hash_map__insert_and_retrieve", "[hash_
     REQUIRE_FALSE( hash_map__string_to_int__retrieve( &hash_map, does_not_exit, &retrieved_value ) );
 }
 
-#include <stdio.h>
-
 TEST_CASE_METHOD( HashMap__TestFixture, "hash_map__delete", "[hash_map]" ){
     String strings[ 10 ] = {
         string__literal( "zero" ),
@@ -83,10 +81,50 @@ TEST_CASE_METHOD( HashMap__TestFixture, "hash_map__delete", "[hash_map]" ){
         string__literal( "nine" )
     };
 
-    for( unsigned long long entry_index = 0; entry_index < 10; entry_index++ ){
+    unsigned long long entry_index;
+    for( entry_index = 0; entry_index < 10; entry_index++ ){
+       hash_map__string_to_int__insert( &hash_map, strings[ entry_index ], entry_index );
+    }
+
+    for( entry_index = 0; entry_index < 10; entry_index++ ){
         hash_map__string_to_int__delete( &hash_map, strings[ 9 - entry_index ] );
 
         int value;
         REQUIRE_FALSE( hash_map__string_to_int__retrieve( &hash_map, strings[ 9 - entry_index ], &value ) );
+    }
+}
+
+void hash_map__for_each__helper( String key, int value, void *user_data ){
+    bool *kvps_visited = (bool*) user_data;
+
+    REQUIRE( kvps_visited[ value ] == false );
+    kvps_visited[ value ] = true;
+}
+
+TEST_CASE_METHOD( HashMap__TestFixture, "hash_map__for_each", "[hash_map]" ){
+    String strings[ 10 ] = {
+        string__literal( "zero" ),
+        string__literal( "one" ),
+        string__literal( "two" ),
+        string__literal( "three" ),
+        string__literal( "four" ),
+        string__literal( "five" ),
+        string__literal( "six" ),
+        string__literal( "seven" ),
+        string__literal( "eight" ),
+        string__literal( "nine" )
+    };
+
+    unsigned long long entry_index;
+    for( entry_index = 0; entry_index < 10; entry_index++ ){
+       hash_map__string_to_int__insert( &hash_map, strings[ entry_index ], entry_index );
+    }
+
+    bool kvps_visited[ 10 ] = { false };
+
+    hash_map__string_to_int__for_each( &hash_map, hash_map__for_each__helper, kvps_visited );
+
+    for( entry_index = 0; entry_index < 10; entry_index++ ){
+        REQUIRE( kvps_visited[ entry_index ] );
     }
 }

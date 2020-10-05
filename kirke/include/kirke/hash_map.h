@@ -32,7 +32,9 @@
                                                                                                                                                     \
     bool METHOD_PREFIX ## __retrieve( TYPENAME *hash_map, KEY_TYPE key, VALUE_TYPE *out_value );                                                    \
                                                                                                                                                     \
-    void METHOD_PREFIX ## __delete( TYPENAME * hash_map, KEY_TYPE key );
+    void METHOD_PREFIX ## __delete( TYPENAME * hash_map, KEY_TYPE key );                                                                            \
+                                                                                                                                                    \
+    void METHOD_PREFIX ## __for_each( TYPENAME *hash_map, void (*function)( KEY_TYPE key, VALUE_TYPE value, void *user_data ), void *user_data );
 
 #define HASH_MAP__DEFINE( TYPENAME, METHOD_PREFIX, KEY_TYPE, VALUE_TYPE, KEY_TYPE__HASH_FUNCTION, KEY_TYPE__EQUALS_FUNCTION )                       \
                                                                                                                                                     \
@@ -140,6 +142,12 @@
         ){                                                                                                                                          \
             hash_map->entry_buckets.data[ bucket_index ] = METHOD_PREFIX ## __list__key_value_pair__delete_link( entry, hash_map->allocator );      \
         }                                                                                                                                           \
+    }                                                                                                                                               \
+                                                                                                                                                    \
+    void METHOD_PREFIX ## __for_each( TYPENAME *hash_map, void (*callback )( KEY_TYPE key, VALUE_TYPE value, void *user_data ), void *user_data ){  \
+        (void)( hash_map );                                                                                                                         \
+        (void)( callback );                                                                                                                         \
+        (void)( user_data );                                                                                                                        \
     }
 
 #define HASH_MAP__DEFINE_DEFAULT_HASH_FUNCTION( METHOD_PREFIX, KEY_TYPE )                                                                           \
