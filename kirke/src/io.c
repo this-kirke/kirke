@@ -7,33 +7,32 @@
 #include "kirke/io.h"
 #include "kirke/string.h"
 
-String* io__read_text_file( Allocator* allocator, String* file_path, Error* error ){
-    FILE* input_file = fopen( file_path->data, "r" );
+bool io__read_text_file( Allocator* allocator, String file_path, String *out__string, Error* error ){
+    FILE* input_file = fopen( file_path.data, "r" );
 
     if( input_file == NULL ){
         error__set(
             error,
             "IO",
             IO__Error__UnableToOpenFile,
-            "Unable to open input file \"%s.\"", file_path->data
+            "Unable to open input file \"%*s.\"", file_path.length, file_path.data
         );
 
-        return NULL;
+        return false;
     }
 
     unsigned long long input_file_size;
     fseek( input_file, 0, SEEK_END );
     input_file_size = ftell( input_file );
 
-    String* output = allocator__alloc( allocator, sizeof( String ) );
-    string__initialize( output, allocator, input_file_size );
+    string__initialize( out__string, allocator, input_file_size );
 
     fseek( input_file, 0, SEEK_SET );
-    output->length = fread( output->data, 1, input_file_size, input_file );
+    out__string->length = fread( out__string->data, 1, input_file_size, input_file );
 
     fclose( input_file );
 
-    return output;
+    return true;
 }
 
 String* io__read_stdin( Allocator* allocator ){

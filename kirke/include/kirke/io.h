@@ -5,6 +5,9 @@
 #ifndef KIRKE__IO__H
 #define KIRKE__IO__H
 
+// System Includes
+#include <stdbool.h>
+
 // Internal Includes
 #include "kirke/macros.h"
 
@@ -36,11 +39,14 @@ typedef enum IO__Error {
  *  \brief This method reads the contents of the file located at \p file_path into a newly-allocated Slice.
  *  \param allocator A pointer to the Allocator which will be used to allocate memory controlled by the returned Slice.
  *  \param file_path A pointer to a String containing the path of the file to be read.
+ *  \param out__string An out parameter. Upon successful completion, this will store the contents read from the input file.
  *  \param error Optional. The address of a pointer to an Error structure, which will be non-NULL upon return if an error is
  *  encountered while attempting to read the specified file.
- *  \returns A pointer to a newly-allocated String containing the contents of the file.
+ *  \returns Returns true if the operation completed successfully. This operation can fail if there is a problem opening the
+ *  specified file.
+ *  \returns Returns false if the operation did not complete successfully.
  */
-String* io__read_text_file( Allocator* allocator, String* file_path, Error* error );
+bool io__read_text_file( Allocator* allocator, String file_path, String* out__string, Error* error );
 
 /**
  *  \brief This method reads the contents of stdin into a newly-allocated String.
