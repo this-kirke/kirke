@@ -35,12 +35,11 @@ bool io__read_text_file( Allocator* allocator, String file_path, String *out__st
     return true;
 }
 
-String* io__read_stdin( Allocator* allocator ){
-    String* output = allocator__alloc( allocator, sizeof( String ) );
-    string__initialize( output, allocator, 0 );
+void io__read_stdin( Allocator* allocator, String *out__string ){
+    string__initialize( out__string, allocator, 0 );
 
     AutoString auto_string = {
-        .string = output,
+        .string = out__string,
         .allocator = allocator
     };
 
@@ -49,6 +48,4 @@ String* io__read_stdin( Allocator* allocator ){
     while( ( bytes_read = fread( buffer, sizeof( char ), sizeof( buffer ), stdin ) ) > 0 ){
         auto_string__append_elements( &auto_string, bytes_read, buffer );
     }
-
-    return output;
 }
