@@ -66,6 +66,9 @@
     }                                                                                                                                               \
                                                                                                                                                     \
     void METHOD_PREFIX ## __clear( TYPENAME *hash_map ){                                                                                            \
+        for( unsigned long long bucket_index = 0; bucket_index < hash_map->entry_buckets.length; bucket_index++ ){                                  \
+            METHOD_PREFIX ## __list__key_value_pair__clear( hash_map->entry_buckets.data[ bucket_index ], hash_map->allocator );                    \
+        }                                                                                                                                           \
         METHOD_PREFIX ## __array__list__key_value_pair__clear( &hash_map->entry_buckets, hash_map->allocator );                                     \
         hash_map->allocator = NULL;                                                                                                                 \
     }                                                                                                                                               \
