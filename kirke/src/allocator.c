@@ -17,7 +17,7 @@ typedef struct Allocator {
      */
     void* ( *realloc )( void* pointer, unsigned long long size, void* allocator_data );
     /**
-     *  This is a pointer to a function which will free a region of memory which was allocated by this 
+     *  This is a pointer to a function which will free a region of memory which was allocated by this
      *  Allocator.
      */
 	void ( *free )( void* pointer, void* allocator_data );
@@ -54,7 +54,7 @@ Allocator* allocator__create(
 		allocator->out_of_memory = out_of_memory_function;
 		allocator->allocator_data = allocator_data;
 	}
-    
+
     return allocator;
 }
 
@@ -73,7 +73,7 @@ void* allocator__alloc( Allocator* allocator, unsigned long long size ){
             allocator->out_of_memory( allocator->allocator_data );
         }
     }
-    
+
     return new_memory;
 }
 
@@ -88,13 +88,13 @@ void* allocator__calloc( Allocator* allocator, unsigned long long count, unsigne
     else{
         memset( new_memory, 0, count * size );
     }
-    
+
     return new_memory;
 }
 
 void *allocator__realloc( Allocator* allocator, void* pointer, unsigned long long size ){
-    void* new_memory = allocator->realloc( pointer, size, allocator->allocator_data ); 
-    
+    void* new_memory = allocator->realloc( pointer, size, allocator->allocator_data );
+
     if( new_memory == NULL ){
         if( allocator->out_of_memory != NULL ){
             allocator->out_of_memory( allocator->allocator_data );
@@ -105,5 +105,7 @@ void *allocator__realloc( Allocator* allocator, void* pointer, unsigned long lon
 }
 
 void allocator__free( Allocator* allocator, void* pointer ){
-    allocator->free( pointer, allocator->allocator_data );
+    if( allocator != NULL ){
+        allocator->free( pointer, allocator->allocator_data );
+    }
 }
