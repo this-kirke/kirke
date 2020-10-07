@@ -15,7 +15,7 @@ bool io__read_text_file( Allocator* allocator, String file_path, String *out__st
             error,
             "IO",
             IO__Error__UnableToOpenFile,
-            "Unable to open input file \"%*s.\"", file_path.length, file_path.data
+            "Unable to open input file \"%.*s\".", file_path.length, file_path.data
         );
 
         return false;
