@@ -10,10 +10,10 @@ TEST_CASE( "split_iterator__initialize", "[split_iterator]" ){
     String delimiter = string__literal( "," );
 
     SplitIterator split_iterator;
-    split_iterator__initialize( &split_iterator, string, delimiter );
+    split_iterator__initialize( &split_iterator, &string, &delimiter );
 
-    REQUIRE( string__equals( split_iterator.string, string ) );
-    REQUIRE( string__equals( split_iterator.delimiter, delimiter ) );
+    REQUIRE( string__equals( *split_iterator.string, string ) );
+    REQUIRE( string__equals( *split_iterator.delimiter, delimiter ) );
     REQUIRE( split_iterator.position == 0 );
 }
 
@@ -22,27 +22,27 @@ TEST_CASE( "split_iterator__count", "split_iterator" ){
     SplitIterator iterator;
 
     String string2 = string__literal( "0,1,2,3" );
-    split_iterator__initialize( &iterator, string2, delimiter );
+    split_iterator__initialize( &iterator, &string2, &delimiter );
     REQUIRE( split_iterator__count( &iterator ) == 4 );
 
     String string1 = string__literal( "0,1,2," );
-    split_iterator__initialize( &iterator, string1, delimiter );
+    split_iterator__initialize( &iterator, &string1, &delimiter );
     REQUIRE( split_iterator__count( &iterator ) == 3 );
 
     String string3 = string__literal( ",,," );
-    split_iterator__initialize( &iterator, string3, delimiter );
+    split_iterator__initialize( &iterator, &string3, &delimiter );
     REQUIRE( split_iterator__count( &iterator ) == 0 );
 
     String string4 = string__literal( "0123456789" );
-    split_iterator__initialize( &iterator, string4, delimiter );
+    split_iterator__initialize( &iterator, &string4, &delimiter );
     REQUIRE( split_iterator__count( &iterator ) == 1 );
 
     String string5 = string__literal( "," );
-    split_iterator__initialize( &iterator, string5, delimiter );
+    split_iterator__initialize( &iterator, &string5, &delimiter );
     REQUIRE( split_iterator__count( &iterator ) == 0 );
 
     String string6 = string__literal( "" );
-    split_iterator__initialize( &iterator, string6, delimiter );
+    split_iterator__initialize( &iterator, &string6, &delimiter );
     REQUIRE( split_iterator__count( &iterator ) == 0 );
 }
 
@@ -51,7 +51,7 @@ TEST_CASE( "split_iterator__rest", "[split_iterator]" ){
     String delimiter = string__literal( "," );
 
     SplitIterator split_iterator;
-    split_iterator__initialize( &split_iterator, string, delimiter );
+    split_iterator__initialize( &split_iterator, &string, &delimiter );
 
     String rest;
 
@@ -83,7 +83,7 @@ TEST_CASE( "split_iterator__next", "[split_iterator]" ){
     unsigned long split_index = 0;
 
     SplitIterator split_iterator;
-    split_iterator__initialize( &split_iterator, test_string, delimiter );
+    split_iterator__initialize( &split_iterator, &test_string, &delimiter );
 
     String token;
 
