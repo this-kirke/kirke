@@ -30,7 +30,7 @@
                                                                                                                                                     \
     void METHOD_PREFIX ## __insert( TYPENAME* hash_map, KEY_TYPE key, VALUE_TYPE value );                                                           \
                                                                                                                                                     \
-    bool METHOD_PREFIX ## __retrieve( TYPENAME *hash_map, KEY_TYPE key, VALUE_TYPE *out_value );                                                    \
+    bool METHOD_PREFIX ## __retrieve( TYPENAME const *hash_map, KEY_TYPE key, VALUE_TYPE *out_value );                                              \
                                                                                                                                                     \
     void METHOD_PREFIX ## __delete( TYPENAME * hash_map, KEY_TYPE key );                                                                            \
                                                                                                                                                     \
@@ -111,7 +111,7 @@
         );                                                                                                                                          \
     }                                                                                                                                               \
                                                                                                                                                     \
-    bool METHOD_PREFIX ## __retrieve( TYPENAME *hash_map, KEY_TYPE key, VALUE_TYPE *out_value ){                                                    \
+    bool METHOD_PREFIX ## __retrieve( TYPENAME const *hash_map, KEY_TYPE key, VALUE_TYPE *out_value ){                                              \
         unsigned long long bucket_index = KEY_TYPE__HASH_FUNCTION( key ) % hash_map->entry_buckets.capacity;                                        \
                                                                                                                                                     \
         TYPENAME ## __List__KeyValuePair *entry;                                                                                                    \
